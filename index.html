@@ -9,82 +9,62 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             background-color: #f4f4f9;
             color: #333;
         }
         .container {
-            max-width: 1800px;
-            width: 100%;
+            max-width: 1200px;
+            width: 90%;
+            margin: 0 auto;
             padding: 20px;
         }
         .profile {
             display: flex;
-            align-items: flex-start;
-            margin-bottom: 80px;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
         }
         .profile img {
-            width: 350px;
-            height: auto;
+            width: 80%;
+            max-width: 350px;
             border-radius: 10px;
-            margin-right: 20px;
-            position: relative;
-        }
-        .profile .badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: gold;
-            color: white;
-            font-size: 14px;
-            padding: 5px 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
         }
         .description {
-            max-width: 600px;
+            text-align: center;
+            max-width: 800px;
         }
         .books {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
-        }
-           .books {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            padding-bottom: 10px;
-            flex-wrap: nowrap;
+            justify-content: center;
         }
         .book {
             background-color: white;
             border: 1px solid #ddd;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 90%;
+            max-width: 300px;
             padding: 15px;
             text-align: center;
         }
         .book img {
-            width: 50%;
+            width: 60%;
             height: auto;
             border-radius: 5px;
             margin-bottom: 10px;
         }
-       .rating {
-            color: ##04b976;
-            font-size: 20px;
+        .rating {
+            color: #04b976;
+            font-size: 16px;
             margin-top: 5px;
-            text-shadow: 0 0 1px rgba(184, 134, 11, 0.8);
-			
-			
-			    }
+        }
         .download-btn {
             background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
+            padding: 10px 15px;
             text-decoration: none;
             border-radius: 5px;
             margin-top: 10px;
@@ -92,12 +72,29 @@
         }
         .download-btn:hover {
             background-color: #45a049;
-			
-			
-	
-    }
-</style>
-       	<h1>  VESSER SELENE </h1> 
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+        }
+        h1, h2, h3, h4 {
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .profile {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .books {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
     </style>
     <script>
         function promptPassword(bookTitle) {
@@ -105,102 +102,67 @@
             if (password === "0151") {
                 window.location.href = bookTitle + ".pdf";  // Redirect to the book's PDF file
             } else {
-                alert("Download restricted by the author at this moment");
+                alert("Download restricted by the author at this moment.");
             }
         }
     </script>
-        
-    </style>
 </head>
 <body>
     <div class="container">
+        <h1>Vesser Selene</h1>
         <div class="profile">
-            <div>
-                <img src="author-photo.jpg" alt="Vesser Selene">
-         
-				
-				
-				<img src="ELITE.png" alt="Icon" style="width: 350px; height: 200px; margin-bottom: 10px; class="highlight-blink"">
-                <h3>  Latest Updates</h3>
-				<br>
-						<h3>  Promoted to Fiverr Elite Member Club on January 13th, 2025</h3>
-						<br>
-				<h3>  More Information</h3>
-				
-				<h4>  Books assisted by Vesser Selene</h4>
-				
-					
-				<h2>VANISHING PULSE</h2>
-				<h4>Wording Illustrator</h4>
-				
-            </div>
-             <div class="container">
-        <h2>A Rising Star in Storytelling</h2>
-        <p>Vesser Selene is a passionate writer whose commitment to storytelling has made her a standout in the creative community. She joined <span class="highlight">Fiverr</span> in late 2023, and her journey has been nothing short of remarkable.</p>
-
-        <h2>Achievements in Contests</h2>
-        <p>In 2024, Vesser participated in the <span class="highlight">Fiverr Steel-a-Palooza Contest</span>, submitting three of her original stories. Her talent shone brightly, with two of her entries ranking in the top 100 and one breaking into the top 50.</p>
-
-        <p>Her skill extends beyond storytelling—Vesser is a master of <span class="highlight">wording illustration</span>, an ability to paint vivid and immersive scenes through her prose. This talent was evident in the <span class="highlight">Fiverr Fiction Fest Contest</span>, where one of the stories she assisted ranked in the top 6. Notably, this contest featured contributions from the top 10 writers from the Palooza event, underscoring her collaborative prowess and creative excellence.</p>
-
-        <h2>Global Recognition</h2>
-        <p>Vesser Selene’s dedication and talent earned global recognition when her story Bound by Ink stunned the Fiverr community by ranking in the top 30 of the Fiverr Inspiration Awards 2024 <span class="highlight">Bound by Inks</span> Notably, she became one of only eight Fiverr clients to achieve this prestigious ranking in the competition. <span class="highlight">Fiverr Inspiration Awards 2024</span>. This accomplishment solidified her status as one of the brightest newcomers on the platform.</p>
-
-        <h2>Elite Status</h2>
-        <p>In light of her incredible journey, Fiverr has honored Vesser Selene by inducting her into the <span class="highlight">Fiverr Elite Member Club</span>. Her dedication, creativity, and meteoric rise serve as an inspiration to storytellers everywhere.</p>
-
-        <p>We wish Vesser Selene continued success as she leaves an indelible mark on the world of storytelling!</p>
-
-           <h2>Books by Vesser Selene</h2>
+            <img src="author-photo.jpg" alt="Vesser Selene">
+            <h3>Latest Updates</h3>
+            <p>Promoted to Fiverr Elite Member Club on January 13th, 2025</p>
+            <h3>More Information</h3>
+            <h4>Books Assisted by Vesser Selene</h4>
+            <h2>Vanishing Pulse</h2>
+            <h4>Wording Illustrator</h4>
+        </div>
+        <div class="description">
+            <h2>A Rising Star in Storytelling</h2>
+            <p>Vesser Selene is a passionate writer whose commitment to storytelling has made her a standout in the creative community...</p>
+            <h2>Achievements in Contests</h2>
+            <p>In 2024, Vesser participated in the Fiverr Steel-a-Palooza Contest...</p>
+        </div>
+        <h2>Books by Vesser Selene</h2>
         <div class="books">
             <div class="book">
-                <img src="BOOK1.jpg" alt="Book 1">
-                <h3>CHAINS OF MIND</h3>
-				<strong>Genres: Drama, Horror, Mystery, Psychological Thriller</strong>
-                <p style="text-align: justify;">"Chains of Mind" tells the story of Delma Grey, who escapes an abusive father only to face a shocking reality. She discovers her new life was an illusion and that she has been living with his decaying body, haunted by her troubled mind.</p>
+                <img src="BOOK1.JPG" alt="Book 1">
+                <h3>Chains of Mind</h3>
+                <strong>Genres: Drama, Horror, Mystery, Psychological Thriller</strong>
+                <p>"Chains of Mind" tells the story of Delma Grey...</p>
                 <div class="rating">★☆☆☆☆</div>
                 <a href="#" class="download-btn" onclick="promptPassword('Chains_of_Mind')">Download Book</a>
             </div>
             <div class="book">
-                <img src="BOOK2.jpg" alt="Book 2">
-                <h3>BILGIS</h3>
-				<strong>Genres: Horror, Thriller, Drama, Psychological</strong>
-               <p style="text-align: justify;">"Bilqis" follows a young girl who escapes brutal captivity after witnessing her sister's death. Determined to expose the truth and seek justice, she fights to bring down her tormentors.</p>
+                <img src="BOOK2.JPG" alt="Book 2">
+                <h3>Bilgis</h3>
+                <strong>Genres: Horror, Thriller, Drama, Psychological</strong>
+                <p>"Bilgis" follows a young girl who escapes brutal captivity...</p>
                 <div class="rating">★☆☆☆☆</div>
                 <a href="#" class="download-btn" onclick="promptPassword('Bilgis')">Download Book</a>
             </div>
             <div class="book">
-                <img src="BOOK3.jpg" alt="Book 3">
-                <h3>HANUTEND LUST</h3>
-				<strong>Genres: Horror, Supernatural, paranormal, Thriller, Dark Romance</strong>
-                <p style="text-align: justify;">Tina and Christie explore a haunted mansion, awakening a vengeful spirit that terrorizes them. Their ordeal turns into a desperate fight for survival as the malevolent force preys on them.</p>
+                <img src="BOOK3.JPG" alt="Book 3">
+                <h3>Hanutend Lust</h3>
+                <strong>Genres: Horror, Supernatural, Thriller, Dark Romance</strong>
+                <p>"Hanutend Lust" follows Tina and Christie...</p>
                 <div class="rating">☆☆☆☆☆</div>
                 <a href="#" class="download-btn" onclick="promptPassword('Hanutend_Lust')">Download Book</a>
             </div>
             <div class="book">
-                <img src="BOOK4.jpg" alt="Book 4">
-                <h3>BOUND BY INK</h3>
-				 <strong>Genres: Mystery, Psychological Horror, Thriller, Dark Fantasy</strong>
-                <p style="text-align: justify;">"Bound by Ink" follows Jade, a young author whose dark creations come to life through a mysterious journal. She must confront her imagination's power before it consumes her
-				<br><br>
-				
-				    </p>
+                <img src="BOOK4.JPG" alt="Book 4">
+                <h3>Bound by Ink</h3>
+                <strong>Genres: Mystery, Psychological Horror, Thriller</strong>
+                <p>"Bound by Ink" follows Jade, a young author...</p>
                 <div class="rating">★★★☆☆</div>
                 <a href="#" class="download-btn" onclick="promptPassword('Bound_by_Ink')">Download Book</a>
-				
-				
             </div>
-			
         </div>
-		<footer>
-    <div style="text-align: center; padding: 20px; ; color: Black;">
+    </div>
+    <footer>
         <p>&copy; 2025 Fiverr. All rights reserved. Copyright protected.</p>
-    </div>
-</footer>
-    </div>
-	
-	
+    </footer>
 </body>
-
-
 </html>
