@@ -2,25 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Secure Payment</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* Base styles */
         :root {
-            --primary: #4f46e5;
-            --primary-dark: #4338ca;
+            --primary: #662d91;
+            --primary-dark: #4e2169;
             --surface: #ffffff;
             --background: #f9fafb;
             --text: #111827;
             --text-secondary: #6b7280;
             --border: #e5e7eb;
             --success: #22c55e;
+            --highlight: #fef9c3;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -29,43 +32,47 @@
             color: var(--text);
             line-height: 1.5;
             min-height: 100vh;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
         }
 
+        /* Container styles */
         .payment-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1rem;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
             min-height: 100vh;
-            align-items: center;
+            align-items: start;
         }
 
-        .payment-summary {
-            background: var(--surface);
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-        }
-
+        /* Card styles */
+        .payment-summary,
         .payment-details {
             background: var(--surface);
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 1rem;
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            height: fit-content;
+        }
+
+        /* Logo styles */
+        .logo-container {
+            margin-bottom: 2rem;
+            text-align: center;
+            padding: 0 1rem;
         }
 
         .logo {
-            width: 20px;
-            height: 20px;
-            background: #f3f4f6;
-            border-radius: 0.5rem;
-            margin-bottom: 2rem;
+            max-width: 50%;
+            height: auto;
+            margin-bottom: 0.5rem;
         }
 
+        /* Content styles */
         .section-title {
-            font-size: 1.5rem;
+            font-size: clamp(1.25rem, 4vw, 1.5rem);
             font-weight: 600;
             margin-bottom: 1.5rem;
             color: var(--text);
@@ -74,19 +81,9 @@
         .payment-method {
             border: 2px solid var(--border);
             border-radius: 0.75rem;
-            padding: 1.5rem;
+            padding: 1.25rem;
             margin-bottom: 1.5rem;
-            cursor: pointer;
             transition: all 0.2s ease;
-        }
-
-        .payment-method:hover {
-            border-color: var(--primary);
-        }
-
-        .payment-method.active {
-            border-color: var(--primary);
-            background: #f5f3ff;
         }
 
         .method-header {
@@ -94,6 +91,7 @@
             align-items: center;
             gap: 1rem;
             margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
 
         .method-icon {
@@ -106,22 +104,22 @@
             justify-content: center;
             font-size: 1.5rem;
             color: var(--primary);
-        }
-
-        .method-title {
-            font-weight: 600;
-            color: var(--text);
+            flex-shrink: 0;
         }
 
         .email-display {
-            background: #f8fafc;
-            padding: 1rem;
+            background: var(--highlight);
+            padding: 1.25rem;
             border-radius: 0.5rem;
             font-family: monospace;
-            font-size: 1.1rem;
-            color: var(--text);
-            border: 1px solid var(--border);
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            color: #854d0e;
+            border: 1px solid #fef08a;
             margin: 1rem 0;
+            text-align: center;
+            font-weight: 600;
+            word-break: break-all;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .security-badge {
@@ -135,17 +133,9 @@
 
         .instructions {
             background: #f8fafc;
-            padding: 1.5rem;
+            padding: 1.25rem;
             border-radius: 0.75rem;
             margin-top: 1.5rem;
-        }
-
-        .instructions-title {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
         .instructions-list {
@@ -154,21 +144,69 @@
         }
 
         .instructions-list li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 0.5rem;
             color: var(--text-secondary);
         }
 
         .instructions-list li i {
             color: var(--primary);
+            margin-top: 0.25rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .payment-container {
+                padding: 1rem;
+                gap: 1rem;
+            }
         }
 
         @media (max-width: 768px) {
             .payment-container {
                 grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .payment-summary,
+            .payment-details {
+                padding: 1.25rem;
+            }
+
+            .method-header {
+                gap: 0.75rem;
+            }
+
+            .instructions {
                 padding: 1rem;
+            }
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) {
+            .payment-method {
+                cursor: default;
+            }
+
+            .email-display {
+                user-select: all;
+                -webkit-user-select: all;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .payment-container {
+                display: block;
+            }
+
+            .payment-summary,
+            .payment-details {
+                box-shadow: none;
+                break-inside: avoid;
+                margin-bottom: 2rem;
             }
         }
     </style>
@@ -176,10 +214,9 @@
 <body>
     <div class="payment-container">
         <div class="payment-summary">
-            <div class="logo">
-                <img src="skrilllogo.jpg" alt="Logo">
+           <div class="logo">
+               <img src="skrilllogo.jpg" alt="Skrill Logo" height="150" width="350">
             </div>
-            <h2 class="section-title">Payment Summary</h2>
             <div class="security-badge">
                 <i class="fas fa-shield-alt"></i>
                 <span>Secure Payment Processing</span>
@@ -218,18 +255,9 @@
                         <div class="method-description">Send payment via Skrill</div>
                     </div>
                 </div>
-              <div class="email-display">
-    <span class="highlighted-email">vesserselene@gmail.com</span>
-</div>
-
-<style>
-    .highlighted-email {
-        background-color: #fff9c4; /* Light yellow color */
-        font-weight: bold;
-        padding: 2px 4px;
-        border-radius: 4px;
-    }
-</style>
+                <div class="email-display">
+                    vesserselene@gmail.com
+                </div>
                 <div class="security-badge">
                     <i class="fas fa-lock"></i>
                     <span>Protected by Paysafe</span>
@@ -240,7 +268,7 @@
                     <i class="fas fa-clock"></i>
                     <span>Next Steps</span>
                 </div>
-                <p>Upon successful completion of your payment, please forward a clear copy of the payment confirmation slip to the designated email address for verification and processing</p>
+                <p>Your premium download code will be sent to your email address within 1 hour</p>
             </div>
         </div>
     </div>
