@@ -15,10 +15,28 @@
         .fade-in {
             animation: fadeIn 0.5s ease-in;
         }
+        .admin-input {
+            width: 100px;
+            font-size: 0.875rem;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800">
     <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Compact Admin Login Section -->
+        <div id="admin-login" class="mb-2 flex justify-end">
+            <div class="login-form flex space-x-1 scale-90">
+                <input type="text" id="username" placeholder="User" class="admin-input p-1 rounded border text-sm">
+                <input type="password" id="password" placeholder="Pass" class="admin-input p-1 rounded border text-sm">
+                <button onclick="login()" class="bg-gray-500 text-white px-2 py-1 rounded text-sm hover:bg-gray-600">→</button>
+            </div>
+        </div>
+        
+        <!-- Compact Admin Logout Section -->
+        <div id="admin-logout" class="hidden mb-2 flex justify-end">
+            <button onclick="logout()" class="bg-gray-500 text-white px-2 py-1 rounded text-sm hover:bg-gray-600">×</button>
+        </div>
+
         <header class="flex justify-between items-center mb-12">
             <div>
                 <h1 class="text-4xl font-bold text-blue-600">Vesser Selene</h1>
@@ -114,14 +132,13 @@
                         <p>Two entries in the Top 100, including one in the Top 50: Chains of Mind & Bilqis</p>
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-md">
-                      <i class="fas fa-star text-4xl text-green-500 mb-4"></i>
+                        <i class="fas fa-star text-4xl text-green-500 mb-4"></i>
                         <h3 class="font-bold mb-2">Fiverr Fiction Fest</h3>
                         <p>Vanishing Pulse – Assisted Story by Vesser Selene, Officially Ranked in the Top</p>
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-md">
-                        
-						 <i class="fas fa-trophy text-4xl text-yellow-500 mb-4"></i>
-						   <i class="fas fa-award text-4xl text-blue-500 mb-4"></i>
+                        <i class="fas fa-trophy text-4xl text-yellow-500 mb-4"></i>
+                        <i class="fas fa-award text-4xl text-blue-500 mb-4"></i>
                         <h3 class="font-bold mb-2">Fiverr Inspiration Awards</h3>
                         <p>Bound by Ink ranked in the Top 30 in 2024, becoming one of only 8 Fiverr members to achieve this milestone </p>
                     </div>
@@ -171,6 +188,29 @@
             } else {
                 alert("Download restricted by the author at this moment.");
             }
+        }
+
+        // Admin login/logout functionality
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === "admin" && password === "password") {
+                document.getElementById('admin-login').classList.add('hidden');
+                document.getElementById('admin-logout').classList.remove('hidden');
+                // Additional login success actions
+            } else {
+                alert("Invalid credentials");
+            }
+        }
+
+        function logout() {
+            document.getElementById('admin-login').classList.remove('hidden');
+            document.getElementById('admin-logout').classList.add('hidden');
+            // Clear input fields
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            // Additional logout actions
         }
     </script>
 </body>
