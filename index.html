@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +24,7 @@
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800">
     <div class="container mx-auto px-4 py-8 max-w-6xl">
-        <!-- Compact Admin Login Section -->
+        <!-- Admin Login Section -->
         <div id="admin-login" class="mb-2 flex justify-end">
             <div class="login-form flex space-x-1 scale-90">
                 <input type="text" id="username" placeholder="User" class="admin-input p-1 rounded border text-sm">
@@ -32,7 +33,7 @@
             </div>
         </div>
         
-        <!-- Compact Admin Logout Section -->
+        <!-- Admin Logout Section -->
         <div id="admin-logout" class="hidden mb-2 flex justify-end">
             <button onclick="logout()" class="bg-gray-500 text-white px-2 py-1 rounded text-sm hover:bg-gray-600">×</button>
         </div>
@@ -117,6 +118,64 @@
                             <a href="Skrillpage.html" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700">Buy via Skrill $11</a>
                             <button onclick="promptPremiumDownload()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Premium</button>
                         </div>
+                        
+                        <!-- Reviews Section -->
+                        <div class="mt-8 text-left">
+                            <h4 class="text-xl font-semibold mb-4">Reader Reviews</h4>
+                            <div class="space-y-4">
+                                <!-- Review 1 -->
+                                <div class="bg-gray-50 rounded-lg p-4 shadow-sm">
+                                    <div class="flex items-center mb-2">
+                                        <div class="flex text-yellow-400">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span class="ml-2 text-sm text-gray-600">by Auren Werner</span>
+                                        <span class="ml-2 text-sm text-gray-400">• January 28, 2025</span>
+                                    </div>
+                                    <p class="text-gray-700 mb-2">"Your story had its creepy vibe, but with your charm? It’d be irresistible. 😉 Keep shining, star—you’ve got the universe at your feet! ✨
+
+Big fan,
+Vesser Selene 😘</p>
+                                    <div id="reply-section-1" class="mt-2 hidden">
+                                        <textarea id="reply-text-1" class="w-full p-2 border rounded-lg" rows="2" placeholder="Write your reply..."></textarea>
+                                        <div class="flex space-x-2 mt-2">
+                                            <button onclick="submitReply(1)" class="bg-blue-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-blue-600">Submit</button>
+                                            <button onclick="cancelReply(1)" class="bg-gray-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-gray-600">Cancel</button>
+                                        </div>
+                                    </div>
+                                    <button onclick="showReplySection(1)" class="reply-btn text-blue-500 text-sm hover:text-blue-600 hidden">Reply</button>
+                                    <div id="replies-1" class="ml-4 mt-2 pl-4 border-l-2 border-gray-200"></div>
+                                </div>
+
+                                <!-- Review 2 -->
+                                <div class="bg-gray-50 rounded-lg p-4 shadow-sm">
+                                    <div class="flex items-center mb-2">
+                                        <div class="flex text-yellow-400">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span class="ml-2 text-sm text-gray-600">by Ishadora Ashwood</span>
+                                        <span class="ml-2 text-sm text-gray-400">• January 28, 2025</span>
+                                    </div>
+                                    <p class="text-gray-700 mb-2">I absolutely loved your story❤️ The Cursed Journals is such a fun mix of reality and fiction—creepy in the best way and so gripping. Highly recommend 😊 </p>
+                                    <div id="reply-section-2" class="mt-2 hidden">
+                                        <textarea id="reply-text-2" class="w-full p-2 border rounded-lg" rows="2" placeholder="Write your reply..."></textarea>
+                                        <div class="flex space-x-2 mt-2">
+                                            <button onclick="submitReply(2)" class="bg-blue-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-blue-600">Submit</button>
+                                            <button onclick="cancelReply(2)" class="bg-gray-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-gray-600">Cancel</button>
+                                        </div>
+                                    </div>
+                                    <button onclick="showReplySection(2)" class="reply-btn text-blue-500 text-sm hover:text-blue-600 hidden">Reply</button>
+                                    <div id="replies-2" class="ml-4 mt-2 pl-4 border-l-2 border-gray-200"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -163,13 +222,41 @@
         });
 
         function showSection(sectionName) {
-            // Hide all sections
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.add('hidden');
             });
-
-            // Show selected section
             document.getElementById(`${sectionName}-section`).classList.remove('hidden');
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === "admin" && password === "password") {
+                document.getElementById('admin-login').classList.add('hidden');
+                document.getElementById('admin-logout').classList.remove('hidden');
+                // Show reply buttons when logged in
+                document.querySelectorAll('.reply-btn').forEach(btn => {
+                    btn.classList.remove('hidden');
+                });
+            } else {
+                alert("Invalid credentials");
+            }
+        }
+
+        function logout() {
+            document.getElementById('admin-login').classList.remove('hidden');
+            document.getElementById('admin-logout').classList.add('hidden');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            // Hide reply buttons when logged out
+            document.querySelectorAll('.reply-btn').forEach(btn => {
+                btn.classList.add('hidden');
+            });
+            // Hide any open reply sections
+            document.querySelectorAll('[id^="reply-section-"]').forEach(section => {
+                section.classList.add('hidden');
+            });
         }
 
         function promptPremiumDownload() {
@@ -190,27 +277,35 @@
             }
         }
 
-        // Admin login/logout functionality
-        function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            if (username === "admin" && password === "password") {
-                document.getElementById('admin-login').classList.add('hidden');
-                document.getElementById('admin-logout').classList.remove('hidden');
-                // Additional login success actions
-            } else {
-                alert("Invalid credentials");
-            }
+        // Review system functions
+        function showReplySection(reviewId) {
+            document.getElementById(`reply-section-${reviewId}`).classList.remove('hidden');
+            document.querySelector(`button[onclick="showReplySection(${reviewId})"]`).classList.add('hidden');
         }
 
-        function logout() {
-            document.getElementById('admin-login').classList.remove('hidden');
-            document.getElementById('admin-logout').classList.add('hidden');
-            // Clear input fields
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-            // Additional logout actions
+        function cancelReply(reviewId) {
+            document.getElementById(`reply-section-${reviewId}`).classList.add('hidden');
+            document.querySelector(`button[onclick="showReplySection(${reviewId})"]`).classList.remove('hidden');
+            document.getElementById(`reply-text-${reviewId}`).value = '';
+        }
+
+        function submitReply(reviewId) {
+            const replyText = document.getElementById(`reply-text-${reviewId}`).value;
+            if (replyText.trim() === '') return;
+
+            const repliesContainer = document.getElementById(`replies-${reviewId}`);
+            const replyElement = document.createElement('div');
+            replyElement.className = 'mt-2';
+            replyElement.innerHTML = `
+                <div class="flex items-center text-sm">
+                    <span class="font-medium">Admin</span>
+                    <span class="ml-2 text-gray-400">• ${new Date().toLocaleDateString()}</span>
+                </div>
+                <p class="text-gray-700 text-sm mt-1">${replyText}</p>
+            `;
+            
+            repliesContainer.appendChild(replyElement);
+            cancelReply(reviewId);
         }
     </script>
 </body>
