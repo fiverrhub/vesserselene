@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +20,8 @@
             font-size: 0.875rem;
         }
     </style>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800">
     <div class="container mx-auto px-4 py-8 max-w-6xl">
@@ -49,6 +50,7 @@
                     <li><a href="#" onclick="showSection('about')" class="hover:text-blue-600">About</a></li>
                     <li><a href="#" onclick="showSection('books')" class="hover:text-blue-600">Books</a></li>
                     <li><a href="#" onclick="showSection('achievements')" class="hover:text-blue-600">Achievements</a></li>
+                    <li><a href="#" onclick="showSection('reviews')" class="hover:text-blue-600">Reviews</a></li>
                 </ul>
             </nav>
         </header>
@@ -173,6 +175,8 @@ Vesser Selene 😘</p>
                                     <button onclick="showReplySection(2)" class="reply-btn text-blue-500 text-sm hover:text-blue-600 hidden">Reply</button>
                                     <div id="replies-2" class="ml-4 mt-2 pl-4 border-l-2 border-gray-200"></div>
                                 </div>
+                                <!-- New Reviews will be appended here -->
+                                <div id="new-reviews-container"></div>
                             </div>
                         </div>
                     </div>
@@ -204,6 +208,26 @@ Vesser Selene 😘</p>
             </section>
         </div>
 
+        <div id="reviews-section" class="section hidden">
+            <section class="mb-16 fade-in">
+                <h2 class="text-3xl text-center mb-8">Reviews</h2>
+                <div class="text-center mb-4">
+                    <input type="password" id="reviews-password" placeholder="Enter premium code" class="p-2 border rounded text-sm">
+                    <button onclick="verifyReviewsPassword()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit</button>
+                </div>
+                <div id="reviews-content" class="hidden">
+                    <div class="text-center mb-4">
+                        <input type="text" id="reviewer-name" class="w-full p-2 border rounded-lg mb-2" placeholder="Your Name">
+                        <textarea id="new-review-text" class="w-full p-2 border rounded-lg" rows="3" placeholder="Write your review..."></textarea>
+                        <button onclick="postReview()" class="bg-blue-500 text-white px-4 py-2 rounded mt-2 hover:bg-blue-600">Post</button>
+                    </div>
+                    <div id="reviews-list" class="space-y-4">
+                        <!-- Existing reviews will be displayed here -->
+                    </div>
+                </div>
+            </section>
+        </div>
+
         <footer class="text-center py-8 bg-gray-800 text-white rounded-lg">
             <p>&copy; 2025 Fiverr Company Limited . All rights reserved.</p>
             <div class="mt-4 space-x-4">
@@ -215,11 +239,28 @@ Vesser Selene 😘</p>
     </div>
 
     <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
         // Show default home section
         document.addEventListener('DOMContentLoaded', () => {
             showSection('home');
+            loadReviews();
         });
 
+        
         function showSection(sectionName) {
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.add('hidden');
@@ -305,6 +346,70 @@ Vesser Selene 😘</p>
             
             repliesContainer.appendChild(replyElement);
             cancelReply(reviewId);
+        }
+
+        function verifyReviewsPassword() {
+            const password = document.getElementById('reviews-password').value;
+            if (password === "2552") {
+                document.getElementById('reviews-content').classList.remove('hidden');
+            } else {
+                alert("Invalid premium code");
+            }
+        }
+
+        function postReview() {
+            const reviewerName = document.getElementById('reviewer-name').value;
+            const reviewText = document.getElementById('new-review-text').value;
+            if (reviewText.trim() === '' || reviewerName.trim() === '') return;
+
+            const review = {
+                name: reviewerName,
+                text: reviewText,
+                date: new Date().toLocaleDateString()
+            };
+
+            // Save review to Firestore
+            db.collection("reviews").add(review).then(() => {
+                displayReview(review, document.getElementById('reviews-list'));
+                displayReview(review, document.getElementById('new-reviews-container'));
+
+                document.getElementById('reviewer-name').value = '';
+                document.getElementById('new-review-text').value = '';
+            }).catch((error) => {
+                console.error("Error adding review: ", error);
+            });
+        }
+
+        function displayReview(review, container) {
+            const newReviewElement = document.createElement('div');
+            newReviewElement.className = 'bg-gray-50 rounded-lg p-4 shadow-sm';
+            newReviewElement.innerHTML = `
+                <div class="flex items-center mb-2">
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <span class="ml-2 text-sm text-gray-600">By ${review.name}</span>
+                    <span class="ml-2 text-sm text-gray-400">• ${review.date}</span>
+                </div>
+                <p class="text-gray-700 mb-2">${review.text}</p>
+            `;
+            container.appendChild(newReviewElement);
+        }
+
+        function loadReviews() {
+            db.collection("reviews").get().then((querySnapshot) => {
+                const reviewsList = document.getElementById('reviews-list');
+                const newReviewsContainer = document.getElementById('new-reviews-container');
+                querySnapshot.forEach((doc) => {
+                    const review = doc.data();
+                    displayReview(review, reviewsList);
+                    displayReview(review, newReviewsContainer);
+                });
+            }).catch((error) => {
+                console.error("Error getting reviews: ", error);
+            });
         }
     </script>
 </body>
