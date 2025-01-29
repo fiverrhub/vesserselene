@@ -121,68 +121,90 @@
                             <button onclick="promptPremiumDownload()" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Premium</button>
                         </div>
                         
-                        <!-- Reviews Section -->
-                        <div class="mt-8 text-left">
-                            <h4 class="text-xl font-semibold mb-4">Reader Reviews</h4>
-                            <div class="space-y-4">
-                                <!-- Review 1 -->
-                                <div class="bg-gray-50 rounded-lg p-4 shadow-sm">
-                                    <div class="flex items-center mb-2">
-                                        <div class="flex text-yellow-400">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        
-                                        </div>
-                                        <span class="ml-2 text-sm text-gray-600">By Auren</span>
-                                        <span class="ml-2 text-sm text-gray-400">28 Jan 2025</span>
-                                    </div>
-                                    <p class="text-gray-700 mb-2">Your story had its creepy vibe, but with your charm? It’d be irresistible. 😉 Keep shining my rising star ...
+                     <!-- Reviews Section -->
+<div class="mt-8 text-left">
+    <h4 class="text-xl font-semibold mb-4">Reader Reviews</h4>
+    <div class="space-y-4">
+        <!-- Review 1 -->
+        <div class="bg-gray-50 rounded-lg p-4 shadow-sm">
+            <div class="flex items-center mb-2">
+                <div class="flex text-yellow-400">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <span class="ml-2 text-sm text-gray-600">By Auren</span>
+                <span class="ml-2 text-sm text-gray-400">28 Jan 2025</span>
+            </div>
+            <p class="text-gray-700 mb-2">Your story had its creepy vibe, but with your charm? It’d be irresistible. 😉 Keep shining my rising star ...
 
 Big fan 
 Vesser Selene 😘</p>
-                                    <div id="reply-section-1" class="mt-2 hidden">
-                                        <textarea id="reply-text-1" class="w-full p-2 border rounded-lg" rows="2" placeholder="Write your reply..."></textarea>
-                                        <div class="flex space-x-2 mt-2">
-                                            <button onclick="submitReply(1)" class="bg-blue-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-blue-600">Submit</button>
-                                            <button onclick="cancelReply(1)" class="bg-gray-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-gray-600">Cancel</button>
-                                        </div>
-                                    </div>
-                                    <button onclick="showReplySection(1)" class="reply-btn text-blue-500 text-sm hover:text-blue-600 hidden">Reply</button>
-                                    <div id="replies-1" class="ml-4 mt-2 pl-4 border-l-2 border-gray-200"></div>
-                                </div>
-
-                                <!-- Review 2 -->
-                                <div class="bg-gray-50 rounded-lg p-4 shadow-sm">
-                                    <div class="flex items-center mb-2">
-                                        <div class="flex text-yellow-400">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <span class="ml-2 text-sm text-gray-600">By Ishadora</span>
-                                        <span class="ml-2 text-sm text-gray-400">28 Jan 2025</span>
-                                    </div>
-                                    <p class="text-gray-700 mb-2">I absolutely loved your story❤️ The Cursed Journals is such a fun mix of reality and fiction—creepy in the best way and so gripping. Highly recommend 😊 </p>
-                                    <div id="reply-section-2" class="mt-2 hidden">
-                                        <textarea id="reply-text-2" class="w-full p-2 border rounded-lg" rows="2" placeholder="Write your reply..."></textarea>
-                                        <div class="flex space-x-2 mt-2">
-                                            <button onclick="submitReply(2)" class="bg-blue-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-blue-600">Submit</button>
-                                            <button onclick="cancelReply(2)" class="bg-gray-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-gray-600">Cancel</button>
-                                        </div>
-                                    </div>
-                                    <button onclick="showReplySection(2)" class="reply-btn text-blue-500 text-sm hover:text-blue-600 hidden">Reply</button>
-                                    <div id="replies-2" class="ml-4 mt-2 pl-4 border-l-2 border-gray-200"></div>
-                                </div>
-                                <!-- New Reviews will be appended here -->
-                                <div id="new-reviews-container"></div>
-                            </div>
-                        </div>
-                    </div>
+            <div id="reply-section-1" class="mt-2 hidden">
+                <textarea id="reply-text-1" class="w-full p-2 border rounded-lg" rows="2" placeholder="Write your reply..."></textarea>
+                <div class="flex space-x-2 mt-2">
+                    <button onclick="submitReply(1)" class="bg-blue-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-blue-600">Submit</button>
+                    <button onclick="cancelReply(1)" class="bg-gray-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-gray-600">Cancel</button>
                 </div>
-            </section>
+            </div>
+            <button onclick="showReplySection(1)" class="reply-btn text-blue-500 text-sm hover:text-blue-600 hidden">Reply</button>
+            <div id="replies-1" class="ml-4 mt-2 pl-4 border-l-2 border-gray-200"></div>
         </div>
+
+        <!-- Review 2 -->
+        <div class="bg-gray-50 rounded-lg p-4 shadow-sm">
+            <div class="flex items-center mb-2">
+                <div class="flex text-yellow-400">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <span class="ml-2 text-sm text-gray-600">By Ishadora</span>
+                <span class="ml-2 text-sm text-gray-400">28 Jan 2025</span>
+            </div>
+            <p class="text-gray-700 mb-2">I absolutely loved your story❤️ The Cursed Journals is such a fun mix of reality and fiction—creepy in the best way and so gripping. Highly recommend 😊 </p>
+            <div id="reply-section-2" class="mt-2 hidden">
+                <textarea id="reply-text-2" class="w-full p-2 border rounded-lg" rows="2" placeholder="Write your reply..."></textarea>
+                <div class="flex space-x-2 mt-2">
+                    <button onclick="submitReply(2)" class="bg-blue-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-blue-600">Submit</button>
+                    <button onclick="cancelReply(2)" class="bg-gray-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-gray-600">Cancel</button>
+                </div>
+            </div>
+            <button onclick="showReplySection(2)" class="reply-btn text-blue-500 text-sm hover:text-blue-600 hidden">Reply</button>
+            <div id="replies-2" class="ml-4 mt-2 pl-4 border-l-2 border-gray-200"></div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="bg-gray-50 rounded-lg p-4 shadow-sm">
+            <div class="flex items-center mb-2">
+                <div class="flex text-yellow-400">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <span class="ml-2 text-sm text-gray-600">By Caelmora</span>
+                <span class="ml-2 text-sm text-gray-400">29 Jan 2025</span>
+            </div>
+            <p class="text-gray-700 mb-2">Wow, Vesser Selene, your words hit harder than a plot twist in a thriller 🌟 </p>
+            <div id="reply-section-3" class="mt-2 hidden">
+                <textarea id="reply-text-3" class="w-full p-2 border rounded-lg" rows="2" placeholder="Write your reply..."></textarea>
+                <div class="flex space-x-2 mt-2">
+                    <button onclick="submitReply(3)" class="bg-blue-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-blue-600">Submit</button>
+                    <button onclick="cancelReply(3)" class="bg-gray-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-gray-600">Cancel</button>
+                </div>
+            </div>
+            <button onclick="showReplySection(3)" class="reply-btn text-blue-500 text-sm hover:text-blue-600 hidden">Reply</button>
+            <div id="replies-3" class="ml-4 mt-2 pl-4 border-l-2 border-gray-200"></div>
+        </div>
+
+        <!-- New Reviews will be appended here -->
+        <div id="new-reviews-container"></div>
+    </div>
+</div>
+
 
         <div id="achievements-section" class="section hidden">
             <section class="mb-16 fade-in">
