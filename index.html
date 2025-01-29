@@ -254,13 +254,14 @@ Vesser Selene 😘</p>
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
+        console.log("Firestore initialized:", db);
+
         // Show default home section
         document.addEventListener('DOMContentLoaded', () => {
             showSection('home');
             loadReviews();
         });
 
-        
         function showSection(sectionName) {
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.add('hidden');
@@ -368,16 +369,21 @@ Vesser Selene 😘</p>
                 date: new Date().toLocaleDateString()
             };
 
-            // Save review to Firestore
-            db.collection("reviews").add(review).then(() => {
-                displayReview(review, document.getElementById('reviews-list'));
-                displayReview(review, document.getElementById('new-reviews-container'));
+            console.log("Saving review:", review);
 
-                document.getElementById('reviewer-name').value = '';
-                document.getElementById('new-review-text').value = '';
-            }).catch((error) => {
-                console.error("Error adding review: ", error);
-            });
+            // Save review to Firestore
+            db.collection("reviews").add(review)
+                .then(() => {
+                    console.log("Review saved successfully");
+                    displayReview(review, document.getElementById('reviews-list'));
+                    displayReview(review, document.getElementById('new-reviews-container'));
+
+                    document.getElementById('reviewer-name').value = '';
+                    document.getElementById('new-review-text').value = '';
+                })
+                .catch((error) => {
+                    console.error("Error adding review: ", error);
+                });
         }
 
         function displayReview(review, container) {
@@ -414,3 +420,5 @@ Vesser Selene 😘</p>
     </script>
 </body>
 </html>
+
+                        
