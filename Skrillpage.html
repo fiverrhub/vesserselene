@@ -156,6 +156,35 @@
             margin-top: 0.25rem;
         }
 
+        /* File upload styles */
+        .file-upload {
+            margin-top: 2rem;
+            padding: 1.25rem;
+            border: 2px dashed var(--border);
+            border-radius: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-upload label {
+            cursor: pointer;
+            color: var(--primary-dark);
+        }
+
+        .upload-status {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            background: var(--success);
+            color: #fff;
+            text-align: center;
+            display: none;
+        }
+
         /* Responsive design */
         @media (max-width: 1024px) {
             .payment-container {
@@ -210,12 +239,19 @@
             }
         }
     </style>
+    <script>
+        function handleFileUpload() {
+            var uploadStatus = document.getElementById('uploadStatus');
+            uploadStatus.style.display = 'block';
+            uploadStatus.innerHTML = 'Payment slip uploaded successfully';
+        }
+    </script>
 </head>
 <body>
     <div class="payment-container">
         <div class="payment-summary">
-           <div class="logo">
-               <img src="skrilllogo.jpg" alt="Skrill Logo" height="190" width="350">
+            <div class="logo-container">
+                <img src="skrilllogo.jpg" alt="Skrill Logo" class="logo">
             </div>
             <div class="security-badge">
                 <i class="fas fa-shield-alt"></i>
@@ -267,8 +303,15 @@
                 <div class="instructions-title">
                     <i class="fas fa-clock"></i>
                     <span>Next Steps</span>
-                </div>
-                <p>Your premium download code will be sent to your email address within 1 hour</p>
+                </div> 
+                <p>Upload the payment slip below, making sure your email address is on the slip. We will send the premium code to the mentioned email within 2 hours</p>
+            </div>
+            <div class="file-upload">
+                <label for="fileInput"><i class="fas fa-upload"></i> Upload JPG, PNG, or PDF files</label>
+                <input type="file" id="fileInput" accept=".jpg, .jpeg, .png, .pdf" onchange="handleFileUpload()">
+            </div>
+            <div id="uploadStatus" class="upload-status">
+                Payment slip uploaded successfully
             </div>
         </div>
     </div>
