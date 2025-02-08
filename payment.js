@@ -1,23 +1,14 @@
-const credentials = {
-  username: 'selene',
-  password: 'selene@0152'
-};
+document.getElementById("login-form").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent the form from submitting normally
 
-function verifyPaymentCredentials() {
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
-  if (username === credentials.username && password === credentials.password) {
-    document.getElementById('payment-section').classList.remove('hidden');
-    alert('Access granted. Redirecting to payment.html...');
-    window.location.href = 'payment.html';
-  } else {
-    alert('Invalid username or password. Please try again.');
-  }
-}
-
-const loginForm = document.getElementById('login-form');
-loginForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  verifyPaymentCredentials();
+    // Authentication with specified credentials
+    if (username === "selene" && password === "selene@0152") {
+        // Redirect to PST.html after successful login
+        window.location.href = "PST.html";
+    } else {
+        alert("Invalid username or password. Please try again.");
+    }
 });
