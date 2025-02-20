@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.map-container {
+    width: 100%;
+    height: 400px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.visited-text {
+    position: absolute;
+    background-color: white;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    color: red;
+}
+
+.visited-text.maldives {
+    top: 55%;
+    left: 72%;
+}
+
+.visited-text.usa {
+    top: 25%;
+    left: 20%;
+}
+
+.visited-text.australia {
+    top: 80%;
+    left: 90%;
+}
+
+/* Newly added styles for Sri Lanka, India, and England */
+.visited-text.sri-lanka {
+    top: 60%;
+    left: 75%;
+}
+
+.visited-text.india {
+    top: 50%;
+    left: 70%;
+}
+
+.visited-text.england {
+    top: 30%;
+    left: 50%;
+}
+
+.visited-countries {
+    margin-top: 30px;
+}
+
+.visited-countries ul {
+    list-style-type: none;
+    padding: 0;
+    columns: 2;
+}
+
+.visited-countries li {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    .visited-countries ul {
+        columns: 1;
+    }
+
+    .map-container {
+        height: 300px;
+    }
+
+    h1 {
+        font-size: 1.2em;
+    }
+}
