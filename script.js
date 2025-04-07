@@ -8,12 +8,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Define markers with country names
     const markers = [
-        { coords: [3.2028, 73.2207], name: 'Maldives' },
-        { coords: [37.0902, -95.7129], name: 'USA' },
-        { coords: [-25.2744, 133.7751], name: 'Australia' },
-        { coords: [7.8731, 80.7718], name: 'Sri Lanka' },
-        { coords: [20.5937, 78.9629], name: 'India' },
-        { coords: [52.3555, -1.1743], name: 'England' }
+       { coords: [3.2028, 73.2207], name: 'Maldives' },
+{ coords: [37.0902, -95.7129], name: 'USA' },
+{ coords: [-25.2744, 133.7751], name: 'Australia' },
+{ coords: [7.8731, 80.7718], name: 'Sri Lanka' },
+{ coords: [20.5937, 78.9629], name: 'India' },
+{ coords: [52.3555, -1.1743], name: 'England' },
+{ coords: [26.8206, 30.8025], name: 'Egypt' }
     ];
 
     // Add markers to the map and visited text
