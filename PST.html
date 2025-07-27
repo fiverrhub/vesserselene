@@ -1,77 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Details</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .no-wrap {
-            white-space: nowrap;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
         }
-        .not-paid {
-            color: #b91c1c;
-            font-weight: bold;
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .status-badge {
+            transition: all 0.2s ease;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+        
+        .verification-banner {
+            background: linear-gradient(90deg, #fbbf24, #f59e0b, #d97706);
+            background-size: 200% 200%;
+            animation: gradient-shift 3s ease infinite;
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .icon-bounce {
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% {
+                transform: translate3d(0,0,0);
+            }
+            40%, 43% {
+                transform: translate3d(0, -8px, 0);
+            }
+            70% {
+                transform: translate3d(0, -4px, 0);
+            }
+            90% {
+                transform: translate3d(0, -2px, 0);
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .responsive-text {
+                font-size: 1.5rem;
+            }
+            .responsive-banner-text {
+                font-size: 1.125rem;
+            }
         }
     </style>
 </head>
-
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="w-full max-w-lg mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6">
-        <h1 class="text-3xl font-bold text-center mb-6 text-blue-600">Payment Details</h1>
-<h1 class="text-3xl font-bold text-center mb-6 text-blue-600">DOCUMENT VERIFICATION IN PROGRESS</h1>
-
-
-        <!-- Payment Details List -->
-        <div class="space-y-4">
-            <!-- Item 1 -->
-            <div class="bg-gray-50 rounded-lg p-4 shadow">
-                <div class="flex justify-between items-center mb-2">
-                    <h2 class="text-lg font-semibold text-gray-700">Fiverr Incspiration 2024</h2>
-                    <span class="text-sm text-gray-600 bg-blue-100 px-2 py-1 rounded-full">Scheduled</span>
-                </div>
-                <div class="text-sm text-gray-700 mb-2"><span class="font-semibold">Payment Schedule Date:</span>Not Available</div>
-                <div class="flex justify-between items-center">
-                    <span class="text-sm text-gray-700"><span class="font-semibold">Payment Status:</span> Scheduled</span>
-                    <span class="text-sm text-gray-700"><span class="font-semibold">Transaction Status:</span> <span class="not-paid">Not Paid</span></span>
-                </div>
-            </div>
-
-            <!-- Item 2 -->
-            <div class="bg-gray-50 rounded-lg p-4 shadow">
-                <div class="flex justify-between items-center mb-2">
-                    <h2 class="text-lg font-semibold text-gray-700">Fiverr Fictionfest 2024</h2>
-                    <span class="text-sm text-gray-600 bg-blue-100 px-2 py-1 rounded-full">Scheduled</span>
-                </div>
-                <div class="text-sm text-gray-700 mb-2"><span class="font-semibold">Payment Schedule Date:</span>Not Available</div>
-                <div class="flex justify-between items-center">
-                    <span class="text-sm text-gray-700"><span class="font-semibold">Payment Status:</span> Scheduled</span>
-                    <span class="text-sm text-gray-700"><span class="font-semibold">Transaction Status:</span> <span class="not-paid">Not Paid</span></span>
-                </div>
-            </div>
-
-            <!-- Item 3 -->
-            <div class="bg-gray-50 rounded-lg p-4 shadow">
-                <div class="flex justify-between items-center mb-2">
-                    <h2 class="text-lg font-semibold text-gray-700">Fiverr Bonus (Ramadhan)</h2>
-                    <span class="text-sm text-gray-600 bg-blue-100 px-2 py-1 rounded-full">Paid Out</span>
-                </div>
-
-                <div class="text-sm text-gray-700 mb-2"><span class="font-semibold">Payment Schedule Date:</span> 01 MAR 2025</div>
-                <div class="flex justify-between items-center">
+<body class="gradient-bg min-h-screen">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0); background-size: 40px 40px;"></div>
+    </div>
+    
+    <div class="relative min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-2xl mx-auto">
+            <!-- Main Card -->
+            <div class="glass-effect rounded-3xl shadow-2xl overflow-hidden">
+                <!-- Header -->
+                <div class="p-8 pb-6">
+                    <div class="text-center mb-6">
+                        <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl mb-4 icon-bounce">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                            </svg>
+                        </div>
+                        <h1 class="text-4xl font-bold text-gray-800 mb-2 responsive-text">Payment Details</h1>
+                        <p class="text-gray-600">Track your payment status and transactions</p>
+                    </div>
                     
-
-<span class="text-sm text-gray-700"><span class="font-semibold">Payment Status:</span> Completed</span>
-
-<span class="text-sm text-gray-700"><span class="font-semibold">Transaction Status:</span> <span class="not-paid" style="color:darkgreen;">Paid Out</span></span>
-
-
-
+                    <!-- Verification Banner -->
+                    <div class="verification-banner rounded-2xl p-4 mb-6 text-center">
+                        <div class="flex items-center justify-center space-x-2">
+                            <svg class="w-6 h-6 text-white pulse-animation" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <h2 class="text-xl font-bold text-white responsive-banner-text">DOCUMENT VERIFICATION IN PROGRESS</h2>
+                        </div>
+                        <div class="mt-2 h-1 bg-white bg-opacity-30 rounded-full overflow-hidden">
+                            <div class="h-full bg-white rounded-full" style="width: 65%; animation: progress 2s ease-in-out infinite alternate;"></div>
+                        </div>
+                        
+                        <!-- Identity Verification Message -->
+                        <div class="mt-3">
+                            <p class="text-white font-bold text-lg blink">Identity verification in progress</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Payment Items -->
+                <div class="px-8 pb-8 space-y-4">
+                    <!-- Item 1 -->
+                    <div class="bg-white bg-opacity-70 rounded-2xl p-6 shadow-lg card-hover">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4">
+                            <div class="flex items-center space-x-3 mb-3 sm:mb-0">
+                                <div class="w-12 h-12 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-800">Fiverr Incspiration 2024</h3>
+                                    <p class="text-sm text-gray-500">Creative project payment</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 status-badge">
+                                <div class="w-2 h-2 bg-blue-500 rounded-full mr-2 pulse-animation"></div>
+                                Scheduled
+                            </span>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="bg-gray-50 rounded-xl p-3">
+                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Payment Schedule Date</p>
+                                <p class="font-semibold text-gray-700">Not Available</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-xl p-3">
+                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Payment Status</p>
+                                <p class="font-semibold text-gray-700">Scheduled</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 flex items-center justify-between p-3 bg-red-50 rounded-xl">
+                            <span class="text-sm font-medium text-gray-600">Transaction Status</span>
+                            <span class="font-bold text-red-600 flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Not Paid
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Item 2 -->
+                    <div class="bg-white bg-opacity-70 rounded-2xl p-6 shadow-lg card-hover">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4">
+                            <div class="flex items-center space-x-3 mb-3 sm:mb-0">
+                                <div class="w-12 h-12 bg-gradient-to-r from-purple-400 to-purple-600 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-800">Fiverr Fictionfest 2024</h3>
+                                    <p class="text-sm text-gray-500">Literary project payment</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 status-badge">
+                                <div class="w-2 h-2 bg-blue-500 rounded-full mr-2 pulse-animation"></div>
+                                Scheduled
+                            </span>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="bg-gray-50 rounded-xl p-3">
+                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Payment Schedule Date</p>
+                                <p class="font-semibold text-gray-700">Not Available</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-xl p-3">
+                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Payment Status</p>
+                                <p class="font-semibold text-gray-700">Scheduled</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 flex items-center justify-between p-3 bg-red-50 rounded-xl">
+                            <span class="text-sm font-medium text-gray-600">Transaction Status</span>
+                            <span class="font-bold text-red-600 flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Not Paid
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Item 3 -->
+                    <div class="bg-white bg-opacity-70 rounded-2xl p-6 shadow-lg card-hover">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4">
+                            <div class="flex items-center space-x-3 mb-3 sm:mb-0">
+                                <div class="w-12 h-12 bg-gradient-to-r from-green-400 to-green-600 rounded-xl flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-800">Fiverr Bonus (Ramadhan)</h3>
+                                    <p class="text-sm text-gray-500">Special bonus payment</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 status-badge">
+                                <div class="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                                Paid Out
+                            </span>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="bg-gray-50 rounded-xl p-3">
+                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Payment Schedule Date</p>
+                                <p class="font-semibold text-gray-700">01 MAR 2025</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-xl p-3">
+                                <p class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Payment Status</p>
+                                <p class="font-semibold text-gray-700">Completed</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 flex items-center justify-between p-3 bg-green-50 rounded-xl">
+                            <span class="text-sm font-medium text-gray-600">Transaction Status</span>
+                            <span class="font-bold text-green-600 flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Paid Out
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Footer -->
+                <div class="bg-gray-50 bg-opacity-50 px-8 py-4">
+                    <div class="flex items-center justify-center text-sm text-gray-500">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        Secure Payment Processing
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    <style>
+        @keyframes progress {
+            0% { width: 65%; }
+            100% { width: 85%; }
+        }
+        
+        .blink {
+            animation: blink-animation 1s steps(5, start) infinite;
+        }
+        
+        @keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+    </style>
 </body>
-
 </html>
