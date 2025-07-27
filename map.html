@@ -466,42 +466,42 @@
             maxZoom: 19
         }).addTo(map);
 
-        // Custom marker icon
-        const customIcon = L.divIcon({
-            className: 'custom-marker',
-            html: `<div style="
-                width: 20px; 
-                height: 20px; 
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-                border-radius: 50%; 
-                border: 3px solid white; 
-                box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-                animation: pulse 2s infinite;
-            "></div>
-            <style>
-                @keyframes pulse {
-                    0% { transform: scale(1); }
-                    50% { transform: scale(1.2); }
-                    100% { transform: scale(1); }
-                }
-            </style>`,
-            iconSize: [26, 26],
-            iconAnchor: [13, 13]
-        });
-
-        // Add markers for each country
+        // Add markers for each country with flag icons
         countryData.forEach(country => {
-            const marker = L.marker([country.lat, country.lng], { icon: customIcon })
+            // Create custom flag icon for each country
+            const flagIcon = L.divIcon({
+                className: 'flag-marker',
+                html: `<div style="
+                    font-size: 32px; 
+                    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+                    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+                    animation: bounce 2s infinite;
+                    cursor: pointer;
+                    transition: transform 0.2s ease;
+                " onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">${country.flag}</div>
+                <style>
+                    @keyframes bounce {
+                        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+                        40% { transform: translateY(-5px); }
+                        60% { transform: translateY(-3px); }
+                    }
+                </style>`,
+                iconSize: [40, 40],
+                iconAnchor: [20, 35]
+            });
+
+            const marker = L.marker([country.lat, country.lng], { icon: flagIcon })
                 .addTo(map)
                 .bindPopup(`
-                    <div style="text-align: center; font-family: Inter, sans-serif;">
-                        <div style="font-size: 24px; margin-bottom: 5px;">${country.flag}</div>
-                        <strong style="font-size: 16px; color: #333;">${country.name}</strong><br>
-                        <span style="color: #667eea; font-weight: bold; font-size: 14px;">${country.visits} visits</span>
+                    <div style="text-align: center; font-family: Inter, sans-serif; padding: 8px;">
+                        <div style="font-size: 28px; margin-bottom: 8px;">${country.flag}</div>
+                        <strong style="font-size: 18px; color: #333; display: block; margin-bottom: 4px;">${country.name}</strong>
+                        <div style="color: #667eea; font-weight: bold; font-size: 16px; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">${country.visits} visits</div>
                     </div>
                 `, {
                     closeButton: true,
-                    autoClose: false
+                    autoClose: false,
+                    maxWidth: 200
                 });
         });
 
