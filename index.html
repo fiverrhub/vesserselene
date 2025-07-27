@@ -1,8 +1,3 @@
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,21 +8,122 @@
   <meta name="keywords" content="Vesser Selene, mystical, mysterious, web experience">
   <meta name="author" content="FIVERR">
   <link rel="canonical" href="https://fiverrhub.github.io/vesserselene/">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  
   <style>
-    .hidden { display: none; }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
     }
-    .fade-in {
-      animation: fadeIn 0.5s ease-in;
+
+    * {
+      scroll-behavior: smooth;
     }
-    .admin-input {
-      width: 100px;
-      font-size: 0.875rem;
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 75%, #f5576c 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
     }
+
+    .font-display {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .glass-card-dark {
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-text-secondary {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(240, 147, 251, 0.6);
+    }
+
+    .btn-accent {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+    }
+
+    .btn-accent:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(79, 172, 254, 0.6);
+    }
+
+    .hover-lift {
+      transition: all 0.3s ease;
+    }
+
+    .hover-lift:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .floating-element {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .pulse-glow {
+      animation: pulseGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      from { box-shadow: 0 0 20px rgba(102, 126, 234, 0.4); }
+      to { box-shadow: 0 0 30px rgba(102, 126, 234, 0.8); }
+    }
+
     .shining-dot::after {
       content: '•';
       color: #f39c12;
@@ -35,308 +131,374 @@
       display: inline-block;
       margin-left: 0.5rem;
     }
+
     @keyframes shimmer {
       0%, 100% { opacity: 0; }
       50% { opacity: 1; }
     }
-    .bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg {
-      background-color: #6c63ff;
-      color: #fff;
-      transition: background-color 0.3s;
+
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
     }
-    .bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg:hover {
-      background-color: #574b90;
+
+    .mobile-menu.active {
+      transform: translateX(0);
     }
-    .bg-amber-600 hover:bg-amber-700 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg {
-      background-color: #f39c12;
-      color: #fff;
-      transition: background-color 0.3s;
+
+    .star-rating {
+      color: #ffd700;
+      filter: drop-shadow(0 2px 4px rgba(255, 215, 0, 0.3));
     }
-    .bg-amber-600 hover:bg-amber-700 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg:hover {
-      background-color: #e67e22;
+
+    .book-card {
+      position: relative;
+      overflow: hidden;
     }
-    .bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg {
-      background-color: #e74c3c;
-      color: #fff;
-      transition: background-color 0.3s;
+
+    .book-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
     }
-    .bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg:hover {
-      background-color: #c0392b;
+
+    .book-card:hover::before {
+      left: 100%;
     }
-    .shadow-2xl {
-      shadow-2xl: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+    @media (max-width: 768px) {
+      .mobile-padding {
+        padding: 1rem;
+      }
+      
+      .mobile-text-sm {
+        font-size: 0.875rem;
+      }
+      
+      .mobile-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
     }
-    .rounded-xl {
-      border-radius: 0.5rem;
+
+    .scroll-indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 1000;
     }
-    .hover:scale-105 transform transition-transform duration-300 ease-in-out {
-      transform: scale(1.05);
-      transition: transform 0.3s;
+
+    .scroll-progress {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      width: 0%;
+      transition: width 0.1s ease;
     }
-    .card {
-      transition: background-color 0.3s;
-      background-color: #fff;
+
+    .section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
     }
-    .card:hover {
-      background-color: #f9f9f9;
+
+    .section.active {
+      opacity: 1;
+      transform: translateY(0);
     }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .bg-gradient-to-r from-purple-700 to-amber-500 bg-clip-text text-transparent {
-      background: linear-gradient(to right, #6c63ff, #f39c12);
-      -webkit-background-clip: text;
-      color: transparent;
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 </head>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <body style="font-family: Inter, sans-serif;" class="bg-gradient-to-br from-gray-50 to-gray-100 text-slate-800">
-  <div class="container mx-auto px-4 py-8">
+
+<body class="text-white min-h-screen">
+  <div class="scroll-indicator">
+    <div class="scroll-progress" id="scrollProgress"></div>
+  </div>
+
+  <div class="container mx-auto px-4 py-4 max-w-7xl">
     <!-- Admin Login Section -->
-    <div id="admin-login" class="mb-2 flex justify-end">
-      <div class="login-form flex space-x-1 scale-90">
-        <input type="text" id="username" placeholder="User" class="admin-input p-1 rounded border text-sm">
-        <input type="password" id="password" placeholder="Pass" class="admin-input p-1 rounded border text-sm">
-        <button onclick="login()" class="bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-2 py-1 rounded text-sm">→</button>
+    <div id="admin-login" class="mb-4 flex justify-end">
+      <div class="login-form flex space-x-2 scale-90">
+        <input type="text" id="username" placeholder="User" class="px-3 py-2 rounded-lg bg-white/20 backdrop-blur border border-white/30 text-white placeholder-white/70 text-sm">
+        <input type="password" id="password" placeholder="Pass" class="px-3 py-2 rounded-lg bg-white/20 backdrop-blur border border-white/30 text-white placeholder-white/70 text-sm">
+        <button onclick="login()" class="btn-primary text-white font-semibold px-4 py-2 rounded-lg text-sm">→</button>
       </div>
     </div>
     
     <!-- Admin Logout Section -->
-    <div id="admin-logout" class="hidden mb-2 flex justify-end">
-      <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-2 py-1 rounded text-sm">×</button>
+    <div id="admin-logout" class="hidden mb-4 flex justify-end">
+      <button onclick="logout()" class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-lg text-sm transition-all">×</button>
     </div>
 
- <!-- Header section with QR code next to title -->
-<header class="flex justify-between items-center mb-12 shadow-2xl p-4 rounded-xl">
-  <div class="flex items-center space-x-4">
-    <div>
-      <h1 class="text-4xl font-bold bg-gradient-to-r from-purple-700 to-amber-500 bg-clip-text text-transparent shining-dot">Vesser Selene</h1>
-      <p class="text-xl text-slate-600">Creative Storyteller & Writer</p>
-    </div>
-    <img src="QR.png" alt="Elite Badge" class="w-20 h-20 rounded-xl shadow-2xl">
-  </div>
-  <nav>
-    <ul class="flex space-x-4">
-      <li><a href="#" onclick="showSection('home')" class="hover:text-blue-600">Home</a></li>
-      <li><a href="#" onclick="showSection('about')" class="hover:text-blue-600">About</a></li>
-      <li><a href="#" onclick="showSection('books')" class="hover:text-blue-600">Books</a></li>
-      <li><a href="#" onclick="showSection('achievements')" class="hover:text-blue-600">Achievements</a></li>
-      <li><a href="#" onclick="showSection('reviews')" class="hover:text-blue-600">Reviews</a></li>
-      <li><a href="#" onclick="showSection('payment')" class="hover:text-blue-600">Payment</a></li>
-    </ul>
-  </nav>
-</header>
+    <!-- Header section -->
+    <header class="glass-card rounded-2xl p-6 mb-8 relative overflow-hidden">
+      <div class="flex flex-col lg:flex-row justify-between items-center">
+        <div class="flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 lg:space-x-6 mb-4 lg:mb-0">
+          <div class="text-center lg:text-left">
+            <h1 class="text-4xl lg:text-5xl font-display font-bold gradient-text shining-dot mb-2">Vesser Selene</h1>
+            <p class="text-xl text-white/80">Creative Storyteller & Writer</p>
+          </div>
+          <img src="QR.png" alt="QR Code" class="w-20 h-20 rounded-xl shadow-2xl floating-element">
+        </div>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden lg:block">
+          <ul class="flex space-x-6">
+            <li><a href="#" onclick="showSection('home')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">Home</a></li>
+            <li><a href="#" onclick="showSection('about')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">About</a></li>
+            <li><a href="#" onclick="showSection('books')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">Books</a></li>
+            <li><a href="#" onclick="showSection('achievements')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">Achievements</a></li>
+            <li><a href="#" onclick="showSection('reviews')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">Reviews</a></li>
+            <li><a href="#" onclick="showSection('payment')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">Payment</a></li>
+          </ul>
+        </nav>
 
-<!-- Home section with bio details replacing QR code -->
-<div id="home-section" class="section">
-  <section id="hero" class="grid md:grid-cols-2 gap-8 items-center mb-16">
-    <div class="hover-grow">
-      <img src="author-photomod.jpg" alt="Vesser Selene" class="w-58 h-60 rounded-xl shadow-2xl mb-5"> 
-      <div  shadow-lg p-4">
- <h3 class="text-xl font-bold mb-2">About the Author</h3>
-
-<div class="text-slate-700 space-y-4">
-    <!-- Basic Info List -->
-<div class="author-details">
-    <ul class="list-none space-y-2">
-        <li><strong>Full Name:</strong> Vesser Selene</li>
-        <li><strong>Age:</strong> 19</li>
-        <li style="display: flex; align-items: center;">
-            <strong>Born Country:</strong> 
-            <span style="margin-left: 5px;">Maldives</span>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_Maldives.svg" alt="Maldives Flag" width="25" height="15" style="margin-left: 5px;">
-        </li>
-     
-        <li><strong>Books Count:</strong> 5</li> 
-		
-		 
-           
-		
-		
-		   <li><strong>Author Status:</strong> <span style="color: darkgreen; font-weight: bold;">Active</span></li>
-		    <img src="FIVERR.JPG" alt="Elite Badge" class="w-38 h-11 "><strong> ELITE MEMBERSHIP</strong>
-		   
-    </ul>
-</div>
-
-
-    <!-- Professional Background -->
-    <div class="author-background mt-4">
-        <p>
-   
-        </p>
-    </div>
-</div>
-</p>
+        <!-- Mobile Menu Button -->
+        <button class="lg:hidden text-white p-2" onclick="toggleMobileMenu()">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
       </div>
-    </div>
-    <div>
-      <h2 class="text-3xl font-bold mb-4 bg-gradient-to-r from-purple-700 to-amber-500 bg-clip-text text-transparent">A Rising Star in Storytelling</h2>
-      <p class="text-lg mb-4">A passionate writer from the Maldives, who joined Fiverr in late 2023, creating remarkable stories that captivate and inspire.</p>
-      
-        <h3 class="font-bold text-red-500 animate-pulse">LATEST UPDATES</h3>
-		<br>
-        <span style="color: darkgreen; font-weight: bold;">Chains of Mind & Bilgis now available for purchase
-     
-	 
-    </div>
-  </section>
-</div>
 
-    <div id="about-section" class="section hidden">
-      <section class="bg-white/90 backdrop-blur-lg ring-1 ring-gray-200 rounded-xl shadow-lg p-8 fade-in">
-        <h2 class="text-3xl font-bold mb-6 text-center">About Vesser Selene</h2>
-        <div class="prose max-w-4xl mx-auto">
-          <h3 class="text-2xl font-semibold mb-4">A Rising Star in Storytelling</h3>
-          <p class="mb-4">Vesser Selene is a passionate writer whose commitment to storytelling has made her a standout in the creative community. She joined Fiverr in late 2023, and her journey has been nothing short of remarkable.</p>
-          <h3 class="text-2xl font-semibold mb-4">Achievements in Contests</h3>
-          <p class="mb-4">In 2024, Vesser participated in the Fiverr Steel-a-Palooza Contest, submitting three of her original stories. Her talent shone brightly, with two of her entries ranking in the top 100 and one breaking into the top 50.</p>
-          <p class="mb-4">Her skill extends beyond storytelling—Vesser is a master of wording illustration, an ability to paint vivid and immersive scenes through her prose. This talent was evident in the Fiverr Fiction Fest Contest, where one of the stories she assisted ranked in the top 6. Notably, this contest featured contributions from the top 10 writers from the Palooza event, underscoring her collaborative prowess and creative excellence.</p>
-          <h3 class="text-2xl font-semibold mb-4">Global Recognition</h3>
-          <p class="mb-4">Vesser Selene's dedication and talent earned global recognition when her story Bound by Ink stunned the Fiverr community by ranking in the top 30 of the Fiverr Inspiration Awards 2024. Notably, she became one of only eight Fiverr clients to achieve this prestigious ranking in the competition. This accomplishment solidified her status as one of the brightest newcomers on the platform.</p>
-          <h3 class="text-2xl font-semibold mb-4">Elite Status</h3>
-          <p class="mb-4">In light of her incredible journey, Fiverr has honored Vesser Selene by inducting her into the Fiverr Elite Member Club. Her dedication, creativity, and meteoric rise serve as an inspiration to storytellers everywhere.</p>
-          <p class="italic">We wish Vesser Selene continued success as she leaves an indelible mark on the world of storytelling!</p>
+      <!-- Mobile Navigation -->
+      <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-64 h-full glass-card-dark z-50 p-6 lg:hidden">
+        <button onclick="toggleMobileMenu()" class="absolute top-4 right-4 text-white text-2xl">
+          <i class="fas fa-times"></i>
+        </button>
+        <nav class="mt-12">
+          <ul class="space-y-4">
+            <li><a href="#" onclick="showSection('home'); toggleMobileMenu()" class="block text-white/80 hover:text-white transition-colors font-medium py-2">Home</a></li>
+            <li><a href="#" onclick="showSection('about'); toggleMobileMenu()" class="block text-white/80 hover:text-white transition-colors font-medium py-2">About</a></li>
+            <li><a href="#" onclick="showSection('books'); toggleMobileMenu()" class="block text-white/80 hover:text-white transition-colors font-medium py-2">Books</a></li>
+            <li><a href="#" onclick="showSection('achievements'); toggleMobileMenu()" class="block text-white/80 hover:text-white transition-colors font-medium py-2">Achievements</a></li>
+            <li><a href="#" onclick="showSection('reviews'); toggleMobileMenu()" class="block text-white/80 hover:text-white transition-colors font-medium py-2">Reviews</a></li>
+            <li><a href="#" onclick="showSection('payment'); toggleMobileMenu()" class="block text-white/80 hover:text-white transition-colors font-medium py-2">Payment</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Home Section -->
+    <div id="home-section" class="section">
+      <section class="grid lg:grid-cols-2 gap-8 items-center mb-16">
+        <div class="glass-card rounded-2xl p-6 hover-lift">
+          <div class="flex flex-col items-center">
+            <img src="author-photomod.jpg" alt="Vesser Selene" class="w-64 h-72 rounded-2xl shadow-2xl mb-6 object-cover pulse-glow">
+            <div class="w-full">
+              <h3 class="text-2xl font-bold mb-4 gradient-text-secondary text-center">About the Author</h3>
+              <div class="text-white/90 space-y-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div><strong>Full Name:</strong> Vesser Selene</div>
+                  <div><strong>Age:</strong> 19</div>
+                  <div class="flex items-center">
+                    <strong>Born Country:</strong>
+                    <span class="ml-2">Maldives</span>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_Maldives.svg" alt="Maldives Flag" width="25" height="15" class="ml-2 rounded">
+                  </div>
+                  <div><strong>Books Count:</strong> 5</div>
+                </div>
+                <div class="text-center mt-4">
+                  <div class="mb-3"><strong>Author Status:</strong> <span class="text-green-400 font-bold">Active</span></div>
+                  <div class="flex items-center justify-center space-x-2">
+                    <img src="FIVERR.JPG" alt="Elite Badge" class="w-32 h-8 rounded">
+                    <strong class="gradient-text">ELITE MEMBERSHIP</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass-card rounded-2xl p-8 hover-lift">
+          <h2 class="text-3xl lg:text-4xl font-display font-bold mb-6 gradient-text">A Rising Star in Storytelling</h2>
+          <p class="text-lg mb-6 text-white/90 leading-relaxed">A passionate writer from the Maldives, who joined Fiverr in late 2023, creating remarkable stories that captivate and inspire.</p>
+          
+          <div class="bg-white/10 rounded-xl p-4 border border-white/20">
+            <h3 class="font-bold text-red-400 animate-pulse mb-2 text-lg">🔥 LATEST UPDATES</h3>
+            <p class="text-green-400 font-semibold">Chains of Mind & Bilgis now available for purchase</p>
+          </div>
         </div>
       </section>
     </div>
 
+    <!-- About Section -->
+    <div id="about-section" class="section hidden">
+      <section class="glass-card rounded-2xl p-8 hover-lift">
+        <h2 class="text-4xl font-display font-bold mb-8 text-center gradient-text">About Vesser Selene</h2>
+        <div class="prose max-w-4xl mx-auto text-white/90 space-y-6">
+          <div>
+            <h3 class="text-2xl font-semibold mb-4 gradient-text-secondary">A Rising Star in Storytelling</h3>
+            <p class="leading-relaxed">Vesser Selene is a passionate writer whose commitment to storytelling has made her a standout in the creative community. She joined Fiverr in late 2023, and her journey has been nothing short of remarkable.</p>
+          </div>
+          
+          <div>
+            <h3 class="text-2xl font-semibold mb-4 gradient-text-secondary">Achievements in Contests</h3>
+            <p class="leading-relaxed mb-4">In 2024, Vesser participated in the Fiverr Steel-a-Palooza Contest, submitting three of her original stories. Her talent shone brightly, with two of her entries ranking in the top 100 and one breaking into the top 50.</p>
+            <p class="leading-relaxed">Her skill extends beyond storytelling—Vesser is a master of wording illustration, an ability to paint vivid and immersive scenes through her prose. This talent was evident in the Fiverr Fiction Fest Contest, where one of the stories she assisted ranked in the top 6. Notably, this contest featured contributions from the top 10 writers from the Palooza event, underscoring her collaborative prowess and creative excellence.</p>
+          </div>
+          
+          <div>
+            <h3 class="text-2xl font-semibold mb-4 gradient-text-secondary">Global Recognition</h3>
+            <p class="leading-relaxed">Vesser Selene's dedication and talent earned global recognition when her story Bound by Ink stunned the Fiverr community by ranking in the top 30 of the Fiverr Inspiration Awards 2024. Notably, she became one of only eight Fiverr clients to achieve this prestigious ranking in the competition. This accomplishment solidified her status as one of the brightest newcomers on the platform.</p>
+          </div>
+          
+          <div>
+            <h3 class="text-2xl font-semibold mb-4 gradient-text-secondary">Elite Status</h3>
+            <p class="leading-relaxed mb-4">In light of her incredible journey, Fiverr has honored Vesser Selene by inducting her into the Fiverr Elite Member Club. Her dedication, creativity, and meteoric rise serve as an inspiration to storytellers everywhere.</p>
+            <p class="italic text-center text-lg">We wish Vesser Selene continued success as she leaves an indelible mark on the world of storytelling!</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Books Section -->
     <div id="books-section" class="section hidden">
-      <section class="mb-16 fade-in">
-        <h2 class="text-3xl text-center mb-8">Books by Vesser Selene</h2>
-        <div class="grid md:grid-cols-3 gap-6">
-          <div class="card rounded-xl p-6 text-center hover-grow">
-            <img src="BOOK1.JPG" alt="Bound by Ink" class="w-full rounded-xl mb-8">
-            <h3 class="text-xl font-bold mb-2">CHAINS OF MIND</h3>
-            <p class="text-sm mb-4">Drama, Horror, Mystery, Psychological Thriller</p>
-            <div class="flex justify-center space-x-2">
-              <a href="Skrillpage.html" class="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold px-4 py-2 rounded-lg transition duration-300 shadow-md bg-amber-600 hover:bg-amber-700 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-4 py-2 rounded">Buy via Skrill $5</a>
-              <button onclick="promptPremiumDownload()" class="bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-4 py-2 rounded">Premium</button>
+      <section class="mb-16">
+        <h2 class="text-4xl font-display font-bold text-center mb-12 gradient-text">Books by Vesser Selene</h2>
+        <div class="grid lg:grid-cols-3 gap-8">
+          <!-- Book 1 -->
+          <div class="glass-card rounded-2xl p-6 text-center hover-lift book-card">
+            <img src="BOOK1.JPG" alt="Chains of Mind" class="w-full h-64 object-cover rounded-xl mb-6 shadow-2xl">
+            <h3 class="text-2xl font-bold mb-3 gradient-text-secondary">CHAINS OF MIND</h3>
+            <p class="text-sm mb-6 text-white/80">Drama, Horror, Mystery, Psychological Thriller</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-3">
+              <a href="Skrillpage.html" class="btn-secondary text-white font-semibold px-6 py-3 rounded-lg transition-all">Buy via Skrill $5</a>
+              <button onclick="promptPremiumDownload()" class="btn-primary text-white font-semibold px-6 py-3 rounded-lg">Premium</button>
             </div>
           </div>
-          <div class="card rounded-xl p-6 text-center hover-grow">
-            <img src="BOOK2.JPG" alt="Bound by Ink" class="w-full rounded-xl mb-8">
-            <h3 class="text-xl font-bold mb-2">BILGIS</h3>
-            <p class="text-sm mb-4">Horror, Thriller, Drama, Psychological</p>
-            <div class="flex justify-center space-x-2">
-              <a href="Skrillpage.html" class="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold px-4 py-2 rounded-lg transition duration-300 shadow-md bg-amber-600 hover:bg-amber-700 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-4 py-2 rounded">Buy via Skrill $5</a>
-              <button onclick="promptPremiumDownload()" class="bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-4 py-2 rounded">Premium</button>
+
+          <!-- Book 2 -->
+          <div class="glass-card rounded-2xl p-6 text-center hover-lift book-card">
+            <img src="BOOK2.JPG" alt="Bilgis" class="w-full h-64 object-cover rounded-xl mb-6 shadow-2xl">
+            <h3 class="text-2xl font-bold mb-3 gradient-text-secondary">BILGIS</h3>
+            <p class="text-sm mb-6 text-white/80">Horror, Thriller, Drama, Psychological</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-3">
+              <a href="Skrillpage.html" class="btn-secondary text-white font-semibold px-6 py-3 rounded-lg transition-all">Buy via Skrill $5</a>
+              <button onclick="promptPremiumDownload()" class="btn-primary text-white font-semibold px-6 py-3 rounded-lg">Premium</button>
             </div>
           </div>
-          <div class="card rounded-xl p-6 text-center hover-grow">
-            <img src="BOOK4.JPG" alt="Bound by Ink" class="w-full rounded-xl mb-8">
-            <h3 class="text-xl font-bold mb-2">BOUND BY INK</h3>
-            <p class="text-sm mb-4">Mystery, Psychological Horror, Thriller, Dark Fantasy</p>
-            <div class="flex justify-center space-x-2">
-              <a href="Skrillpage.html" class="inline-block bg-amber-600 hover:bg-amber-700 text-white font-semibold px-4 py-2 rounded-lg transition duration-300 shadow-md bg-amber-600 hover:bg-amber-700 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-4 py-2 rounded">Buy via Skrill $12</a>
-              <button onclick="promptPremiumDownload()" class="bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-4 py-2 rounded">Premium</button>
+
+          <!-- Book 3 -->
+          <div class="glass-card rounded-2xl p-6 text-center hover-lift book-card">
+            <img src="BOOK4.JPG" alt="Bound by Ink" class="w-full h-64 object-cover rounded-xl mb-6 shadow-2xl">
+            <h3 class="text-2xl font-bold mb-3 gradient-text-secondary">BOUND BY INK</h3>
+            <p class="text-sm mb-6 text-white/80">Mystery, Psychological Horror, Thriller, Dark Fantasy</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-3">
+              <a href="Skrillpage.html" class="btn-secondary text-white font-semibold px-6 py-3 rounded-lg transition-all">Buy via Skrill $12</a>
+              <button onclick="promptPremiumDownload()" class="btn-primary text-white font-semibold px-6 py-3 rounded-lg">Premium</button>
             </div>
+            
             <!-- Reviews Section -->
             <div class="mt-8 text-left">
-              <h4 class="text-xl font-semibold mb-4">Reader Reviews</h4>
+              <h4 class="text-xl font-semibold mb-6 gradient-text text-center">Reader Reviews</h4>
               <div class="space-y-4">
                 <!-- Review 1 -->
-                <div class="bg-gray-100 rounded-xl p-4 shadow-sm">
-                  <div class="flex items-center mb-2">
-                    <div class="flex text-yellow-400">
-                      <i class="fas fa-star" style="font-size: 12px;"></i>
-                      <i class="fas fa-star" style="font-size: 12px;"></i>
-                      <i class="fas fa-star" style="font-size: 12px;"></i>
+                <div class="bg-white/10 rounded-xl p-4 border border-white/20">
+                  <div class="flex flex-col sm:flex-row sm:items-center mb-3 space-y-1 sm:space-y-0">
+                    <div class="flex star-rating">
+                      <i class="fas fa-star text-sm"></i>
+                      <i class="fas fa-star text-sm"></i>
+                      <i class="fas fa-star text-sm"></i>
                     </div>
-                    <span class="ml-2 text-sm text-slate-600">By Auren</span>
-                    <span class="ml-2 text-sm text-gray-400">28 Jan 2025</span>
+                    <span class="sm:ml-3 text-sm text-white/80">By Auren</span>
+                    <span class="sm:ml-3 text-sm text-white/60">28 Jan 2025</span>
                   </div>
-                  <p class="text-slate-700 mb-2">Your story had its creepy vibe, but with your charm? It’d be irresistible. 😉 Keep shining my rising star ... Big fan Vesser Selene 😘</p>
-                  <div id="reply-section-1" class="mt-2 hidden">
-                    <textarea id="reply-text-1" class="w-full p-2 border rounded-xl" rows="2" placeholder="Write your reply..."></textarea>
-                    <div class="flex space-x-2 mt-2">
-                      <button onclick="submitReply(1)" class="bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-3 py-1 rounded-xl text-sm">Submit</button>
-                      <button onclick="cancelReply(1)" class="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-3 py-1 rounded-xl text-sm">Cancel</button>
+                  <p class="text-white/90 mb-3 leading-relaxed">Your story had its creepy vibe, but with your charm? It'd be irresistible. 😉 Keep shining my rising star ... Big fan Vesser Selene 😘</p>
+                  <div id="reply-section-1" class="mt-3 hidden">
+                    <textarea id="reply-text-1" class="w-full p-3 border border-white/30 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur" rows="2" placeholder="Write your reply..."></textarea>
+                    <div class="flex space-x-2 mt-3">
+                      <button onclick="submitReply(1)" class="btn-primary text-white px-4 py-2 rounded-lg text-sm">Submit</button>
+                      <button onclick="cancelReply(1)" class="btn-secondary text-white px-4 py-2 rounded-lg text-sm">Cancel</button>
                     </div>
                   </div>
-                  <button onclick="showReplySection(1)" class="reply-btn text-blue-500 text-sm hover:text-blue-600 hidden">Reply</button>
-                  <div id="replies-1" class="ml-4 mt-2 pl-4 border-l-2 border-gray-200"></div>
+                  <button onclick="showReplySection(1)" class="reply-btn text-blue-400 text-sm hover:text-blue-300 hidden transition-colors">Reply</button>
+                  <div id="replies-1" class="ml-4 mt-3 pl-4 border-l-2 border-white/20"></div>
                 </div>
+
                 <!-- Review 2 -->
-                <div class="bg-gray-100 rounded-xl p-4 shadow-sm">
-                  <div class="flex items-center mb-2">
-                    <div class="flex text-yellow-400">
-                      <i class="fas fa-star" style="font-size: 12px;"></i>
-                      <i class="fas fa-star" style="font-size: 12px;"></i>
-                      <i class="fas fa-star" style="font-size: 12px;"></i>
-                      <i class="fas fa-star" style="font-size: 12px;"></i>
+                <div class="bg-white/10 rounded-xl p-4 border border-white/20">
+                  <div class="flex flex-col sm:flex-row sm:items-center mb-3 space-y-1 sm:space-y-0">
+                    <div class="flex star-rating">
+                      <i class="fas fa-star text-sm"></i>
+                      <i class="fas fa-star text-sm"></i>
+                      <i class="fas fa-star text-sm"></i>
+                      <i class="fas fa-star text-sm"></i>
                     </div>
-                    <span class="ml-2 text-sm text-slate-600">By Ishadora</span>
-                    <span class="ml-2 text-sm text-gray-400">28 Jan 2025</span>
+                    <span class="sm:ml-3 text-sm text-white/80">By Ishadora</span>
+                    <span class="sm:ml-3 text-sm text-white/60">28 Jan 2025</span>
                   </div>
-                  <p class="text-slate-700 mb-2">I absolutely loved your story❤️ The Cursed Journals is such a fun mix of reality and fiction—creepy in the best way and so gripping. Highly recommend 😊 </p>
-                  <div id="reply-section-2" class="mt-2 hidden">
-                    <textarea id="reply-text-2" class="w-full p-2 border rounded-xl" rows="2" placeholder="Write your reply..."></textarea>
-                    <div class="flex space-x-2 mt-2">
-                      <button onclick="submitReply(2)" class="bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-3 py-1 rounded-xl text-sm">Submit</button>
-                      <button onclick="cancelReply(2)" class="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-3 py-1 rounded-xl text-sm">Cancel</button>
+                  <p class="text-white/90 mb-3 leading-relaxed">I absolutely loved your story❤️ The Cursed Journals is such a fun mix of reality and fiction—creepy in the best way and so gripping. Highly recommend 😊</p>
+                  <div id="reply-section-2" class="mt-3 hidden">
+                    <textarea id="reply-text-2" class="w-full p-3 border border-white/30 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur" rows="2" placeholder="Write your reply..."></textarea>
+                    <div class="flex space-x-2 mt-3">
+                      <button onclick="submitReply(2)" class="btn-primary text-white px-4 py-2 rounded-lg text-sm">Submit</button>
+                      <button onclick="cancelReply(2)" class="btn-secondary text-white px-4 py-2 rounded-lg text-sm">Cancel</button>
                     </div>
                   </div>
-                  <button onclick="showReplySection(2)" class="reply-btn text-blue-500 text-sm hover:text-blue-600 hidden">Reply</button>
-                  <div id="replies-2" class="ml-4 mt-2 pl-4 border-l-2 border-gray-200"></div>
+                  <button onclick="showReplySection(2)" class="reply-btn text-blue-400 text-sm hover:text-blue-300 hidden transition-colors">Reply</button>
+                  <div id="replies-2" class="ml-4 mt-3 pl-4 border-l-2 border-white/20"></div>
                 </div>
+
                 <!-- Review 3 -->
-                <div class="bg-gray-100 rounded-xl p-4 shadow-sm">
-                  <div class="flex items-center mb-2">
-                    <div class="flex text-yellow-400">
-                      <i class="fas fa-star" style="font-size: 12px;"></i>
-                      <i class="fas fa-star" style="font-size: 12px;"></i>
+                <div class="bg-white/10 rounded-xl p-4 border border-white/20">
+                  <div class="flex flex-col sm:flex-row sm:items-center mb-3 space-y-1 sm:space-y-0">
+                    <div class="flex star-rating">
+                      <i class="fas fa-star text-sm"></i>
+                      <i class="fas fa-star text-sm"></i>
                     </div>
-                    <span class="ml-2 text-sm text-slate-600">By Robin</span>
-                    <span class="ml-2 text-sm text-gray-400">01 Feb 2025</span>
+                    <span class="sm:ml-3 text-sm text-white/80">By Robin</span>
+                    <span class="sm:ml-3 text-sm text-white/60">01 Feb 2025</span>
                   </div>
-                  <p class="text-slate-700 mb-2">not so bad @ishadora are you happy now 😊 </p>
-                  <div id="reply-section-3" class="mt-2 hidden">
-                    <textarea id="reply-text-3" class="w-full p-2 border rounded-xl" rows="2" placeholder="Write your reply..."></textarea>
-                    <div class="flex space-x-2 mt-2">
-                      <button onclick="submitReply(3)" class="bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-3 py-1 rounded-xl text-sm">Submit</button>
-                      <button onclick="cancelReply(3)" class="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-3 py-1 rounded-xl text-sm">Cancel</button>
+                  <p class="text-white/90 mb-3 leading-relaxed">not so bad @ishadora are you happy now 😊</p>
+                  <div id="reply-section-3" class="mt-3 hidden">
+                    <textarea id="reply-text-3" class="w-full p-3 border border-white/30 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur" rows="2" placeholder="Write your reply..."></textarea>
+                    <div class="flex space-x-2 mt-3">
+                      <button onclick="submitReply(3)" class="btn-primary text-white px-4 py-2 rounded-lg text-sm">Submit</button>
+                      <button onclick="cancelReply(3)" class="btn-secondary text-white px-4 py-2 rounded-lg text-sm">Cancel</button>
                     </div>
                   </div>
-                  <button onclick="showReplySection(3)" class="reply-btn text-blue-500 text-sm hover:text-blue-600 hidden">Reply</button>
-                  <div id="replies-3" class="ml-4 mt-2 pl-4 border-l-2 border-gray-200"></div>
+                  <button onclick="showReplySection(3)" class="reply-btn text-blue-400 text-sm hover:text-blue-300 hidden transition-colors">Reply</button>
+                  <div id="replies-3" class="ml-4 mt-3 pl-4 border-l-2 border-white/20"></div>
                 </div>
+
                 <!-- Review 4 -->
-                <div class="bg-gray-100 rounded-xl p-4 shadow-sm">
-                  <div class="flex items-center mb-2">
-                    <div class="flex text-yellow-400">
-                      <i class="fas fa-star" style="font-size: 12px;"></i>
-                      <i class="fas fa-star" style="font-size: 12px;"></i>
-                      <i class="fas fa-star" style="font-size: 12px;"></i>
-                      <i class="fas fa-star" style="font-size: 12px;"></i>
+                <div class="bg-white/10 rounded-xl p-4 border border-white/20">
+                  <div class="flex flex-col sm:flex-row sm:items-center mb-3 space-y-1 sm:space-y-0">
+                    <div class="flex star-rating">
+                      <i class="fas fa-star text-sm"></i>
+                      <i class="fas fa-star text-sm"></i>
+                      <i class="fas fa-star text-sm"></i>
+                      <i class="fas fa-star text-sm"></i>
                     </div>
-                    <span class="ml-2 text-sm text-slate-600">By Auren</span>
-                    <span class="ml-2 text-sm text-gray-400">05 Feb 2025</span>
+                    <span class="sm:ml-3 text-sm text-white/80">By Auren</span>
+                    <span class="sm:ml-3 text-sm text-white/60">05 Feb 2025</span>
                   </div>
-                  <p class="text-slate-700 mb-2">@Robin & @Ishadora 🍿👀🤔 Drama's getting good now go get a room...losers</p>
-                  <div id="reply-section-4" class="mt-2 hidden">
-   
-
-
-
-
-
-
-
-				  <textarea id="reply-text-4" class="w-full p-2 border rounded-xl" rows="2" placeholder="Write your reply..."></textarea>
-                    <div class="flex space-x-2 mt-2">
-                      <button onclick="submitReply(4)" class="bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-3 py-1 rounded-xl text-sm">Submit</button>
-                      <button onclick="cancelReply(4)" class="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-3 py-1 rounded-xl text-sm">Cancel</button>
+                  <p class="text-white/90 mb-3 leading-relaxed">@Robin & @Ishadora 🍿👀🤔 Drama's getting good now go get a room...losers</p>
+                  <div id="reply-section-4" class="mt-3 hidden">
+                    <textarea id="reply-text-4" class="w-full p-3 border border-white/30 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur" rows="2" placeholder="Write your reply..."></textarea>
+                    <div class="flex space-x-2 mt-3">
+                      <button onclick="submitReply(4)" class="btn-primary text-white px-4 py-2 rounded-lg text-sm">Submit</button>
+                      <button onclick="cancelReply(4)" class="btn-secondary text-white px-4 py-2 rounded-lg text-sm">Cancel</button>
                     </div>
                   </div>
-                  <button onclick="showReplySection(4)" class="reply-btn text-blue-500 text-sm hover:text-blue-600 hidden">Reply</button>
-                  <div id="replies-4" class="ml-4 mt-2 pl-4 border-l-2 border-gray-200"></div>
+                  <button onclick="showReplySection(4)" class="reply-btn text-blue-400 text-sm hover:text-blue-300 hidden transition-colors">Reply</button>
+                  <div id="replies-4" class="ml-4 mt-3 pl-4 border-l-2 border-white/20"></div>
                 </div>
-                <!-- New Reviews will be appended here -->
+                
+                <!-- New Reviews Container -->
                 <div id="new-reviews-container"></div>
               </div>
             </div>
@@ -345,73 +507,92 @@
       </section>
     </div>
 
+    <!-- Achievements Section -->
     <div id="achievements-section" class="section hidden">
-      <section class="mb-16 fade-in">
-        <h2 class="text-3xl text-center mb-8">Achievements & Recognition</h2>
-        <div class="flex justify-center mb-8">
-          <img src="ELITE.png" alt="Elite Badge" class="w-65 h-30 rounded-xl">
+      <section class="mb-16">
+        <h2 class="text-4xl font-display font-bold text-center mb-12 gradient-text">Achievements & Recognition</h2>
+        <div class="flex justify-center mb-12">
+          <img src="ELITE.png" alt="Elite Badge" class="w-80 h-40 rounded-2xl shadow-2xl floating-element">
         </div>
-        <div class="grid md:grid-cols-3 gap-6">
-          <div class="bg-white/90 backdrop-blur-lg ring-1 ring-gray-200 p-6 rounded-xl shadow-lg hover-grow">
-            <i class="fas fa-star text-4xl text-green-500 mb-4"></i>
-            <h3 class="font-bold mb-2">Fiverr Steel-a-Palooza Contest</h3>
-            <p>Two entries in the Top 100, including one in the Top 50: Chains of Mind & Bilqis</p>
+        <div class="grid lg:grid-cols-3 gap-8">
+          <div class="glass-card p-8 rounded-2xl hover-lift text-center">
+            <div class="text-6xl mb-6">
+              <i class="fas fa-star text-green-400 drop-shadow-lg"></i>
+            </div>
+            <h3 class="font-bold mb-4 text-xl gradient-text-secondary">Fiverr Steel-a-Palooza Contest</h3>
+            <p class="text-white/90 leading-relaxed">Two entries in the Top 100, including one in the Top 50: Chains of Mind & Bilqis</p>
           </div>
-          <div class="bg-white/90 backdrop-blur-lg ring-1 ring-gray-200 p-6 rounded-xl shadow-lg hover-grow">
-            <i class="fas fa-star text-4xl text-green-500 mb-4"></i>
-            <h3 class="font-bold mb-2">Fiverr Fiction Fest</h3>
-            <p>Vanishing Pulse – Assisted Story by Vesser Selene, Officially Ranked in the Top</p>
+          
+          <div class="glass-card p-8 rounded-2xl hover-lift text-center">
+            <div class="text-6xl mb-6">
+              <i class="fas fa-star text-green-400 drop-shadow-lg"></i>
+            </div>
+            <h3 class="font-bold mb-4 text-xl gradient-text-secondary">Fiverr Fiction Fest</h3>
+            <p class="text-white/90 leading-relaxed">Vanishing Pulse – Assisted Story by Vesser Selene, Officially Ranked in the Top</p>
           </div>
-          <div class="bg-white/90 backdrop-blur-lg ring-1 ring-gray-200 p-6 rounded-xl shadow-lg hover-grow">
-            <i class="fas fa-trophy text-4xl text-yellow-500 mb-4"></i>
-            <i class="fas fa-award text-4xl text-blue-500 mb-4"></i>
-            <h3 class="font-bold mb-2">Fiverr Inspiration Awards</h3>
-            <p>Bound by Ink ranked in the Top 30 in 2024, becoming one of only 8 Fiverr members to achieve this milestone</p>
+          
+          <div class="glass-card p-8 rounded-2xl hover-lift text-center">
+            <div class="text-6xl mb-6 flex justify-center space-x-2">
+              <i class="fas fa-trophy text-yellow-400 drop-shadow-lg"></i>
+              <i class="fas fa-award text-blue-400 drop-shadow-lg"></i>
+            </div>
+            <h3 class="font-bold mb-4 text-xl gradient-text-secondary">Fiverr Inspiration Awards</h3>
+            <p class="text-white/90 leading-relaxed">Bound by Ink ranked in the Top 30 in 2024, becoming one of only 8 Fiverr members to achieve this milestone</p>
           </div>
         </div>
       </section>
     </div>
 
+    <!-- Reviews Section -->
     <div id="reviews-section" class="section hidden">
-      <section class="mb-16 fade-in">
-        <h2 class="text-3xl text-center mb-8">Reviews</h2>
-        <div class="text-center mb-4">
-          <input type="password" id="reviews-password" placeholder="Enter premium code" class="p-2 border rounded text-sm">
-          <button onclick="verifyReviewsPassword()" class="bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-4 py-2 rounded">Submit</button>
-        </div>
-        <div id="reviews-content" class="hidden">
-          <div class="text-center mb-4">
-            <input type="text" id="reviewer-name" class="w-full p-2 border rounded-xl mb-2" placeholder="Your Name">
-            <textarea id="new-review-text" class="w-full p-2 border rounded-xl" rows="3" placeholder="Write your review..."></textarea>
-            <button onclick="postReview()" class="bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-4 py-2 rounded transition duration-300 shadow-lg px-4 py-2 rounded mt-2">Post</button>
+      <section class="mb-16">
+        <h2 class="text-4xl font-display font-bold text-center mb-12 gradient-text">Reviews</h2>
+        <div class="glass-card rounded-2xl p-8 max-w-2xl mx-auto">
+          <div class="text-center mb-6">
+            <input type="password" id="reviews-password" placeholder="Enter premium code" class="w-full p-4 border border-white/30 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur mb-4">
+            <button onclick="verifyReviewsPassword()" class="btn-primary text-white font-semibold px-8 py-3 rounded-lg w-full sm:w-auto">Submit</button>
           </div>
-          <div id="reviews-list" class="space-y-4">
-            <!-- Existing reviews will be displayed here -->
+          
+          <div id="reviews-content" class="hidden">
+            <div class="mb-8 space-y-4">
+              <input type="text" id="reviewer-name" class="w-full p-4 border border-white/30 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur" placeholder="Your Name">
+              <textarea id="new-review-text" class="w-full p-4 border border-white/30 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur" rows="4" placeholder="Write your review..."></textarea>
+              <button onclick="postReview()" class="btn-primary text-white font-semibold px-8 py-3 rounded-lg w-full sm:w-auto">Post Review</button>
+            </div>
+            <div id="reviews-list" class="space-y-4"></div>
           </div>
         </div>
       </section>
     </div>
 
+    <!-- Payment Section -->
     <div id="payment-section" class="section hidden">
-      <section class="mb-16 fade-in">
-        <h2 class="text-3xl text-center mb-8">Payment Related</h2>
-        <li><a href="payment.html" class="hover:text-blue-600">Payment Related</a></li>
+      <section class="mb-16">
+        <h2 class="text-4xl font-display font-bold text-center mb-12 gradient-text">Payment Related</h2>
+        <div class="glass-card rounded-2xl p-8 text-center max-w-md mx-auto">
+          <i class="fas fa-credit-card text-6xl mb-6 gradient-text-secondary"></i>
+          <a href="payment.html" class="btn-accent text-white font-semibold px-8 py-4 rounded-lg text-lg hover:scale-105 transform transition-all inline-block">Payment Portal</a>
+        </div>
       </section>
     </div>
 
-<footer class="text-center py-8 bg-gray-800 text-white rounded-xl">
-  <p>&copy; 2025 Fiverr Company Limited. All rights reserved.</p>
-  <div class="mt-4 space-x-4">
-    <a href="#" class="hover:text-blue-400"><i class="fab fa-twitter"></i></a>
-    <a href="#" class="hover:text-blue-400"><i class="fab fa-linkedin"></i></a>
-    <a href="#" class="hover:text-blue-400"><i class="fab fa-instagram"></i></a>
+    <!-- Footer -->
+    <footer class="glass-card-dark rounded-2xl p-8 text-center mt-16">
+      <p class="text-white/80 mb-4">&copy; 2025 Fiverr Company Limited. All rights reserved.</p>
+      <div class="flex justify-center space-x-6 mb-6">
+        <a href="#" class="text-white/60 hover:text-white text-2xl transition-colors"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="text-white/60 hover:text-white text-2xl transition-colors"><i class="fab fa-linkedin"></i></a>
+        <a href="#" class="text-white/60 hover:text-white text-2xl transition-colors"><i class="fab fa-instagram"></i></a>
+      </div>
+      <p class="text-white/60">
+        <a href="map.html" class="text-blue-400 hover:text-blue-300 transition-colors">No of visitors to the page: <strong>120</strong></a>
+      </p>
+    </footer>
   </div>
-  <p class="mt-4">
-    <a href="map.html" class="text-blue-400 hover:underline">No of visitors to the page: <strong>120</strong></a>
-  </p>
-</footer>
-</div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.6.1/firebase-app.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.6.1/firebase-firestore.min.js"></script>
+  
   <script>
     // Firebase configuration
     const firebaseConfig = {
@@ -425,24 +606,74 @@
     };
 
     // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    let app, db;
+    try {
+      app = firebase.initializeApp(firebaseConfig);
+      db = firebase.firestore();
+      console.log("Firestore initialized:", db);
+    } catch (error) {
+      console.log("Firebase initialization skipped for demo");
+    }
 
-    console.log("Firestore initialized:", db);
+    // Scroll progress indicator
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset;
+      const docHeight = document.body.offsetHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      document.getElementById('scrollProgress').style.width = scrollPercent + '%';
+    });
 
-    // Show default home section
+    // Initialize
     document.addEventListener('DOMContentLoaded', () => {
       showSection('home');
       loadReviews();
+      
+      // Add smooth scroll behavior
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
     });
 
-    function showSection(sectionName) {
-      document.querySelectorAll('.section').forEach(section => {
-        section.classList.add('hidden');
-      });
-      document.getElementById(`${sectionName}-section`).classList.remove('hidden');
+    // Mobile menu toggle
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('active');
     }
 
+    // Section navigation
+    function showSection(sectionName) {
+      // Hide all sections
+      document.querySelectorAll('.section').forEach(section => {
+        section.classList.add('hidden');
+        section.classList.remove('active');
+      });
+      
+      // Show selected section with animation
+      const targetSection = document.getElementById(`${sectionName}-section`);
+      targetSection.classList.remove('hidden');
+      
+      // Trigger animation after a brief delay
+      setTimeout(() => {
+        targetSection.classList.add('active');
+      }, 50);
+
+      // Update active nav link
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('text-white', 'font-bold');
+        link.classList.add('text-white/80');
+      });
+      
+      // Scroll to top smoothly
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Admin functions
     function login() {
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
@@ -450,7 +681,6 @@
       if (username === "admin" && password === "password") {
         document.getElementById('admin-login').classList.add('hidden');
         document.getElementById('admin-logout').classList.remove('hidden');
-        // Show reply buttons when logged in
         document.querySelectorAll('.reply-btn').forEach(btn => {
           btn.classList.remove('hidden');
         });
@@ -464,18 +694,17 @@
       document.getElementById('admin-logout').classList.add('hidden');
       document.getElementById('username').value = '';
       document.getElementById('password').value = '';
-      // Hide reply buttons when logged out
       document.querySelectorAll('.reply-btn').forEach(btn => {
         btn.classList.add('hidden');
       });
-      // Hide any open reply sections
       document.querySelectorAll('[id^="reply-section-"]').forEach(section => {
         section.classList.add('hidden');
       });
     }
 
+    // Book functions
     function promptPremiumDownload() {
-      var password = prompt("Enter password to download the book:");
+      const password = prompt("Enter password to download the book:");
       if (password === "5555") {
         window.location.href = "Bound_by_Ink.pdf";
       } else {
@@ -484,7 +713,7 @@
     }
 
     function promptPassword(bookTitle) {
-      var password = prompt("Enter password to download the book:");
+      const password = prompt("Enter password to download the book:");
       if (password === "0151") {
         window.location.href = bookTitle + ".pdf";
       } else {
@@ -510,13 +739,13 @@
 
       const repliesContainer = document.getElementById(`replies-${reviewId}`);
       const replyElement = document.createElement('div');
-      replyElement.className = 'mt-2';
+      replyElement.className = 'mt-3 bg-white/5 rounded-lg p-3 border border-white/10';
       replyElement.innerHTML = `
-        <div class="flex items-center text-sm">
-          <span class="font-medium">Admin</span>
-          <span class="ml-2 text-gray-400">• ${new Date().toLocaleDateString()}</span>
+        <div class="flex items-center text-sm mb-2">
+          <span class="font-medium text-blue-400">Admin</span>
+          <span class="ml-2 text-white/60">• ${new Date().toLocaleDateString()}</span>
         </div>
-        <p class="text-slate-700 text-sm mt-1">${replyText}</p>
+        <p class="text-white/90 text-sm leading-relaxed">${replyText}</p>
       `;
       
       repliesContainer.appendChild(replyElement);
@@ -545,61 +774,82 @@
 
       console.log("Saving review:", review);
 
-      // Save review to Firestore
-      db.collection("reviews").add(review)
-        .then(() => {
-          console.log("Review saved successfully");
-          displayReview(review, document.getElementById('reviews-list'));
-          displayReview(review, document.getElementById('new-reviews-container'));
+      // Save review to Firestore if available
+      if (db) {
+        db.collection("reviews").add(review)
+          .then(() => {
+            console.log("Review saved successfully");
+            displayReview(review, document.getElementById('reviews-list'));
+            displayReview(review, document.getElementById('new-reviews-container'));
 
-          document.getElementById('reviewer-name').value = '';
-          document.getElementById('new-review-text').value = '';
-        })
-        .catch((error) => {
-          console.error("Error adding review: ", error);
-        });
+            document.getElementById('reviewer-name').value = '';
+            document.getElementById('new-review-text').value = '';
+          })
+          .catch((error) => {
+            console.error("Error adding review: ", error);
+          });
+      } else {
+        // Fallback for demo without Firebase
+        displayReview(review, document.getElementById('reviews-list'));
+        displayReview(review, document.getElementById('new-reviews-container'));
+        document.getElementById('reviewer-name').value = '';
+        document.getElementById('new-review-text').value = '';
+      }
     }
 
     function displayReview(review, container) {
       const newReviewElement = document.createElement('div');
-      newReviewElement.className = 'bg-gray-100 rounded-xl p-4 shadow-sm';
+      newReviewElement.className = 'bg-white/10 rounded-xl p-4 border border-white/20 hover-lift';
       newReviewElement.innerHTML = `
-        <div class="flex items-center mb-2">
-          <div class="flex text-yellow-400">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
+        <div class="flex flex-col sm:flex-row sm:items-center mb-3 space-y-1 sm:space-y-0">
+          <div class="flex star-rating">
+            <i class="fas fa-star text-sm"></i>
+            <i class="fas fa-star text-sm"></i>
+            <i class="fas fa-star text-sm"></i>
           </div>
-          <span class="ml-2 text-sm text-slate-600">By ${review.name}</span>
-          <span class="ml-2 text-sm text-gray-400">• ${review.date}</span>
+          <span class="sm:ml-3 text-sm text-white/80">By ${review.name}</span>
+          <span class="sm:ml-3 text-sm text-white/60">• ${review.date}</span>
         </div>
-        <p class="text-slate-700 mb-2">${review.text}</p>
+        <p class="text-white/90 leading-relaxed">${review.text}</p>
       `;
       container.appendChild(newReviewElement);
     }
 
     function loadReviews() {
-      db.collection("reviews").get().then((querySnapshot) => {
-        const reviewsList = document.getElementById('reviews-list');
-        const newReviewsContainer = document.getElementById('new-reviews-container');
-        querySnapshot.forEach((doc) => {
-          const review = doc.data();
-          displayReview(review, reviewsList);
-          displayReview(review, newReviewsContainer);
+      if (db) {
+        db.collection("reviews").get().then((querySnapshot) => {
+          const reviewsList = document.getElementById('reviews-list');
+          const newReviewsContainer = document.getElementById('new-reviews-container');
+          querySnapshot.forEach((doc) => {
+            const review = doc.data();
+            displayReview(review, reviewsList);
+            displayReview(review, newReviewsContainer);
+          });
+        }).catch((error) => {
+          console.error("Error getting reviews: ", error);
         });
-      }).catch((error) => {
-        console.error("Error getting reviews: ", error);
-      });
-    }
-
-    function verifyPaymentPassword() {
-      const password = document.getElementById('payment-password').value;
-      if (password === "1234") {
-        document.getElementById('payment-content').classList.remove('hidden');
-      } else {
-        alert("Invalid payment code");
       }
     }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('mobileMenu');
+      const menuButton = e.target.closest('button[onclick="toggleMobileMenu()"]');
+      
+      if (!menu.contains(e.target) && !menuButton && menu.classList.contains('active')) {
+        toggleMobileMenu();
+      }
+    });
+
+    // Add loading animation for images
+    document.addEventListener('DOMContentLoaded', () => {
+      const images = document.querySelectorAll('img');
+      images.forEach(img => {
+        img.addEventListener('load', () => {
+          img.style.opacity = '1';
+        });
+      });
+    });
   </script>
 </body>
 </html>
