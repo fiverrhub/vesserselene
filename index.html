@@ -221,13 +221,58 @@
       50% { opacity: 1; }
     }
 
+    /* FIXED MOBILE MENU STYLES */
     .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 280px;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 9999;
       transform: translateX(100%);
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease-in-out;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .mobile-menu.active {
       transform: translateX(0);
+    }
+
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 9998;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-nav-item {
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .mobile-nav-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(-5px);
+    }
+
+    .mobile-nav-item:last-child {
+      border-bottom: none;
     }
 
     .star-rating {
@@ -267,6 +312,22 @@
       .mobile-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
+      }
+
+      /* Ensure mobile menu is always on top */
+      .mobile-menu {
+        width: 85%;
+        max-width: 320px;
+      }
+
+      .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      /* Fix for small screens */
+      .glass-card {
+        margin: 0.5rem 0;
       }
     }
 
@@ -313,6 +374,9 @@
     <div class="scroll-progress" id="scrollProgress"></div>
   </div>
 
+  <!-- Mobile Menu Overlay -->
+  <div id="mobileMenuOverlay" class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+
   <div class="container mx-auto px-4 py-4 max-w-7xl">
     <!-- Admin Login Section -->
     <div id="admin-login" class="mb-4 flex justify-end">
@@ -354,28 +418,61 @@
         </nav>
 
         <!-- Mobile Menu Button -->
-        <button class="lg:hidden text-white p-2" onclick="toggleMobileMenu()">
-          <i class="fas fa-bars text-2xl"></i>
+        <button class="lg:hidden text-white p-2 z-50 relative" onclick="toggleMobileMenu()">
+          <i class="fas fa-bars text-2xl" id="menuIcon"></i>
         </button>
-      </div>
-
-      <!-- Mobile Navigation -->
-      <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-64 h-full glass-card-dark z-50 p-6 lg:hidden">
-        <button onclick="toggleMobileMenu()" class="absolute top-4 right-4 text-white text-2xl">
-          <i class="fas fa-times"></i>
-        </button>
-        <nav class="mt-12">
-          <ul class="space-y-4">
-            <li><a href="#" onclick="showSection('home'); toggleMobileMenu()" class="block text-white/80 hover:text-white transition-colors font-medium py-2">Home</a></li>
-            <li><a href="#" onclick="showSection('about'); toggleMobileMenu()" class="block text-white/80 hover:text-white transition-colors font-medium py-2">About</a></li>
-            <li><a href="#" onclick="showSection('books'); toggleMobileMenu()" class="block text-white/80 hover:text-white transition-colors font-medium py-2">Books</a></li>
-            <li><a href="#" onclick="showSection('achievements'); toggleMobileMenu()" class="block text-white/80 hover:text-white transition-colors font-medium py-2">Achievements</a></li>
-            <li><a href="#" onclick="showSection('reviews'); toggleMobileMenu()" class="block text-white/80 hover:text-white transition-colors font-medium py-2">Reviews</a></li>
-            <li><a href="#" onclick="showSection('payment'); toggleMobileMenu()" class="block text-white/80 hover:text-white transition-colors font-medium py-2">Payment</a></li>
-          </ul>
-        </nav>
       </div>
     </header>
+
+    <!-- IMPROVED Mobile Navigation -->
+    <div id="mobileMenu" class="mobile-menu">
+      <div class="flex justify-between items-center p-6 border-b border-white/10">
+        <h3 class="text-white font-semibold text-lg">Navigation</h3>
+        <button onclick="toggleMobileMenu()" class="text-white text-2xl hover:text-rose-200 transition-colors">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <nav class="flex-1">
+        <ul class="py-4">
+          <li class="mobile-nav-item">
+            <a href="#" onclick="showSection('home'); toggleMobileMenu()" class="flex items-center text-white hover:text-rose-200 transition-colors font-medium">
+              <i class="fas fa-home w-5 mr-3"></i>
+              Home
+            </a>
+          </li>
+          <li class="mobile-nav-item">
+            <a href="#" onclick="showSection('about'); toggleMobileMenu()" class="flex items-center text-white hover:text-rose-200 transition-colors font-medium">
+              <i class="fas fa-user w-5 mr-3"></i>
+              About
+            </a>
+          </li>
+          <li class="mobile-nav-item">
+            <a href="#" onclick="showSection('books'); toggleMobileMenu()" class="flex items-center text-white hover:text-rose-200 transition-colors font-medium">
+              <i class="fas fa-book w-5 mr-3"></i>
+              Books
+            </a>
+          </li>
+          <li class="mobile-nav-item">
+            <a href="#" onclick="showSection('achievements'); toggleMobileMenu()" class="flex items-center text-white hover:text-rose-200 transition-colors font-medium">
+              <i class="fas fa-trophy w-5 mr-3"></i>
+              Achievements
+            </a>
+          </li>
+          <li class="mobile-nav-item">
+            <a href="#" onclick="showSection('reviews'); toggleMobileMenu()" class="flex items-center text-white hover:text-rose-200 transition-colors font-medium">
+              <i class="fas fa-star w-5 mr-3"></i>
+              Reviews
+            </a>
+          </li>
+          <li class="mobile-nav-item">
+            <a href="#" onclick="showSection('payment'); toggleMobileMenu()" class="flex items-center text-white hover:text-rose-200 transition-colors font-medium">
+              <i class="fas fa-credit-card w-5 mr-3"></i>
+              Payment
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
 
     <!-- Home Section -->
     <div id="home-section" class="section">
@@ -668,7 +765,6 @@
         </div>
       </section>
     </div>
- <h2 class="text-4xl font-display font-bold text-center mb-12 gradient-text">Pending Document Verification: Inprogress</h2>
 
     <!-- Footer -->
     <footer class="glass-card-dark rounded-2xl p-8 text-center mt-16">
@@ -734,10 +830,23 @@
       });
     });
 
-    // Mobile menu toggle
+    // IMPROVED Mobile menu toggle
     function toggleMobileMenu() {
       const menu = document.getElementById('mobileMenu');
+      const overlay = document.getElementById('mobileMenuOverlay');
+      const menuIcon = document.getElementById('menuIcon');
+      
       menu.classList.toggle('active');
+      overlay.classList.toggle('active');
+      
+      // Prevent body scrolling when menu is open
+      if (menu.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+        menuIcon.className = 'fas fa-times text-2xl';
+      } else {
+        document.body.style.overflow = 'auto';
+        menuIcon.className = 'fas fa-bars text-2xl';
+      }
     }
 
     // Section navigation
@@ -925,13 +1034,31 @@
       }
     }
 
-    // Close mobile menu when clicking outside
+    // Enhanced click outside to close mobile menu
     document.addEventListener('click', (e) => {
       const menu = document.getElementById('mobileMenu');
       const menuButton = e.target.closest('button[onclick="toggleMobileMenu()"]');
+      const overlay = document.getElementById('mobileMenuOverlay');
       
-      if (!menu.contains(e.target) && !menuButton && menu.classList.contains('active')) {
+      // Close menu if clicking outside or on overlay
+      if ((!menu.contains(e.target) && !menuButton && menu.classList.contains('active')) || 
+          e.target === overlay) {
         toggleMobileMenu();
+      }
+    });
+
+    // Prevent menu close when clicking inside the menu
+    document.getElementById('mobileMenu').addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+
+    // Handle escape key to close mobile menu
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const menu = document.getElementById('mobileMenu');
+        if (menu.classList.contains('active')) {
+          toggleMobileMenu();
+        }
       }
     });
 
@@ -943,6 +1070,14 @@
           img.style.opacity = '1';
         });
       });
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      const menu = document.getElementById('mobileMenu');
+      if (window.innerWidth >= 1024 && menu.classList.contains('active')) {
+        toggleMobileMenu();
+      }
     });
   </script>
 </body>
