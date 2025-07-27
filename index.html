@@ -10,7 +10,7 @@
   <link rel="canonical" href="https://fiverrhub.github.io/vesserselene/">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&family=Dancing+Script:wght@400;500;600;700&family=Great+Vibes&family=Satisfy&display=swap" rel="stylesheet">
   
   <style>
     :root {
@@ -28,20 +28,102 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 75%, #f5576c 100%);
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 75%, #1a1a2e 100%);
       background-attachment: fixed;
       min-height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(219, 112, 147, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(186, 85, 211, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(147, 197, 253, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
     }
 
     .font-display {
       font-family: 'Playfair Display', serif;
     }
 
+    .author-name {
+      font-family: 'Great Vibes', cursive;
+      font-weight: 400;
+      letter-spacing: 2px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '✦';
+      position: absolute;
+      right: -30px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(219, 112, 147, 0.6);
+      font-size: 0.8em;
+      animation: twinkle 2s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: translateY(-50%) scale(1); }
+      50% { opacity: 1; transform: translateY(-50%) scale(1.2); }
+    }
+
+    .literary-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      position: relative;
+      padding: 0 20px;
+    }
+
+    .literary-quote::before {
+      content: '"';
+      position: absolute;
+      left: 0;
+      top: -10px;
+      font-size: 2em;
+      color: rgba(219, 112, 147, 0.4);
+      font-family: 'Great Vibes', cursive;
+    }
+
+    .literary-quote::after {
+      content: '"';
+      position: absolute;
+      right: 0;
+      bottom: -20px;
+      font-size: 2em;
+      color: rgba(219, 112, 147, 0.4);
+      font-family: 'Great Vibes', cursive;
+    }
+
     .glass-card {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(219, 112, 147, 0.5), transparent);
     }
 
     .glass-card-dark {
@@ -51,10 +133,12 @@
     }
 
     .gradient-text {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 50%, #c7d2fe 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
     }
 
     .gradient-text-secondary {
@@ -249,8 +333,10 @@
       <div class="flex flex-col lg:flex-row justify-between items-center">
         <div class="flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 lg:space-x-6 mb-4 lg:mb-0">
           <div class="text-center lg:text-left">
-            <h1 class="text-4xl lg:text-5xl font-display font-bold gradient-text shining-dot mb-2">Vesser Selene</h1>
-            <p class="text-xl text-white/80">Creative Storyteller & Writer</p>
+            <h1 class="text-5xl lg:text-6xl author-name font-bold mb-3 relative">
+              <span class="text-white drop-shadow-lg">Vesser Selene</span>
+            </h1>
+            <p class="text-xl text-rose-200 font-medium">Creative Storyteller & Writer</p>
           </div>
           <img src="QR.png" alt="QR Code" class="w-20 h-20 rounded-xl shadow-2xl floating-element">
         </div>
@@ -298,7 +384,7 @@
           <div class="flex flex-col items-center">
             <img src="author-photomod.jpg" alt="Vesser Selene" class="w-64 h-72 rounded-2xl shadow-2xl mb-6 object-cover pulse-glow">
             <div class="w-full">
-              <h3 class="text-2xl font-bold mb-4 gradient-text-secondary text-center">About the Author</h3>
+              <h3 class="text-2xl font-bold mb-4 text-rose-200 text-center section-title">About the Author</h3>
               <div class="text-white/90 space-y-3">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div><strong>Full Name:</strong> Vesser Selene</div>
@@ -323,12 +409,13 @@
         </div>
         
         <div class="glass-card rounded-2xl p-8 hover-lift">
-          <h2 class="text-3xl lg:text-4xl font-display font-bold mb-6 gradient-text">A Rising Star in Storytelling</h2>
-          <p class="text-lg mb-6 text-white/90 leading-relaxed">A passionate writer from the Maldives, who joined Fiverr in late 2023, creating remarkable stories that captivate and inspire.</p>
+          <h2 class="text-3xl lg:text-4xl font-display font-bold mb-6 text-white section-title">A Rising Star in Storytelling</h2>
+          <p class="text-lg mb-6 text-white/90 leading-relaxed literary-quote">A passionate writer from the Maldives, who joined Fiverr in late 2023, creating remarkable stories that captivate and inspire.</p>
           
-          <div class="bg-white/10 rounded-xl p-4 border border-white/20">
-            <h3 class="font-bold text-red-400 animate-pulse mb-2 text-lg">🔥 LATEST UPDATES</h3>
-            <p class="text-green-400 font-semibold">Chains of Mind & Bilgis now available for purchase</p>
+          <div class="bg-white/10 rounded-xl p-4 border border-white/20 relative">
+            <div class="absolute top-2 right-2 text-pink-300/30 text-lg">📖</div>
+            <h3 class="font-bold text-rose-300 animate-pulse mb-2 text-lg">🌟 LATEST UPDATES</h3>
+            <p class="text-emerald-300 font-semibold">Chains of Mind & Bilgis now available for purchase</p>
           </div>
         </div>
       </section>
@@ -337,10 +424,10 @@
     <!-- About Section -->
     <div id="about-section" class="section hidden">
       <section class="glass-card rounded-2xl p-8 hover-lift">
-        <h2 class="text-4xl font-display font-bold mb-8 text-center gradient-text">About Vesser Selene</h2>
+        <h2 class="text-4xl font-display font-bold text-center mb-8 text-white section-title">About Vesser Selene</h2>
         <div class="prose max-w-4xl mx-auto text-white/90 space-y-6">
           <div>
-            <h3 class="text-2xl font-semibold mb-4 gradient-text-secondary">A Rising Star in Storytelling</h3>
+            <h3 class="text-2xl font-semibold mb-4 text-rose-200 section-title">A Rising Star in Storytelling</h3>
             <p class="leading-relaxed">Vesser Selene is a passionate writer whose commitment to storytelling has made her a standout in the creative community. She joined Fiverr in late 2023, and her journey has been nothing short of remarkable.</p>
           </div>
           
@@ -367,12 +454,14 @@
     <!-- Books Section -->
     <div id="books-section" class="section hidden">
       <section class="mb-16">
-        <h2 class="text-4xl font-display font-bold text-center mb-12 gradient-text">Books by Vesser Selene</h2>
+        <h2 class="text-4xl font-display font-bold text-center mb-12 text-white section-title">Books by Vesser Selene</h2>
         <div class="grid lg:grid-cols-3 gap-8">
           <!-- Book 1 -->
           <div class="glass-card rounded-2xl p-6 text-center hover-lift book-card">
-            <img src="BOOK1.JPG" alt="Chains of Mind" class="w-full h-64 object-cover rounded-xl mb-6 shadow-2xl">
-            <h3 class="text-2xl font-bold mb-3 gradient-text-secondary">CHAINS OF MIND</h3>
+            <div class="mb-6 flex justify-center">
+              <img src="BOOK1.JPG" alt="Chains of Mind" class="w-48 h-64 object-contain rounded-xl shadow-2xl bg-white/10 p-2">
+            </div>
+            <h3 class="text-2xl font-bold mb-3 text-rose-200">CHAINS OF MIND</h3>
             <p class="text-sm mb-6 text-white/80">Drama, Horror, Mystery, Psychological Thriller</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-3">
               <a href="Skrillpage.html" class="btn-secondary text-white font-semibold px-6 py-3 rounded-lg transition-all">Buy via Skrill $5</a>
@@ -382,8 +471,10 @@
 
           <!-- Book 2 -->
           <div class="glass-card rounded-2xl p-6 text-center hover-lift book-card">
-            <img src="BOOK2.JPG" alt="Bilgis" class="w-full h-64 object-cover rounded-xl mb-6 shadow-2xl">
-            <h3 class="text-2xl font-bold mb-3 gradient-text-secondary">BILGIS</h3>
+            <div class="mb-6 flex justify-center">
+              <img src="BOOK2.JPG" alt="Bilgis" class="w-48 h-64 object-contain rounded-xl shadow-2xl bg-white/10 p-2">
+            </div>
+            <h3 class="text-2xl font-bold mb-3 text-rose-200">BILGIS</h3>
             <p class="text-sm mb-6 text-white/80">Horror, Thriller, Drama, Psychological</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-3">
               <a href="Skrillpage.html" class="btn-secondary text-white font-semibold px-6 py-3 rounded-lg transition-all">Buy via Skrill $5</a>
@@ -393,8 +484,10 @@
 
           <!-- Book 3 -->
           <div class="glass-card rounded-2xl p-6 text-center hover-lift book-card">
-            <img src="BOOK4.JPG" alt="Bound by Ink" class="w-full h-64 object-cover rounded-xl mb-6 shadow-2xl">
-            <h3 class="text-2xl font-bold mb-3 gradient-text-secondary">BOUND BY INK</h3>
+            <div class="mb-6 flex justify-center">
+              <img src="BOOK4.JPG" alt="Bound by Ink" class="w-48 h-64 object-contain rounded-xl shadow-2xl bg-white/10 p-2">
+            </div>
+            <h3 class="text-2xl font-bold mb-3 text-rose-200">BOUND BY INK</h3>
             <p class="text-sm mb-6 text-white/80">Mystery, Psychological Horror, Thriller, Dark Fantasy</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-3">
               <a href="Skrillpage.html" class="btn-secondary text-white font-semibold px-6 py-3 rounded-lg transition-all">Buy via Skrill $12</a>
@@ -403,7 +496,7 @@
             
             <!-- Reviews Section -->
             <div class="mt-8 text-left">
-              <h4 class="text-xl font-semibold mb-6 gradient-text text-center">Reader Reviews</h4>
+              <h4 class="text-xl font-semibold mb-6 text-rose-200 text-center section-title">Reader Reviews</h4>
               <div class="space-y-4">
                 <!-- Review 1 -->
                 <div class="bg-white/10 rounded-xl p-4 border border-white/20">
