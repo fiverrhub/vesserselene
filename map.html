@@ -329,9 +329,9 @@
             }
         }
 
-        /* Dark mode map tiles */
+        /* Light mode map tiles */
         .leaflet-container {
-            background: #1a1a2e !important;
+            background: #f8f9fa !important;
         }
 
         /* Custom scrollbar */
@@ -459,8 +459,8 @@
             dragging: true
         });
 
-        // Add dark theme tile layer
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        // Add light theme tile layer
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
             attribution: '© OpenStreetMap contributors © CARTO',
             subdomains: 'abcd',
             maxZoom: 19
