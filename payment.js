@@ -8,6 +8,7 @@ document.getElementById("login-form").addEventListener("submit", function (event
     if (username === "selene" && password === "selene@0152") {
         // Redirect to PST.html hosted on GitHub
         window.location.href = "https://fiverrhub.github.io/vesserselene/PST.html";
+            window.location.href = "https://fiverrhub.github.io/vesserselene/events.html";
     } else {
         alert("Invalid username or password. Please try again.");
     }
