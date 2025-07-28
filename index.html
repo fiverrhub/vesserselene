@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -775,7 +776,14 @@ Mark your calendars and prepare your best stories for this exciting competition!
         <h2 class="text-4xl font-display font-bold text-center mb-12 gradient-text">Upcoming Events</h2>
         <div class="glass-card rounded-2xl p-8 text-center max-w-md mx-auto">
    
-          <a href="events.html" class="btn-accent text-white font-semibold px-8 py-4 rounded-lg text-lg hover:scale-105 transform transition-all inline-block">Admin Portal</a>
+          
+    <div class="space-y-4">
+      <input type="text" id="adminUser" placeholder="Username" class="w-full px-4 py-3 border border-white/20 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur">
+      <input type="password" id="adminPass" placeholder="Password" class="w-full px-4 py-3 border border-white/20 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur">
+      <button onclick="adminLogin()" class="btn-accent text-white font-semibold px-8 py-4 rounded-lg text-lg hover:scale-105 transform transition-all inline-block w-full">Admin Portal</button>
+      <p id="loginError" class="text-red-400 font-semibold hidden">Enter correct credentials</p>
+    </div>
+    
         </div>
       </section>
     </div>
@@ -1106,5 +1114,19 @@ Mark your calendars and prepare your best stories for this exciting competition!
       }
     });
   </script>
+
+<script>
+  function adminLogin() {
+    const user = document.getElementById("adminUser").value;
+    const pass = document.getElementById("adminPass").value;
+    const errorMsg = document.getElementById("loginError");
+    if (user === "selene" && pass === "selene@0152") {
+      window.location.href = "events.html";
+    } else {
+      errorMsg.classList.remove("hidden");
+    }
+  }
+</script>
 </body>
+
 </html>
