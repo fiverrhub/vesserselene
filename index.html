@@ -413,6 +413,7 @@
             <li><a href="#" onclick="showSection('books')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">Books</a></li>
             <li><a href="#" onclick="showSection('achievements')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">Achievements</a></li>
             <li><a href="#" onclick="showSection('reviews')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">Reviews</a></li>
+			 <li><a href="#" onclick="showSection('events')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">Events</a></li>
             <li><a href="#" onclick="showSection('payment')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">Payment</a></li>
           </ul>
         </nav>
@@ -462,6 +463,12 @@
             <a href="#" onclick="showSection('reviews'); toggleMobileMenu()" class="flex items-center text-white hover:text-rose-200 transition-colors font-medium">
               <i class="fas fa-star w-5 mr-3"></i>
               Reviews
+            </a>
+          </li>
+		    <li class="mobile-nav-item">
+            <a href="#" onclick="showSection('events'); toggleMobileMenu()" class="flex items-center text-white hover:text-rose-200 transition-colors font-medium">
+              <i class="fas fa-credit-card w-5 mr-3"></i>
+              Events
             </a>
           </li>
           <li class="mobile-nav-item">
@@ -761,6 +768,19 @@ Mark your calendars and prepare your best stories for this exciting competition!
       </section>
     </div>
 
+
+ <!-- Events Section -->
+    <div id="events-section" class="section hidden">
+      <section class="mb-16">
+        <h2 class="text-4xl font-display font-bold text-center mb-12 gradient-text">Upcoming Events</h2>
+        <div class="glass-card rounded-2xl p-8 text-center max-w-md mx-auto">
+   
+          <a href="events.html" class="btn-accent text-white font-semibold px-8 py-4 rounded-lg text-lg hover:scale-105 transform transition-all inline-block">Admin Portal</a>
+        </div>
+      </section>
+    </div>
+	
+	
     <!-- Payment Section -->
     <div id="payment-section" class="section hidden">
       <section class="mb-16">
