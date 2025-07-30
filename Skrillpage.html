@@ -3,20 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Secure Payment</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Secure Payment | Vesser Selene</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Base styles */
         :root {
-            --primary: #662d91;
-            --primary-dark: #4e2169;
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #a5b4fc;
             --surface: #ffffff;
-            --background: #f9fafb;
-            --text: #111827;
-            --text-secondary: #6b7280;
-            --border: #e5e7eb;
-            --success: #22c55e;
-            --highlight: #fef9c3;
+            --surface-elevated: #f8fafc;
+            --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --text: #0f172a;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --error: #ef4444;
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
         }
 
         * {
@@ -27,143 +39,386 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--background);
+            background-attachment: fixed;
             color: var(--text);
-            line-height: 1.5;
+            line-height: 1.6;
             min-height: 100vh;
             padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            overflow-x: hidden;
         }
 
-        /* Container styles */
+        /* Animated background elements */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(1deg); }
+            66% { transform: translateY(10px) rotate(-1deg); }
+        }
+
+        /* Main container */
         .payment-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 1rem;
+            padding: 2rem;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
+            gap: 3rem;
             min-height: 100vh;
             align-items: start;
         }
 
-        /* Card styles */
-        .payment-summary,
-        .payment-details {
-            background: var(--surface);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            height: fit-content;
+        /* Glass morphism cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 2rem;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Logo styles */
-        .logo-container {
-            margin-bottom: 2rem;
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Logo section */
+        .logo-section {
             text-align: center;
-            padding: 0 1rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .logo-container {
+            display: inline-block;
+            position: relative;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.05);
         }
 
         .logo {
-            max-width: 50%;
+            max-width: 200px;
             height: auto;
-            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
         }
 
-        /* Content styles */
+        .logo-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--success);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 50%;
+            font-size: 0.75rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Section titles */
         .section-title {
-            font-size: clamp(1.25rem, 4vw, 1.5rem);
-            font-weight: 600;
-            margin-bottom: 1.5rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
             color: var(--text);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
+        .section-title i {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Payment method card */
         .payment-method {
-            border: 2px solid var(--border);
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-method::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .payment-method:hover::before {
+            left: 100%;
+        }
+
+        .payment-method:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-lg);
         }
 
         .method-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
             flex-wrap: wrap;
         }
 
         .method-icon {
-            width: 48px;
-            height: 48px;
-            background: #f3f4f6;
-            border-radius: 0.5rem;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            color: var(--primary);
+            font-size: 1.75rem;
+            color: white;
             flex-shrink: 0;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
         }
 
+        .method-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .method-info h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+
+        .method-info p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Email display */
         .email-display {
-            background: var(--highlight);
-            padding: 1.25rem;
-            border-radius: 0.5rem;
-            font-family: monospace;
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            color: #854d0e;
-            border: 1px solid #fef08a;
-            margin: 1rem 0;
+            background: linear-gradient(135deg, var(--warning-light), #fff9db);
+            padding: 2rem;
+            border-radius: 1rem;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            color: var(--warning);
+            border: 2px solid #fbbf24;
+            margin: 1.5rem 0;
             text-align: center;
             font-weight: 600;
             word-break: break-all;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
+        .email-display:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .email-display::before {
+            content: 'Click to copy';
+            position: absolute;
+            top: -10px;
+            right: 1rem;
+            background: var(--warning);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+
+        .email-display:hover::before {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Security badges */
         .security-badge {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
             color: var(--success);
-            font-size: 0.875rem;
-            margin-top: 1rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: var(--success-light);
+            border-radius: 0.75rem;
+            border: 1px solid #86efac;
         }
 
+        .security-badge i {
+            font-size: 1.1rem;
+        }
+
+        /* Instructions */
         .instructions {
-            background: #f8fafc;
-            padding: 1.25rem;
-            border-radius: 0.75rem;
-            margin-top: 1.5rem;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 2rem;
+            border-radius: 1.5rem;
+            margin-top: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: var(--shadow-md);
+        }
+
+        .instructions-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+        }
+
+        .instructions-title i {
+            color: var(--primary);
+            font-size: 1.2rem;
         }
 
         .instructions-list {
             list-style: none;
-            margin-top: 1rem;
+            space-y: 1rem;
         }
 
         .instructions-list li {
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
             display: flex;
             align-items: flex-start;
-            gap: 0.5rem;
+            gap: 1rem;
             color: var(--text-secondary);
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .instructions-list li:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: translateX(5px);
         }
 
         .instructions-list li i {
-            color: var(--primary);
-            margin-top: 0.25rem;
+            color: var(--success);
+            margin-top: 0.125rem;
+            font-size: 1.1rem;
+            flex-shrink: 0;
         }
 
-        /* File upload styles */
+        /* File upload */
         .file-upload {
             margin-top: 2rem;
-            padding: 1.25rem;
-            border: 2px dashed var(--border);
-            border-radius: 0.75rem;
+            padding: 2rem;
+            border: 3px dashed var(--primary-light);
+            border-radius: 1.5rem;
             text-align: center;
             cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-upload::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary-light), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .file-upload:hover::before {
+            opacity: 0.1;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         .file-upload input[type="file"] {
@@ -173,147 +428,493 @@
         .file-upload label {
             cursor: pointer;
             color: var(--primary-dark);
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
         }
 
+        .file-upload label i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .file-upload:hover label i {
+            transform: scale(1.1);
+        }
+
+        .file-types {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* Upload status */
         .upload-status {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 0.75rem;
-            background: var(--success);
-            color: #fff;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
             text-align: center;
             display: none;
+            font-weight: 600;
+            box-shadow: var(--shadow-md);
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .upload-status i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* Copy notification */
+        .copy-notification {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: var(--success);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            transform: translateY(-100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .copy-notification.show {
+            transform: translateY(0);
+            opacity: 1;
         }
 
         /* Responsive design */
-        @media (max-width: 1024px) {
+        @media (max-width: 1200px) {
             .payment-container {
-                padding: 1rem;
-                gap: 1rem;
+                padding: 1.5rem;
+                gap: 2rem;
+            }
+
+            .glass-card {
+                padding: 2rem;
             }
         }
 
         @media (max-width: 768px) {
             .payment-container {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 1rem;
                 min-height: auto;
             }
 
-            .payment-summary,
-            .payment-details {
-                padding: 1.25rem;
+            .glass-card {
+                padding: 1.5rem;
+                border-radius: 1.5rem;
             }
 
             .method-header {
-                gap: 0.75rem;
+                gap: 1rem;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .method-icon {
+                width: 56px;
+                height: 56px;
+                font-size: 1.5rem;
             }
 
             .instructions {
-                padding: 1rem;
+                padding: 1.5rem;
+            }
+
+            .file-upload {
+                padding: 1.5rem;
+            }
+
+            .logo {
+                max-width: 150px;
+            }
+
+            .copy-notification {
+                top: 1rem;
+                right: 1rem;
+                left: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .payment-container {
+                padding: 0.75rem;
+            }
+
+            .glass-card {
+                padding: 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .email-display {
+                padding: 1.5rem;
+                font-size: 1rem;
             }
         }
 
         /* Touch device optimizations */
-        @media (hover: none) {
-            .payment-method {
-                cursor: default;
-            }
-
+        @media (hover: none) and (pointer: coarse) {
             .email-display {
                 user-select: all;
                 -webkit-user-select: all;
+            }
+
+            .glass-card:hover {
+                transform: none;
+            }
+
+            .payment-method:hover {
+                transform: none;
+            }
+
+            .file-upload:hover {
+                transform: none;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --surface: #1e293b;
+                --surface-elevated: #334155;
+                --text: #f1f5f9;
+                --text-secondary: #94a3b8;
+                --text-muted: #64748b;
+                --border: #334155;
+                --glass-bg: rgba(30, 41, 59, 0.4);
+                --glass-border: rgba(255, 255, 255, 0.1);
+            }
+
+            .logo-container {
+                background: rgba(30, 41, 59, 0.9);
+            }
+
+            .payment-method {
+                background: rgba(30, 41, 59, 0.6);
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+
+            .instructions {
+                background: rgba(30, 41, 59, 0.7);
+            }
+
+            .instructions-list li {
+                background: rgba(30, 41, 59, 0.5);
+            }
+
+            .file-upload {
+                background: rgba(30, 41, 59, 0.3);
             }
         }
 
         /* Print styles */
         @media print {
-            .payment-container {
-                display: block;
+            body {
+                background: white;
             }
 
-            .payment-summary,
-            .payment-details {
+            .payment-container {
+                display: block;
                 box-shadow: none;
+            }
+
+            .glass-card {
+                background: white;
+                box-shadow: none;
+                border: 1px solid #ccc;
                 break-inside: avoid;
                 margin-bottom: 2rem;
             }
+
+            .file-upload {
+                display: none;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
-    <script>
-        function handleFileUpload() {
-            var uploadStatus = document.getElementById('uploadStatus');
-            uploadStatus.style.display = 'block';
-            uploadStatus.innerHTML = 'Payment slip uploaded successfully';
-        }
-    </script>
 </head>
 <body>
+    <!-- Copy notification -->
+    <div id="copyNotification" class="copy-notification">
+        <i class="fas fa-check"></i>
+        Email copied to clipboard!
+    </div>
+
     <div class="payment-container">
-        <div class="payment-summary">
-            <div class="logo-container">
-                <img src="skrilllogo.jpg" alt="Skrill Logo" class="logo">
+        <!-- Left Panel - Payment Summary -->
+        <div class="glass-card">
+            <div class="logo-section">
+                <div class="logo-container">
+                    <img src="skrilllogo.jpg" alt="Skrill Logo" class="logo">
+                    <div class="logo-badge">
+                        <i class="fas fa-shield-check"></i>
+                    </div>
+                </div>
+                <h1 class="section-title">
+                    <i class="fas fa-credit-card"></i>
+                    Secure Payment
+                </h1>
             </div>
+
             <div class="security-badge">
                 <i class="fas fa-shield-alt"></i>
-                <span>Secure Payment Processing</span>
+                <span>256-bit SSL Encryption • PCI Compliant</span>
             </div>
+
             <div class="instructions">
                 <div class="instructions-title">
                     <i class="fas fa-info-circle"></i>
-                    <span>Important Instructions</span>
+                    <span>Payment Instructions</span>
                 </div>
                 <ul class="instructions-list">
                     <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Send payment to the email address highlighted</span>
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Send payment to the highlighted email address using Skrill</span>
                     </li>
                     <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Keep your transaction ID handy</span>
+                        <i class="fas fa-receipt"></i>
+                        <span>Keep your transaction ID safe for reference</span>
                     </li>
                     <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Forward the payment confirmation slip to the highlighted email address</span>
+                        <i class="fas fa-upload"></i>
+                        <span>Upload your payment confirmation slip below</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-clock"></i>
+                        <span>Receive your premium code within 2 hours</span>
                     </li>
                 </ul>
             </div>
         </div>
 
-        <div class="payment-details">
-            <h2 class="section-title">Payment Details</h2>
-            <div class="payment-method active">
+        <!-- Right Panel - Payment Details -->
+        <div class="glass-card">
+            <h2 class="section-title">
+                <i class="fas fa-wallet"></i>
+                Payment Details
+            </h2>
+            
+            <div class="payment-method">
                 <div class="method-header">
                     <div class="method-icon">
-                        <i class="fas fa-wallet"></i>
+                        <i class="fab fa-skrill"></i>
                     </div>
-                    <div>
-                        <div class="method-title">Skrill Payment</div>
-                        <div class="method-description">Send payment via Skrill</div>
+                    <div class="method-info">
+                        <h3>Skrill Payment Gateway</h3>
+                        <p>Fast, secure, and reliable payment processing</p>
                     </div>
                 </div>
-                <div class="email-display">
+
+                <div class="email-display" onclick="copyEmail()" title="Click to copy email">
                     vesserselene@gmail.com
                 </div>
+
                 <div class="security-badge">
                     <i class="fas fa-lock"></i>
-                    <span>Protected by Paysafe</span>
+                    <span>Protected by Paysafe Financial Services</span>
                 </div>
             </div>
+
             <div class="instructions">
                 <div class="instructions-title">
-                    <i class="fas fa-clock"></i>
+                    <i class="fas fa-rocket"></i>
                     <span>Next Steps</span>
-                </div> 
-                <p>Upload the payment slip below, making sure your email address is on the slip. We will send the premium code to the mentioned email within 2 hours</p>
+                </div>
+                <p>After completing your Skrill payment, upload your payment confirmation slip below. Make sure your email address is visible on the receipt. We'll send your premium access code to your email within 2 hours of verification.</p>
             </div>
-            <div class="file-upload">
-                <label for="fileInput"><i class="fas fa-upload"></i> Upload JPG, PNG, or PDF files</label>
-                <input type="file" id="fileInput" accept=".jpg, .jpeg, .png, .pdf" onchange="handleFileUpload()">
+
+            <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+                <label for="fileInput">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>Upload Payment Confirmation</span>
+                    <div class="file-types">Accepted formats: JPG, PNG, PDF (Max 10MB)</div>
+                </label>
+                <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
             </div>
+
             <div id="uploadStatus" class="upload-status">
-                Payment slip uploaded successfully
+                <i class="fas fa-check-circle"></i>
+                Payment slip uploaded successfully! Processing...
             </div>
         </div>
     </div>
-</body>
-</html>
+
+    <script>
+        // Copy email to clipboard
+        function copyEmail() {
+            const email = 'vesserselene@gmail.com';
+            
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(email).then(() => {
+                    showCopyNotification();
+                }).catch(() => {
+                    fallbackCopyTextToClipboard(email);
+                });
+            } else {
+                fallbackCopyTextToClipboard(email);
+            }
+        }
+
+        // Fallback copy method
+        function fallbackCopyTextToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showCopyNotification();
+            } catch (err) {
+                console.error('Fallback: Could not copy text: ', err);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        // Show copy notification
+        function showCopyNotification() {
+            const notification = document.getElementById('copyNotification');
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Handle file upload
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            const uploadStatus = document.getElementById('uploadStatus');
+            
+            if (file) {
+                // Check file size (10MB limit)
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('File size too large. Please select a file smaller than 10MB.');
+                    event.target.value = '';
+                    return;
+                }
+
+                // Check file type
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert('Invalid file type. Please select a JPG, PNG, or PDF file.');
+                    event.target.value = '';
+                    return;
+                }
+
+                // Show upload status with loading
+                uploadStatus.innerHTML = `
+                    <i class="loading"></i>
+                    Uploading ${file.name}...
+                `;
+                uploadStatus.style.display = 'block';
+
+                // Simulate upload delay
+                setTimeout(() => {
+                    uploadStatus.innerHTML = `
+                        <i class="fas fa-check-circle"></i>
+                        Payment slip "${file.name}" uploaded successfully! We'll review it within 2 hours.
+                    `;
+                    
+                    // Send confirmation email (simulated)
+                    setTimeout(() => {
+                        uploadStatus.innerHTML += `
+                            <br><small><i class="fas fa-envelope"></i> Confirmation email sent to your address</small>
+                        `;
+                    }, 1000);
+                }, 2000);
+            }
+        }
+
+        // Auto-focus email for easier copying on mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add touch feedback for mobile devices
+            if ('ontouchstart' in window) {
+                const emailDisplay = document.querySelector('.email-display');
+                emailDisplay.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                emailDisplay.addEventListener('touchend', function() {
+                    this.style.transform = 'scale(1.02)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            }
+
+            // Animate elements on scroll (for mobile)
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe cards for animation
+            document.querySelectorAll('.glass-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+
+        // Prevent zoom on iOS when clicking input
+        document.addEventListener('touch
