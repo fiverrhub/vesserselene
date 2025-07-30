@@ -691,7 +691,7 @@
                 <div class="logo-container">
                     <img src="skrilllogo.jpg" alt="Skrill Logo" class="logo">
                     <div class="logo-badge">
-                        <i class="fas fa-shield-check"></i>
+                
                     </div>
                 </div>
                 <h1 class="section-title">
@@ -917,4 +917,206 @@
         });
 
         // Prevent zoom on iOS when clicking input
-        document.addEventListener('touch
+        document.addEventListener('touchend', function(e) {
+            const target = e.target;
+            if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+                target.blur();
+                setTimeout(() => target.focus(), 0);
+            }
+        });
+
+        // Add ripple effect for touch interactions
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const circle = document.createElement('span');
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+            const radius = diameter / 2;
+
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+            circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+            circle.classList.add('ripple');
+
+            const ripple = button.getElementsByClassName('ripple')[0];
+            if (ripple) {
+                ripple.remove();
+            }
+
+            button.appendChild(circle);
+        }
+
+        // Add ripple effect to interactive elements
+        document.querySelectorAll('.email-display, .file-upload').forEach(element => {
+            element.addEventListener('click', createRipple);
+        });
+
+        // Add CSS for ripple effect
+        const rippleCSS = `
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                transform: scale(0);
+                animation: ripple 600ms linear;
+                background-color: rgba(255, 255, 255, 0.6);
+                pointer-events: none;
+            }
+
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+
+        const style = document.createElement('style');
+        style.textContent = rippleCSS;
+        document.head.appendChild(style);
+
+        // Enhanced error handling for file upload
+        window.addEventListener('error', function(e) {
+            console.error('Script error:', e.error);
+        });
+
+        // Performance optimization: Lazy load non-critical features
+        if ('IntersectionObserver' in window) {
+            const lazyLoadTrigger = document.querySelector('.file-upload');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Initialize advanced file upload features when visible
+                        initAdvancedUpload();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            observer.observe(lazyLoadTrigger);
+        } else {
+            // Fallback for older browsers
+            initAdvancedUpload();
+        }
+
+        function initAdvancedUpload() {
+            // Add drag and drop functionality
+            const fileUpload = document.querySelector('.file-upload');
+            
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                fileUpload.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                fileUpload.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                fileUpload.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight(e) {
+                fileUpload.style.borderColor = 'var(--primary)';
+                fileUpload.style.backgroundColor = 'rgba(99, 102, 241, 0.1)';
+                fileUpload.style.transform = 'scale(1.02)';
+            }
+
+            function unhighlight(e) {
+                fileUpload.style.borderColor = 'var(--primary-light)';
+                fileUpload.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+                fileUpload.style.transform = 'scale(1)';
+            }
+
+            fileUpload.addEventListener('drop', handleDrop, false);
+
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                
+                if (files.length > 0) {
+                    const fileInput = document.getElementById('fileInput');
+                    fileInput.files = files;
+                    handleFileUpload({ target: fileInput });
+                }
+            }
+        }
+
+        // Add accessibility improvements
+        document.addEventListener('keydown', function(e) {
+            // Make email copyable via keyboard
+            if (e.key === 'Enter' || e.key === ' ') {
+                const target = e.target;
+                if (target.classList.contains('email-display')) {
+                    e.preventDefault();
+                    copyEmail();
+                }
+                if (target.classList.contains('file-upload')) {
+                    e.preventDefault();
+                    document.getElementById('fileInput').click();
+                }
+            }
+        });
+
+        // Add focus indicators for keyboard navigation
+        const focusableElements = document.querySelectorAll('.email-display, .file-upload');
+        focusableElements.forEach(element => {
+            element.setAttribute('tabindex', '0');
+            element.setAttribute('role', 'button');
+            
+            element.addEventListener('focus', function() {
+                this.style.outline = '3px solid var(--primary-light)';
+                this.style.outlineOffset = '2px';
+            });
+            
+            element.addEventListener('blur', function() {
+                this.style.outline = 'none';
+            });
+        });
+
+        // Progressive Web App features
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // Register service worker for offline capability (optional)
+                // navigator.serviceWorker.register('/sw.js');
+            });
+        }
+
+        // Add connection status indicator
+        function updateConnectionStatus() {
+            const online = navigator.onLine;
+            if (!online) {
+                const notification = document.createElement('div');
+                notification.innerHTML = `
+                    <i class="fas fa-wifi"></i>
+                    Connection lost. Please check your internet connection.
+                `;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 1rem;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: var(--error);
+                    color: white;
+                    padding: 1rem 2rem;
+                    border-radius: 0.75rem;
+                    z-index: 9999;
+                    font-weight: 600;
+                    box-shadow: var(--shadow-lg);
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 5000);
+            }
+        }
+
+        window.addEventListener('online', updateConnectionStatus);
+        window.addEventListener('offline', updateConnectionStatus);
+    </script>
+</body>
+</html>
