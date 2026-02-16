@@ -1,1132 +1,394 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vesser Selene - Creative Storyteller & Writer</title>
-  <meta name="description" content="Explore the wonders and secrets of Vesser Selene, a captivating online realm.">
-  <meta name="keywords" content="Vesser Selene, mystical, mysterious, web experience">
-  <meta name="author" content="FIVERR">
-  <link rel="canonical" href="https://fiverrhub.github.io/vesserselene/">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&family=Dancing+Script:wght@400;500;600;700&family=Great+Vibes&family=Satisfy&display=swap" rel="stylesheet">
-  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>WEBPAGE TEMPORARILY UNAVAILABLE</title>
   <style>
-    :root {
-      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-      --glass-bg: rgba(255, 255, 255, 0.1);
-      --glass-border: rgba(255, 255, 255, 0.2);
+    :root{
+      --bg1:#070A12;
+      --bg2:#0B1224;
+      --card:rgba(255,255,255,.06);
+      --border:rgba(255,255,255,.10);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.70);
+      --muted2:rgba(255,255,255,.55);
+      --accent:#7C5CFF;
+      --accent2:#23D5AB;
+      --shadow: 0 30px 80px rgba(0,0,0,.55);
+      --radius: 22px;
     }
 
-    * {
-      scroll-behavior: smooth;
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
+      background:
+        radial-gradient(900px 600px at 15% 20%, rgba(124,92,255,.28), transparent 55%),
+        radial-gradient(900px 600px at 85% 25%, rgba(35,213,171,.22), transparent 58%),
+        radial-gradient(800px 800px at 55% 90%, rgba(255,255,255,.08), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
     }
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 75%, #1a1a2e 100%);
-      background-attachment: fixed;
-      min-height: 100vh;
-      position: relative;
+    .noise{
+      pointer-events:none;
+      position:fixed; inset:0;
+      opacity:.05;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+      background-size: 260px 260px;
     }
 
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        radial-gradient(circle at 20% 80%, rgba(219, 112, 147, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(186, 85, 211, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(147, 197, 253, 0.05) 0%, transparent 50%);
-      pointer-events: none;
-      z-index: -1;
+    .wrap{
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      padding: clamp(18px, 3vw, 36px);
     }
 
-    .font-display {
-      font-family: 'Playfair Display', serif;
+    .card{
+      width:min(980px, 100%);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+      backdrop-filter: blur(10px);
     }
 
-    .author-name {
-      font-family: 'Great Vibes', cursive;
-      font-weight: 400;
-      letter-spacing: 2px;
+    .grid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
     }
 
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      position: relative;
-      display: inline-block;
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
     }
 
-    .section-title::after {
-      content: '✦';
-      position: absolute;
-      right: -30px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: rgba(219, 112, 147, 0.6);
-      font-size: 0.8em;
-      animation: twinkle 2s ease-in-out infinite;
+    .left{
+      padding: clamp(22px, 4vw, 44px);
+      position:relative;
     }
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.3; transform: translateY(-50%) scale(1); }
-      50% { opacity: 1; transform: translateY(-50%) scale(1.2); }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing:.2px;
+      user-select:none;
     }
 
-    .literary-quote {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      position: relative;
-      padding: 0 20px;
+    .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,.25));
+      box-shadow: 0 0 0 4px rgba(124,92,255,.18), 0 0 18px rgba(124,92,255,.45);
+      position:relative;
+    }
+    .dot::after{
+      content:"";
+      position:absolute; inset:-8px;
+      border-radius:50%;
+      border:1px solid rgba(124,92,255,.25);
+      animation: pulse 1.6s ease-out infinite;
+    }
+    @keyframes pulse{
+      0%{ transform:scale(.6); opacity:.9; }
+      100%{ transform:scale(1.35); opacity:0; }
     }
 
-    .literary-quote::before {
-      content: '"';
-      position: absolute;
-      left: 0;
-      top: -10px;
-      font-size: 2em;
-      color: rgba(219, 112, 147, 0.4);
-      font-family: 'Great Vibes', cursive;
+    h1{
+      margin: 16px 0 10px;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.06;
+      letter-spacing: -0.02em;
     }
 
-    .literary-quote::after {
-      content: '"';
-      position: absolute;
-      right: 0;
-      bottom: -20px;
-      font-size: 2em;
-      color: rgba(219, 112, 147, 0.4);
-      font-family: 'Great Vibes', cursive;
+    p{
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: clamp(15px, 1.35vw, 17px);
+      line-height: 1.6;
     }
 
-    .glass-card {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-      position: relative;
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 18px;
     }
 
-    .glass-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(219, 112, 147, 0.5), transparent);
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      color: var(--muted2);
+      font-size: 13px;
     }
 
-    .glass-card-dark {
-      background: rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top: 22px;
     }
 
-    .gradient-text {
-      background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 50%, #c7d2fe 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    .btn{
+      appearance:none;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.07);
+      color: var(--text);
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-size: 14px;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.10);
+      border-color: rgba(255,255,255,.22);
+    }
+    .btn:active{ transform: translateY(0px); }
+    .btn.primary{
+      border-color: rgba(124,92,255,.45);
+      background: linear-gradient(135deg, rgba(124,92,255,.35), rgba(35,213,171,.18));
     }
 
-    .gradient-text-secondary {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .right{
+      padding: clamp(20px, 3.5vw, 40px);
+      border-left:1px solid rgba(255,255,255,.10);
+      position:relative;
+      background:
+        radial-gradient(500px 500px at 50% 30%, rgba(124,92,255,.18), transparent 60%),
+        radial-gradient(600px 600px at 50% 90%, rgba(35,213,171,.12), transparent 60%);
     }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
-    }
-
-    .btn-secondary {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
-    }
-
-    .btn-secondary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(240, 147, 251, 0.6);
-    }
-
-    .btn-accent {
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
-    }
-
-    .btn-accent:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(79, 172, 254, 0.6);
-    }
-
-    .hover-lift {
-      transition: all 0.3s ease;
-    }
-
-    .hover-lift:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    }
-
-    .floating-element {
-      animation: float 6s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-    }
-
-    .pulse-glow {
-      animation: pulseGlow 2s ease-in-out infinite alternate;
-    }
-
-    @keyframes pulseGlow {
-      from { box-shadow: 0 0 20px rgba(102, 126, 234, 0.4); }
-      to { box-shadow: 0 0 30px rgba(102, 126, 234, 0.8); }
-    }
-
-    .shining-dot::after {
-      content: '•';
-      color: #f39c12;
-      animation: shimmer 1.5s infinite;
-      display: inline-block;
-      margin-left: 0.5rem;
-    }
-
-    @keyframes shimmer {
-      0%, 100% { opacity: 0; }
-      50% { opacity: 1; }
-    }
-
-    /* FIXED MOBILE MENU STYLES */
-    .mobile-menu {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 280px;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(20px);
-      border-left: 1px solid rgba(255, 255, 255, 0.1);
-      z-index: 9999;
-      transform: translateX(100%);
-      transition: transform 0.3s ease-in-out;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .mobile-menu.active {
-      transform: translateX(0);
-    }
-
-    .mobile-menu-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 9998;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-    }
-
-    .mobile-menu-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .mobile-nav-item {
-      padding: 16px 24px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
-    }
-
-    .mobile-nav-item:hover {
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateX(-5px);
-    }
-
-    .mobile-nav-item:last-child {
-      border-bottom: none;
-    }
-
-    .star-rating {
-      color: #ffd700;
-      filter: drop-shadow(0 2px 4px rgba(255, 215, 0, 0.3));
-    }
-
-    .book-card {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .book-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-
-    .book-card:hover::before {
-      left: 100%;
-    }
-
-    @media (max-width: 768px) {
-      .mobile-padding {
-        padding: 1rem;
-      }
-      
-      .mobile-text-sm {
-        font-size: 0.875rem;
-      }
-      
-      .mobile-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-
-      /* Ensure mobile menu is always on top */
-      .mobile-menu {
-        width: 85%;
-        max-width: 320px;
-      }
-
-      .container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-      }
-
-      /* Fix for small screens */
-      .glass-card {
-        margin: 0.5rem 0;
+    @media (max-width: 860px){
+      .right{
+        border-left:none;
+        border-top:1px solid rgba(255,255,255,.10);
       }
     }
 
-    .scroll-indicator {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.1);
-      z-index: 1000;
+    .panel{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.20);
+      border-radius: 18px;
+      padding: 16px;
     }
 
-    .scroll-progress {
-      height: 100%;
-      background: linear-gradient(90deg, #667eea, #764ba2);
-      width: 0%;
-      transition: width 0.1s ease;
+    .panel h2{
+      margin: 0 0 8px;
+      font-size: 14px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.78);
     }
 
-    .section {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease;
+    .status{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      margin-top: 10px;
     }
 
-    .section.active {
-      opacity: 1;
-      transform: translateY(0);
+    .status .label{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
+    .status .label strong{
+      font-size: 14px;
+      color: rgba(255,255,255,.90);
+    }
+
+    .status .label span{
+      font-size: 13px;
+      color: var(--muted2);
+    }
+
+    .pill{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.80);
+      white-space:nowrap;
+    }
+
+    .footer{
+      padding: 14px clamp(22px, 4vw, 44px);
+      border-top: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      color: var(--muted2);
+      font-size: 12.5px;
+    }
+
+    .link{
+      color: rgba(255,255,255,.80);
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(255,255,255,.35);
+    }
+    .link:hover{ border-bottom-color: rgba(255,255,255,.70); }
+
+    .icon{
+      width:18px; height:18px; flex:0 0 18px;
+      opacity:.95;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .dot::after{ animation:none; }
+      .btn{ transition:none; }
     }
   </style>
 </head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
 
-<body class="text-white min-h-screen">
-  <div class="scroll-indicator">
-    <div class="scroll-progress" id="scrollProgress"></div>
-  </div>
-
-  <!-- Mobile Menu Overlay -->
-  <div id="mobileMenuOverlay" class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
-
-  <div class="container mx-auto px-4 py-4 max-w-7xl">
-    <!-- Admin Login Section -->
-    <div id="admin-login" class="mb-4 flex justify-end">
-      <div class="login-form flex space-x-2 scale-90">
-        <input type="text" id="username" placeholder="User" class="px-3 py-2 rounded-lg bg-white/20 backdrop-blur border border-white/30 text-white placeholder-white/70 text-sm">
-        <input type="password" id="password" placeholder="Pass" class="px-3 py-2 rounded-lg bg-white/20 backdrop-blur border border-white/30 text-white placeholder-white/70 text-sm">
-        <button onclick="login()" class="btn-primary text-white font-semibold px-4 py-2 rounded-lg text-sm">→</button>
-      </div>
-    </div>
-    
-    <!-- Admin Logout Section -->
-    <div id="admin-logout" class="hidden mb-4 flex justify-end">
-      <button onclick="logout()" class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-lg text-sm transition-all">×</button>
-    </div>
-
-    <!-- Header section -->
-    <header class="glass-card rounded-2xl p-6 mb-8 relative overflow-hidden">
-      <div class="flex flex-col lg:flex-row justify-between items-center">
-        <div class="flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 lg:space-x-6 mb-4 lg:mb-0">
-          <div class="text-center lg:text-left">
-            <h1 class="text-5xl lg:text-6xl author-name font-bold mb-3 relative">
-              <span class="text-white drop-shadow-lg">Vesser Selene</span>
-            </h1>
-            <p class="text-xl text-rose-200 font-medium">Creative Storyteller & Writer</p>
+  <main class="wrap">
+    <section class="card" role="status" aria-live="polite">
+      <div class="grid">
+        <div class="left">
+          <div class="badge">
+            <span class="dot" aria-hidden="true"></span>
+            <span>Service notice</span>
           </div>
-        
-        </div>
-        
-        <!-- Desktop Navigation -->
-        <nav class="hidden lg:block">
-          <ul class="flex space-x-6">
-            <li><a href="#" onclick="showSection('home')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">Home</a></li>
-            <li><a href="#" onclick="showSection('about')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">About</a></li>
-            <li><a href="#" onclick="showSection('books')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">Books</a></li>
-            <li><a href="#" onclick="showSection('achievements')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">Achievements</a></li>
-            <li><a href="#" onclick="showSection('reviews')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">Reviews</a></li>
-			 <li><a href="#" onclick="showSection('events')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">Events</a></li>
-            <li><a href="#" onclick="showSection('payment')" class="nav-link text-white/80 hover:text-white transition-colors font-medium">Payment</a></li>
-          </ul>
-        </nav>
 
-        <!-- Mobile Menu Button -->
-        <button class="lg:hidden text-white p-2 z-50 relative" onclick="toggleMobileMenu()">
-          <i class="fas fa-bars text-2xl" id="menuIcon"></i>
-        </button>
-      </div>
-    </header>
+          <h1>Website temporarily unavailable</h1>
+          <p>
+            We’re doing a quick maintenance / fixing an issue.
+            Please try again in a few minutes.
+          </p>
 
-    <!-- IMPROVED Mobile Navigation -->
-    <div id="mobileMenu" class="mobile-menu">
-      <div class="flex justify-between items-center p-6 border-b border-white/10">
-        <h3 class="text-white font-semibold text-lg">Navigation</h3>
-        <button onclick="toggleMobileMenu()" class="text-white text-2xl hover:text-rose-200 transition-colors">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <nav class="flex-1">
-        <ul class="py-4">
-          <li class="mobile-nav-item">
-            <a href="#" onclick="showSection('home'); toggleMobileMenu()" class="flex items-center text-white hover:text-rose-200 transition-colors font-medium">
-              <i class="fas fa-home w-5 mr-3"></i>
+          <div class="meta">
+            <div class="chip">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              <span id="timeText">Updated just now</span>
+            </div>
+
+            <div class="chip">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 2l10 6-10 6L2 8l10-6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M2 8v8l10 6 10-6V8" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+              <span>Responsive • Desktop + Mobile</span>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn primary" onclick="location.reload()">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M21 12a9 9 0 0 1-15.36 6.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M3 12a9 9 0 0 1 15.36-6.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M6 18v-4h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M18 6v4h-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Refresh
+            </button>
+
+            <a class="btn" href="/" aria-label="Go to homepage">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
               Home
             </a>
-          </li>
-          <li class="mobile-nav-item">
-            <a href="#" onclick="showSection('about'); toggleMobileMenu()" class="flex items-center text-white hover:text-rose-200 transition-colors font-medium">
-              <i class="fas fa-user w-5 mr-3"></i>
-              About
-            </a>
-          </li>
-          <li class="mobile-nav-item">
-            <a href="#" onclick="showSection('books'); toggleMobileMenu()" class="flex items-center text-white hover:text-rose-200 transition-colors font-medium">
-              <i class="fas fa-book w-5 mr-3"></i>
-              Books
-            </a>
-          </li>
-          <li class="mobile-nav-item">
-            <a href="#" onclick="showSection('achievements'); toggleMobileMenu()" class="flex items-center text-white hover:text-rose-200 transition-colors font-medium">
-              <i class="fas fa-trophy w-5 mr-3"></i>
-              Achievements
-            </a>
-          </li>
-          <li class="mobile-nav-item">
-            <a href="#" onclick="showSection('reviews'); toggleMobileMenu()" class="flex items-center text-white hover:text-rose-200 transition-colors font-medium">
-              <i class="fas fa-star w-5 mr-3"></i>
-              Reviews
-            </a>
-          </li>
-		    <li class="mobile-nav-item">
-            <a href="#" onclick="showSection('events'); toggleMobileMenu()" class="flex items-center text-white hover:text-rose-200 transition-colors font-medium">
-              <i class="fas fa-credit-card w-5 mr-3"></i>
-              Events
-            </a>
-          </li>
-          <li class="mobile-nav-item">
-            <a href="#" onclick="showSection('payment'); toggleMobileMenu()" class="flex items-center text-white hover:text-rose-200 transition-colors font-medium">
-              <i class="fas fa-credit-card w-5 mr-3"></i>
-              Payment
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
+          </div>
+        </div>
 
-    <!-- Home Section -->
-    <div id="home-section" class="section">
-      <section class="grid lg:grid-cols-2 gap-8 items-center mb-16">
-        <div class="glass-card rounded-2xl p-6 hover-lift">
-          <div class="flex flex-col items-center">
-            <img src="author-photomod.jpg" alt="Vesser Selene" class="w-64 h-72 rounded-2xl shadow-2xl mb-6 object-cover pulse-glow">
-            <div class="w-full">
-              <h3 class="text-2xl font-bold mb-4 text-rose-200 text-center section-title">About the Author</h3>
-              <div class="text-white/90 space-y-3">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div><strong>Full Name:</strong> Vesser Selene</div>
-                  <div><strong>Age:</strong> 19</div>
-                  <div class="flex items-center">
-                    <strong>Born Country:</strong>
-                    <span class="ml-2">Maldives</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_Maldives.svg" alt="Maldives Flag" width="25" height="15" class="ml-2 rounded">
-                  </div>
-                  <div><strong>Books Count:</strong> 5</div>
-                </div>
-                <div class="mt-4 space-y-3">
-                  <div class="flex justify-between items-center">
-                    <strong>Author Status:</strong> 
-                    <span class="text-green-400 font-bold">Active</span>
-                  </div>
-                  <div class="flex justify-between items-center">
-           
-                    <div class="flex items-center space-x-2">
-            
-                    </div>
-                  </div>
-                </div>
+        <aside class="right">
+          <div class="panel">
+            <h2>Status</h2>
+
+            <div class="status">
+              <div class="label">
+                <strong>Maintenance in progress</strong>
+                <span>We’ll be back soon.</span>
               </div>
+              <span class="pill">Temporary</span>
             </div>
-          </div>
-        </div>
-        
-        <div class="glass-card rounded-2xl p-8 hover-lift">
-          <h2 class="text-3xl lg:text-4xl font-display font-bold mb-6 text-white section-title">A Rising Star in Storytelling</h2>
-          <p class="text-lg mb-6 text-white/90 leading-relaxed literary-quote">A passionate writer from the Maldives, who joined Fiverr in late 2023, creating remarkable stories that captivate and inspire.</p>
-          
-          <div class="bg-white/10 rounded-xl p-4 border border-white/20 relative">
-            <div class="absolute top-2 right-2 text-pink-300/30 text-lg">📖</div>
-            <h3 class="font-bold text-rose-300 animate-pulse mb-2 text-lg">🌟 LATEST UPDATES</h3>
-            <p class="text-emerald-300 font-semibold">Fiverr is excited to announce the Limited Edition of the Bath Short Story Award (BSSA) 2025, officially launching on 20 December 2025. This special edition is dedicated to discovering new talent and celebrating diverse storytelling from around the world, offering emerging writers a unique opportunity to showcase their voices. More details will be revealed soon ... stay tuned!</p>
-          </div>
-        </div>
-      </section>
-    </div>
 
-    <!-- About Section -->
-    <div id="about-section" class="section hidden">
-      <section class="glass-card rounded-2xl p-8 hover-lift">
-        <h2 class="text-4xl font-display font-bold text-center mb-8 text-white section-title">About Vesser Selene</h2>
-        <div class="prose max-w-4xl mx-auto text-white/90 space-y-6">
-          <div>
-            <h3 class="text-2xl font-semibold mb-4 text-rose-200 section-title">A Rising Star in Storytelling</h3>
-            <p class="leading-relaxed">Vesser Selene is a passionate writer whose commitment to storytelling has made her a standout in the creative community. She joined Fiverr in late 2023, and her journey has been nothing short of remarkable.</p>
-          </div>
-          
-          <div>
-            <h3 class="text-2xl font-semibold mb-4 gradient-text-secondary">Achievements in Contests</h3>
-            <p class="leading-relaxed mb-4">In 2024, Vesser participated in the Fiverr Steel-a-Palooza Contest, submitting three of her original stories. Her talent shone brightly, with two of her entries ranking in the top 100 and one breaking into the top 50.</p>
-            <p class="leading-relaxed">Her skill extends beyond storytelling—Vesser is a master of wording illustration, an ability to paint vivid and immersive scenes through her prose. This talent was evident in the Fiverr Fiction Fest Contest, where one of the stories she assisted ranked in the top 6. Notably, this contest featured contributions from the top 10 writers from the Palooza event, underscoring her collaborative prowess and creative excellence.</p>
-          </div>
-          
-          <div>
-            <h3 class="text-2xl font-semibold mb-4 gradient-text-secondary">Global Recognition</h3>
-            <p class="leading-relaxed">Vesser Selene's dedication and talent earned global recognition when her story Bound by Ink stunned the Fiverr community by ranking in the top 30 of the Fiverr Inspiration Awards 2024. Notably, she became one of only eight Fiverr clients to achieve this prestigious ranking in the competition. This accomplishment solidified her status as one of the brightest newcomers on the platform.</p>
-          </div>
-          
-          <div>
-            <h3 class="text-2xl font-semibold mb-4 gradient-text-secondary">Elite Status</h3>
-            <p class="leading-relaxed mb-4">In light of her incredible journey, Fiverr has honored Vesser Selene by inducting her into the Fiverr Elite Member Club. Her dedication, creativity, and meteoric rise serve as an inspiration to storytellers everywhere.</p>
-            <p class="italic text-center text-lg">We wish Vesser Selene continued success as she leaves an indelible mark on the world of storytelling!</p>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <!-- Books Section -->
-    <div id="books-section" class="section hidden">
-      <section class="mb-16">
-        <h2 class="text-4xl font-display font-bold text-center mb-12 text-white section-title">Books by Vesser Selene</h2>
-        <div class="grid lg:grid-cols-3 gap-8">
-          <!-- Book 1 -->
-          <div class="glass-card rounded-2xl p-6 text-center hover-lift book-card">
-            <div class="mb-6 flex justify-center">
-              <img src="BOOK1.JPG" alt="Chains of Mind" class="w-48 h-64 object-contain rounded-xl shadow-2xl bg-white/10 p-2">
-            </div>
-            <h3 class="text-2xl font-bold mb-3 text-rose-200">CHAINS OF MIND</h3>
-            <p class="text-sm mb-6 text-white/80">Drama, Horror, Mystery, Psychological Thriller</p>
-            <div class="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-3">
-              <a href="Skrillpage.html" class="btn-secondary text-white font-semibold px-6 py-3 rounded-lg transition-all">Buy via Skrill $5</a>
-              <button onclick="promptPremiumDownload()" class="btn-primary text-white font-semibold px-6 py-3 rounded-lg">Premium</button>
-            </div>
-          </div>
-
-          <!-- Book 2 -->
-          <div class="glass-card rounded-2xl p-6 text-center hover-lift book-card">
-            <div class="mb-6 flex justify-center">
-              <img src="BOOK2.JPG" alt="Bilgis" class="w-48 h-64 object-contain rounded-xl shadow-2xl bg-white/10 p-2">
-            </div>
-            <h3 class="text-2xl font-bold mb-3 text-rose-200">BILGIS</h3>
-            <p class="text-sm mb-6 text-white/80">Horror, Thriller, Drama, Psychological</p>
-            <div class="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-3">
-              <a href="Skrillpage.html" class="btn-secondary text-white font-semibold px-6 py-3 rounded-lg transition-all">Buy via Skrill $5</a>
-              <button onclick="promptPremiumDownload()" class="btn-primary text-white font-semibold px-6 py-3 rounded-lg">Premium</button>
-            </div>
-          </div>
-
-          <!-- Book 3 -->
-          <div class="glass-card rounded-2xl p-6 text-center hover-lift book-card">
-            <div class="mb-6 flex justify-center">
-              <img src="BOOK4.JPG" alt="Bound by Ink" class="w-48 h-64 object-contain rounded-xl shadow-2xl bg-white/10 p-2">
-            </div>
-            <h3 class="text-2xl font-bold mb-3 text-rose-200">BOUND BY INK</h3>
-            <p class="text-sm mb-6 text-white/80">Mystery, Psychological Horror, Thriller, Dark Fantasy</p>
-            <div class="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-3">
-              <a href="Skrillpage.html" class="btn-secondary text-white font-semibold px-6 py-3 rounded-lg transition-all">Buy via Skrill $12</a>
-              <button onclick="promptPremiumDownload()" class="btn-primary text-white font-semibold px-6 py-3 rounded-lg">Premium</button>
-            </div>
-            
-            <!-- Reviews Section -->
-            <div class="mt-8 text-left">
-              <h4 class="text-xl font-semibold mb-6 text-rose-200 text-center section-title">Reader Reviews</h4>
-              <div class="space-y-4">
-                <!-- Review 1 -->
-                <div class="bg-white/10 rounded-xl p-4 border border-white/20">
-                  <div class="flex flex-col sm:flex-row sm:items-center mb-3 space-y-1 sm:space-y-0">
-                    <div class="flex star-rating">
-                      <i class="fas fa-star text-sm"></i>
-                      <i class="fas fa-star text-sm"></i>
-                      <i class="fas fa-star text-sm"></i>
-                    </div>
-                    <span class="sm:ml-3 text-sm text-white/80">By Auren</span>
-                    <span class="sm:ml-3 text-sm text-white/60">28 Jan 2025</span>
-                  </div>
-                  <p class="text-white/90 mb-3 leading-relaxed">Your story had its creepy vibe, but with your charm? It'd be irresistible. 😉 Keep shining my rising star ... Big fan Vesser Selene 😘</p>
-                  <div id="reply-section-1" class="mt-3 hidden">
-                    <textarea id="reply-text-1" class="w-full p-3 border border-white/30 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur" rows="2" placeholder="Write your reply..."></textarea>
-                    <div class="flex space-x-2 mt-3">
-                      <button onclick="submitReply(1)" class="btn-primary text-white px-4 py-2 rounded-lg text-sm">Submit</button>
-                      <button onclick="cancelReply(1)" class="btn-secondary text-white px-4 py-2 rounded-lg text-sm">Cancel</button>
-                    </div>
-                  </div>
-                  <button onclick="showReplySection(1)" class="reply-btn text-blue-400 text-sm hover:text-blue-300 hidden transition-colors">Reply</button>
-                  <div id="replies-1" class="ml-4 mt-3 pl-4 border-l-2 border-white/20"></div>
-                </div>
-
-                <!-- Review 2 -->
-                <div class="bg-white/10 rounded-xl p-4 border border-white/20">
-                  <div class="flex flex-col sm:flex-row sm:items-center mb-3 space-y-1 sm:space-y-0">
-                    <div class="flex star-rating">
-                      <i class="fas fa-star text-sm"></i>
-                      <i class="fas fa-star text-sm"></i>
-                      <i class="fas fa-star text-sm"></i>
-                      <i class="fas fa-star text-sm"></i>
-                    </div>
-                    <span class="sm:ml-3 text-sm text-white/80">By Ishadora</span>
-                    <span class="sm:ml-3 text-sm text-white/60">28 Jan 2025</span>
-                  </div>
-                  <p class="text-white/90 mb-3 leading-relaxed">I absolutely loved your story❤️ The Cursed Journals is such a fun mix of reality and fiction—creepy in the best way and so gripping. Highly recommend 😊</p>
-                  <div id="reply-section-2" class="mt-3 hidden">
-                    <textarea id="reply-text-2" class="w-full p-3 border border-white/30 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur" rows="2" placeholder="Write your reply..."></textarea>
-                    <div class="flex space-x-2 mt-3">
-                      <button onclick="submitReply(2)" class="btn-primary text-white px-4 py-2 rounded-lg text-sm">Submit</button>
-                      <button onclick="cancelReply(2)" class="btn-secondary text-white px-4 py-2 rounded-lg text-sm">Cancel</button>
-                    </div>
-                  </div>
-                  <button onclick="showReplySection(2)" class="reply-btn text-blue-400 text-sm hover:text-blue-300 hidden transition-colors">Reply</button>
-                  <div id="replies-2" class="ml-4 mt-3 pl-4 border-l-2 border-white/20"></div>
-                </div>
-
-                <!-- Review 3 -->
-                <div class="bg-white/10 rounded-xl p-4 border border-white/20">
-                  <div class="flex flex-col sm:flex-row sm:items-center mb-3 space-y-1 sm:space-y-0">
-                    <div class="flex star-rating">
-                      <i class="fas fa-star text-sm"></i>
-                      <i class="fas fa-star text-sm"></i>
-                    </div>
-                    <span class="sm:ml-3 text-sm text-white/80">By Robin</span>
-                    <span class="sm:ml-3 text-sm text-white/60">01 Feb 2025</span>
-                  </div>
-                  <p class="text-white/90 mb-3 leading-relaxed">not so bad @ishadora are you happy now 😊</p>
-                  <div id="reply-section-3" class="mt-3 hidden">
-                    <textarea id="reply-text-3" class="w-full p-3 border border-white/30 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur" rows="2" placeholder="Write your reply..."></textarea>
-                    <div class="flex space-x-2 mt-3">
-                      <button onclick="submitReply(3)" class="btn-primary text-white px-4 py-2 rounded-lg text-sm">Submit</button>
-                      <button onclick="cancelReply(3)" class="btn-secondary text-white px-4 py-2 rounded-lg text-sm">Cancel</button>
-                    </div>
-                  </div>
-                  <button onclick="showReplySection(3)" class="reply-btn text-blue-400 text-sm hover:text-blue-300 hidden transition-colors">Reply</button>
-                  <div id="replies-3" class="ml-4 mt-3 pl-4 border-l-2 border-white/20"></div>
-                </div>
-
-                <!-- Review 4 -->
-                <div class="bg-white/10 rounded-xl p-4 border border-white/20">
-                  <div class="flex flex-col sm:flex-row sm:items-center mb-3 space-y-1 sm:space-y-0">
-                    <div class="flex star-rating">
-                      <i class="fas fa-star text-sm"></i>
-                      <i class="fas fa-star text-sm"></i>
-                      <i class="fas fa-star text-sm"></i>
-                      <i class="fas fa-star text-sm"></i>
-                    </div>
-                    <span class="sm:ml-3 text-sm text-white/80">By Auren</span>
-                    <span class="sm:ml-3 text-sm text-white/60">05 Feb 2025</span>
-                  </div>
-                  <p class="text-white/90 mb-3 leading-relaxed">@Robin & @Ishadora 🍿👀🤔 Drama's getting good now go get a room...losers</p>
-                  <div id="reply-section-4" class="mt-3 hidden">
-                    <textarea id="reply-text-4" class="w-full p-3 border border-white/30 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur" rows="2" placeholder="Write your reply..."></textarea>
-                    <div class="flex space-x-2 mt-3">
-                      <button onclick="submitReply(4)" class="btn-primary text-white px-4 py-2 rounded-lg text-sm">Submit</button>
-                      <button onclick="cancelReply(4)" class="btn-secondary text-white px-4 py-2 rounded-lg text-sm">Cancel</button>
-                    </div>
-                  </div>
-                  <button onclick="showReplySection(4)" class="reply-btn text-blue-400 text-sm hover:text-blue-300 hidden transition-colors">Reply</button>
-                  <div id="replies-4" class="ml-4 mt-3 pl-4 border-l-2 border-white/20"></div>
-                </div>
-                
-                <!-- New Reviews Container -->
-                <div id="new-reviews-container"></div>
+            <div class="status">
+              <div class="label">
+                <strong>Try again later</strong>
+                <span>If this keeps happening, contact support.</span>
               </div>
+              <span class="pill">Retry</span>
+            </div>
+
+            <!-- Optional: show an incident code (edit/remove if not needed) -->
+            <div class="status" style="margin-bottom:2px;">
+              <div class="label">
+                <strong>Incident reference</strong>
+                <span id="refText">REF-XXXX</span>
+              </div>
+              <span class="pill" id="codePill">#</span>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
-
-    <!-- Achievements Section -->
-    <div id="achievements-section" class="section hidden">
-      <section class="mb-16">
-        <h2 class="text-4xl font-display font-bold text-center mb-12 gradient-text">Achievements & Recognition</h2>
-        <div class="flex justify-center mb-12">
-          <img src="ELITE LOGO.png" alt="Elite Badge" class="w-60 h-180 rounded-2xl shadow-2xl floating-element">
-		   <img src="INSPIRATION.png" alt="Elite Badge" class="w-60 h-180 rounded-2xl shadow-2xl floating-element"> 
-        </div>
-        <div class="grid lg:grid-cols-3 gap-8">
-          <div class="glass-card p-8 rounded-2xl hover-lift text-center">
-            <div class="text-6xl mb-6">
-              <i class="fas fa-star text-green-400 drop-shadow-lg"></i>
-            </div>
-            <h3 class="font-bold mb-4 text-xl gradient-text-secondary">Fiverr Steel-a-Palooza Contest</h3>
-            <p class="text-white/90 leading-relaxed">Two entries in the Top 100, including one in the Top 50: Chains of Mind & Bilqis</p>
-          </div>
-          
-          <div class="glass-card p-8 rounded-2xl hover-lift text-center">
-            <div class="text-6xl mb-6">
-              <i class="fas fa-star text-green-400 drop-shadow-lg"></i>
-            </div>
-            <h3 class="font-bold mb-4 text-xl gradient-text-secondary">Fiverr Fiction Fest</h3>
-            <p class="text-white/90 leading-relaxed">Vanishing Pulse – Assisted Story by Vesser Selene, Officially Ranked in the Top</p>
-          </div>
-          
-          <div class="glass-card p-8 rounded-2xl hover-lift text-center">
-            <div class="text-6xl mb-6 flex justify-center space-x-2">
-              <i class="fas fa-trophy text-yellow-400 drop-shadow-lg"></i>
-              <i class="fas fa-award text-blue-400 drop-shadow-lg"></i>
-            </div>
-            <h3 class="font-bold mb-4 text-xl gradient-text-secondary">Fiverr Inspiration Awards</h3>
-            <p class="text-white/90 leading-relaxed">Bound by Ink ranked in the Top 30 in 2024, becoming one of only 8 Fiverr members to achieve this milestone</p>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <!-- Reviews Section -->
-    <div id="reviews-section" class="section hidden">
-      <section class="mb-16">
-        <h2 class="text-4xl font-display font-bold text-center mb-12 gradient-text">Reviews</h2>
-        <div class="glass-card rounded-2xl p-8 max-w-2xl mx-auto">
-          <div class="text-center mb-6">
-            <input type="password" id="reviews-password" placeholder="Enter premium code" class="w-full p-4 border border-white/30 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur mb-4">
-            <button onclick="verifyReviewsPassword()" class="btn-primary text-white font-semibold px-8 py-3 rounded-lg w-full sm:w-auto">Submit</button>
-          </div>
-          
-          <div id="reviews-content" class="hidden">
-            <div class="mb-8 space-y-4">
-              <input type="text" id="reviewer-name" class="w-full p-4 border border-white/30 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur" placeholder="Your Name">
-              <textarea id="new-review-text" class="w-full p-4 border border-white/30 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur" rows="4" placeholder="Write your review..."></textarea>
-              <button onclick="postReview()" class="btn-primary text-white font-semibold px-8 py-3 rounded-lg w-full sm:w-auto">Post Review</button>
-            </div>
-            <div id="reviews-list" class="space-y-4"></div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-
- <!-- Events Section -->
-    <div id="events-section" class="section hidden">
-      <section class="mb-16">
-        <h2 class="text-4xl font-display font-bold text-center mb-12 gradient-text">Upcoming Events</h2>
-        <div class="glass-card rounded-2xl p-8 text-center max-w-md mx-auto">
-   
-          
-    <div class="space-y-4">
-      <input type="text" id="adminUser" placeholder="Username" class="w-full px-4 py-3 border border-white/20 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur">
-      <input type="password" id="adminPass" placeholder="Password" class="w-full px-4 py-3 border border-white/20 rounded-xl bg-white/10 text-white placeholder-white/70 backdrop-blur">
-      <button onclick="adminLogin()" class="btn-accent text-white font-semibold px-8 py-4 rounded-lg text-lg hover:scale-105 transform transition-all inline-block w-full">LOGIN</button>
-      <p id="loginError" class="text-red-400 font-semibold hidden">Enter correct credentials</p>
-    </div>
-    
-        </div>
-      </section>
-    </div>
-	
-	
-    <!-- Payment Section -->
-    <div id="payment-section" class="section hidden">
-      <section class="mb-16">
-        <h2 class="text-4xl font-display font-bold text-center mb-12 gradient-text">Payment Related</h2>
-        <div class="glass-card rounded-2xl p-8 text-center max-w-md mx-auto">
-  
-          <a href="payment.html" class="btn-accent text-white font-semibold px-8 py-4 rounded-lg text-lg hover:scale-105 transform transition-all inline-block">Payment Portal</a>
-        </div>
-      </section>
-    </div>
-
-    <!-- Footer -->
-    <footer class="glass-card-dark rounded-2xl p-8 text-center mt-16">
-      <p class="text-white/80 mb-4">&copy; 2025 Fiverr Company Limited. All rights reserved.</p>
-      <div class="flex justify-center space-x-6 mb-6">
-        <a href="#" class="text-white/60 hover:text-white text-2xl transition-colors"><i class="fab fa-twitter"></i></a>
-        <a href="#" class="text-white/60 hover:text-white text-2xl transition-colors"><i class="fab fa-linkedin"></i></a>
-        <a href="#" class="text-white/60 hover:text-white text-2xl transition-colors"><i class="fab fa-instagram"></i></a>
+        </aside>
       </div>
-      <p class="text-white/60">
-        <a href="map.html" class="text-blue-400 hover:text-blue-300 transition-colors">No of visitors to the page: <strong>120</strong></a>
-      </p>
-    </footer>
-  </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.6.1/firebase-app.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.6.1/firebase-firestore.min.js"></script>
-  
+      <div class="footer">
+        <div>© <span id="year"></span> • Fiverr Company Limited. All rights reserved.
+
+</div>
+        <div>
+          
+          <span aria-hidden="true"></span>
+          <a class="link" href="tel:+0000000000">CONTACT SUPPORT TEAM</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
   <script>
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID",
-      measurementId: "YOUR_MEASUREMENT_ID"
-    };
+    // Update year
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Initialize Firebase
-    let app, db;
-    try {
-      app = firebase.initializeApp(firebaseConfig);
-      db = firebase.firestore();
-      console.log("Firestore initialized:", db);
-    } catch (error) {
-      console.log("Firebase initialization skipped for demo");
-    }
-
-    // Scroll progress indicator
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.pageYOffset;
-      const docHeight = document.body.offsetHeight - window.innerHeight;
-      const scrollPercent = (scrollTop / docHeight) * 100;
-      document.getElementById('scrollProgress').style.width = scrollPercent + '%';
+    // Show "last updated" time
+    const d = new Date();
+    const time = d.toLocaleString(undefined, {
+      weekday: "short", year: "numeric", month: "short", day: "2-digit",
+      hour: "2-digit", minute: "2-digit"
     });
+    document.getElementById("timeText").textContent = "Updated: " + time;
 
-    // Initialize
-    document.addEventListener('DOMContentLoaded', () => {
-      showSection('home');
-      loadReviews();
-      
-      // Add smooth scroll behavior
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute('href'));
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
-          }
-        });
-      });
-    });
-
-    // IMPROVED Mobile menu toggle
-    function toggleMobileMenu() {
-      const menu = document.getElementById('mobileMenu');
-      const overlay = document.getElementById('mobileMenuOverlay');
-      const menuIcon = document.getElementById('menuIcon');
-      
-      menu.classList.toggle('active');
-      overlay.classList.toggle('active');
-      
-      // Prevent body scrolling when menu is open
-      if (menu.classList.contains('active')) {
-        document.body.style.overflow = 'hidden';
-        menuIcon.className = 'fas fa-times text-2xl';
-      } else {
-        document.body.style.overflow = 'auto';
-        menuIcon.className = 'fas fa-bars text-2xl';
-      }
-    }
-
-    // Section navigation
-    function showSection(sectionName) {
-      // Hide all sections
-      document.querySelectorAll('.section').forEach(section => {
-        section.classList.add('hidden');
-        section.classList.remove('active');
-      });
-      
-      // Show selected section with animation
-      const targetSection = document.getElementById(`${sectionName}-section`);
-      targetSection.classList.remove('hidden');
-      
-      // Trigger animation after a brief delay
-      setTimeout(() => {
-        targetSection.classList.add('active');
-      }, 50);
-
-      // Update active nav link
-      document.querySelectorAll('.nav-link').forEach(link => {
-        link.classList.remove('text-white', 'font-bold');
-        link.classList.add('text-white/80');
-      });
-      
-      // Scroll to top smoothly
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Admin functions
-    function login() {
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      
-      if (username === "admin" && password === "password") {
-        document.getElementById('admin-login').classList.add('hidden');
-        document.getElementById('admin-logout').classList.remove('hidden');
-        document.querySelectorAll('.reply-btn').forEach(btn => {
-          btn.classList.remove('hidden');
-        });
-      } else {
-        alert("Invalid credentials");
-      }
-    }
-
-    function logout() {
-      document.getElementById('admin-login').classList.remove('hidden');
-      document.getElementById('admin-logout').classList.add('hidden');
-      document.getElementById('username').value = '';
-      document.getElementById('password').value = '';
-      document.querySelectorAll('.reply-btn').forEach(btn => {
-        btn.classList.add('hidden');
-      });
-      document.querySelectorAll('[id^="reply-section-"]').forEach(section => {
-        section.classList.add('hidden');
-      });
-    }
-
-    // Book functions
-    function promptPremiumDownload() {
-      const password = prompt("Enter password to download the book:");
-      if (password === "5555") {
-        window.location.href = "Bound_by_Ink.pdf";
-      } else {
-        alert("Payment Required");
-      }
-    }
-
-    function promptPassword(bookTitle) {
-      const password = prompt("Enter password to download the book:");
-      if (password === "0151") {
-        window.location.href = bookTitle + ".pdf";
-      } else {
-        alert("Download restricted by the author at this moment.");
-      }
-    }
-
-    // Review system functions
-    function showReplySection(reviewId) {
-      document.getElementById(`reply-section-${reviewId}`).classList.remove('hidden');
-      document.querySelector(`button[onclick="showReplySection(${reviewId})"]`).classList.add('hidden');
-    }
-
-    function cancelReply(reviewId) {
-      document.getElementById(`reply-section-${reviewId}`).classList.add('hidden');
-      document.querySelector(`button[onclick="showReplySection(${reviewId})"]`).classList.remove('hidden');
-      document.getElementById(`reply-text-${reviewId}`).value = '';
-    }
-
-    function submitReply(reviewId) {
-      const replyText = document.getElementById(`reply-text-${reviewId}`).value;
-      if (replyText.trim() === '') return;
-
-      const repliesContainer = document.getElementById(`replies-${reviewId}`);
-      const replyElement = document.createElement('div');
-      replyElement.className = 'mt-3 bg-white/5 rounded-lg p-3 border border-white/10';
-      replyElement.innerHTML = `
-        <div class="flex items-center text-sm mb-2">
-          <span class="font-medium text-blue-400">Admin</span>
-          <span class="ml-2 text-white/60">• ${new Date().toLocaleDateString()}</span>
-        </div>
-        <p class="text-white/90 text-sm leading-relaxed">${replyText}</p>
-      `;
-      
-      repliesContainer.appendChild(replyElement);
-      cancelReply(reviewId);
-    }
-
-    function verifyReviewsPassword() {
-      const password = document.getElementById('reviews-password').value;
-      if (password === "2552") {
-        document.getElementById('reviews-content').classList.remove('hidden');
-      } else {
-        alert("Invalid premium code");
-      }
-    }
-
-    function postReview() {
-      const reviewerName = document.getElementById('reviewer-name').value;
-      const reviewText = document.getElementById('new-review-text').value;
-      if (reviewText.trim() === '' || reviewerName.trim() === '') return;
-
-      const review = {
-        name: reviewerName,
-        text: reviewText,
-        date: new Date().toLocaleDateString()
-      };
-
-      console.log("Saving review:", review);
-
-      // Save review to Firestore if available
-      if (db) {
-        db.collection("reviews").add(review)
-          .then(() => {
-            console.log("Review saved successfully");
-            displayReview(review, document.getElementById('reviews-list'));
-            displayReview(review, document.getElementById('new-reviews-container'));
-
-            document.getElementById('reviewer-name').value = '';
-            document.getElementById('new-review-text').value = '';
-          })
-          .catch((error) => {
-            console.error("Error adding review: ", error);
-          });
-      } else {
-        // Fallback for demo without Firebase
-        displayReview(review, document.getElementById('reviews-list'));
-        displayReview(review, document.getElementById('new-reviews-container'));
-        document.getElementById('reviewer-name').value = '';
-        document.getElementById('new-review-text').value = '';
-      }
-    }
-
-    function displayReview(review, container) {
-      const newReviewElement = document.createElement('div');
-      newReviewElement.className = 'bg-white/10 rounded-xl p-4 border border-white/20 hover-lift';
-      newReviewElement.innerHTML = `
-        <div class="flex flex-col sm:flex-row sm:items-center mb-3 space-y-1 sm:space-y-0">
-          <div class="flex star-rating">
-            <i class="fas fa-star text-sm"></i>
-            <i class="fas fa-star text-sm"></i>
-            <i class="fas fa-star text-sm"></i>
-          </div>
-          <span class="sm:ml-3 text-sm text-white/80">By ${review.name}</span>
-          <span class="sm:ml-3 text-sm text-white/60">• ${review.date}</span>
-        </div>
-        <p class="text-white/90 leading-relaxed">${review.text}</p>
-      `;
-      container.appendChild(newReviewElement);
-    }
-
-    function loadReviews() {
-      if (db) {
-        db.collection("reviews").get().then((querySnapshot) => {
-          const reviewsList = document.getElementById('reviews-list');
-          const newReviewsContainer = document.getElementById('new-reviews-container');
-          querySnapshot.forEach((doc) => {
-            const review = doc.data();
-            displayReview(review, reviewsList);
-            displayReview(review, newReviewsContainer);
-          });
-        }).catch((error) => {
-          console.error("Error getting reviews: ", error);
-        });
-      }
-    }
-
-    // Enhanced click outside to close mobile menu
-    document.addEventListener('click', (e) => {
-      const menu = document.getElementById('mobileMenu');
-      const menuButton = e.target.closest('button[onclick="toggleMobileMenu()"]');
-      const overlay = document.getElementById('mobileMenuOverlay');
-      
-      // Close menu if clicking outside or on overlay
-      if ((!menu.contains(e.target) && !menuButton && menu.classList.contains('active')) || 
-          e.target === overlay) {
-        toggleMobileMenu();
-      }
-    });
-
-    // Prevent menu close when clicking inside the menu
-    document.getElementById('mobileMenu').addEventListener('click', (e) => {
-      e.stopPropagation();
-    });
-
-    // Handle escape key to close mobile menu
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        const menu = document.getElementById('mobileMenu');
-        if (menu.classList.contains('active')) {
-          toggleMobileMenu();
-        }
-      }
-    });
-
-    // Add loading animation for images
-    document.addEventListener('DOMContentLoaded', () => {
-      const images = document.querySelectorAll('img');
-      images.forEach(img => {
-        img.addEventListener('load', () => {
-          img.style.opacity = '1';
-        });
-      });
-    });
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      const menu = document.getElementById('mobileMenu');
-      if (window.innerWidth >= 1024 && menu.classList.contains('active')) {
-        toggleMobileMenu();
-      }
-    });
+    // Create a lightweight reference code
+    const code = Math.random().toString(36).slice(2, 6).toUpperCase() + "-" + Math.random().toString(36).slice(2, 6).toUpperCase();
+    document.getElementById("refText").textContent = "REF-" + code;
+    document.getElementById("codePill").textContent = "REF-" + code;
   </script>
-
-<script>
-  function adminLogin() {
-    const user = document.getElementById("adminUser").value;
-    const pass = document.getElementById("adminPass").value;
-    const errorMsg = document.getElementById("loginError");
-    if (user === "selene" && pass === "selene@0152") {
-      window.location.href = "events.html";
-    } else {
-      errorMsg.classList.remove("hidden");
-    }
-  }
-</script>
 </body>
-
 </html>
