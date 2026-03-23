@@ -1,548 +1,380 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Most Visited Locations</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Most Visited Locations — Vesser Selene</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
-        :root {
-            --primary-color: #667eea;
-            --secondary-color: #764ba2;
-            --accent-color: #f093fb;
-            --dark-bg: #0f0f23;
-            --card-bg: rgba(255, 255, 255, 0.1);
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.8);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            --gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-        }
+  <style>
+    :root {
+      --ink: #0d0d0f;
+      --paper: #f5f0e8;
+      --cream: #ede7d6;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --rose: #c4706a;
+      --mist: rgba(245,240,232,0.05);
+      --mist-2: rgba(245,240,232,0.1);
+      --border: rgba(201,168,76,0.2);
+      --font-display: 'Cinzel', serif;
+      --font-body: 'Cormorant Garamond', serif;
+      --font-sans: 'DM Sans', sans-serif;
+    }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-primary);
-            min-height: 100vh;
-            background-image: 
-                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
-            background-attachment: fixed;
-            overflow-x: hidden;
-        }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-        }
+    body {
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(10px);
-            background: var(--card-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            animation: slideDown 0.8s ease-out;
-        }
+    /* noise */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: 0.6;
+    }
+    /* glows */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 55% 40% at 10% 20%, rgba(201,168,76,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 45% 45% at 90% 80%, rgba(196,112,106,0.07) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
 
-        .header h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
-        }
+    /* scroll bar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(245,240,232,0.05); }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(var(--gold), var(--rose)); border-radius: 3px; }
 
-        .header p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            font-weight: 300;
-        }
+    /* ── SCROLL PROGRESS ── */
+    #scrollProgress {
+      position: fixed; top: 0; left: 0; height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--rose));
+      width: 0%; z-index: 10000; transition: width 0.1s linear;
+    }
 
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
+    /* ── WRAPPER ── */
+    .wrapper {
+      max-width: 1280px; margin: 0 auto;
+      padding: 0 2rem; position: relative; z-index: 1;
+    }
 
-        @media (min-width: 1024px) {
-            .content-grid {
-                grid-template-columns: 1fr 400px;
-            }
-        }
+    /* ── BACK LINK ── */
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-sans); font-size: 0.72rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(201,168,76,0.6); text-decoration: none;
+      padding: 1.5rem 2rem 0;
+      max-width: 1280px; margin: 0 auto; display: block;
+      position: relative; z-index: 1;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--gold); }
 
-        .map-section {
-            backdrop-filter: blur(10px);
-            background: var(--card-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            animation: slideUp 0.8s ease-out 0.2s both;
-        }
+    /* ── HEADER ── */
+    .page-header {
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+      text-align: center;
+      animation: fadeDown 0.7s ease both;
+    }
+    .page-header .eyebrow {
+      font-family: var(--font-sans); font-size: 0.72rem;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.75rem; display: block;
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 600; letter-spacing: 0.1em;
+      background: linear-gradient(135deg, var(--paper) 0%, var(--gold) 60%, var(--rose) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+    .page-header .date-line {
+      font-family: var(--font-sans); font-size: 0.78rem;
+      color: rgba(245,240,232,0.35); letter-spacing: 0.1em;
+    }
 
-        .map-container {
-            height: 500px;
-            width: 100%;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            position: relative;
-        }
+    /* ── GRID ── */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    @media (max-width: 1024px) { .content-grid { grid-template-columns: 1fr; } }
 
-        @media (max-width: 768px) {
-            .map-container {
-                height: 350px;
-            }
-        }
+    /* ── CARD ── */
+    .card {
+      background: var(--mist);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      position: relative; overflow: hidden;
+      animation: fadeUp 0.6s ease both;
+    }
+    .card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .card.delay-1 { animation-delay: 0.15s; }
+    .card.delay-2 { animation-delay: 0.3s; }
 
-        .stats-section {
-            backdrop-filter: blur(10px);
-            background: var(--card-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            animation: slideUp 0.8s ease-out 0.4s both;
-        }
+    /* ── MAP ── */
+    .map-card { padding: 1.5rem; }
+    .map-label {
+      font-family: var(--font-sans); font-size: 0.68rem;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem; display: block;
+    }
+    #map {
+      height: 500px; width: 100%;
+      border-radius: 2px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    @media (max-width: 768px) { #map { height: 320px; } }
 
-        .stats-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
+    /* override leaflet popup */
+    .leaflet-popup-content-wrapper {
+      background: #111115 !important;
+      border: 1px solid var(--border) !important;
+      border-radius: 2px !important;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important;
+      color: var(--paper) !important;
+    }
+    .leaflet-popup-tip { background: #111115 !important; }
+    .leaflet-popup-close-button { color: var(--gold) !important; }
 
-        .stats-header h2 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
+    /* ── STATS ── */
+    .stats-card { padding: 2rem; }
+    .stats-header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+    .stats-header h2 {
+      font-family: var(--font-display); font-size: 0.85rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+    .total-number {
+      font-family: var(--font-display);
+      font-size: 4rem; font-weight: 600;
+      background: linear-gradient(135deg, var(--gold), var(--rose));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1; margin-bottom: 0.4rem;
+    }
+    .total-label {
+      font-family: var(--font-sans); font-size: 0.72rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(245,240,232,0.35);
+    }
 
-        .total-visits {
-            font-size: 3rem;
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
-        }
+    /* ── COUNTRY LIST ── */
+    .country-list { display: flex; flex-direction: column; gap: 0.6rem; }
+    .country-item {
+      display: flex; align-items: center;
+      padding: 0.85rem 1rem;
+      background: rgba(245,240,232,0.03);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 2px;
+      cursor: pointer; position: relative; overflow: hidden;
+      transition: border-color 0.25s, background 0.25s, transform 0.25s;
+    }
+    .country-item:hover {
+      border-color: rgba(201,168,76,0.35);
+      background: rgba(201,168,76,0.06);
+      transform: translateX(4px);
+    }
+    .country-flag { font-size: 1.25rem; margin-right: 0.75rem; flex-shrink: 0; }
+    .country-name {
+      font-family: var(--font-sans); font-size: 0.85rem;
+      color: var(--paper); flex: 1; font-weight: 400;
+    }
+    .country-visits {
+      font-family: var(--font-display); font-size: 1rem;
+      font-weight: 600; color: var(--gold);
+      margin-right: 0.75rem; min-width: 28px; text-align: right;
+    }
+    .country-bar-wrap {
+      width: 60px; height: 3px;
+      background: rgba(245,240,232,0.08); border-radius: 1px; flex-shrink: 0;
+    }
+    .country-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--rose));
+      border-radius: 1px; width: 0;
+      transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+    }
+    /* rank badge */
+    .rank {
+      font-family: var(--font-sans); font-size: 0.6rem;
+      letter-spacing: 0.1em; color: rgba(245,240,232,0.25);
+      min-width: 1.5rem; margin-right: 0.5rem; text-align: center;
+    }
 
-        .country-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem; text-align: center;
+      position: relative; z-index: 1;
+    }
+    footer p {
+      font-family: var(--font-sans); font-size: 0.72rem;
+      color: rgba(245,240,232,0.3); letter-spacing: 0.05em;
+    }
+    footer a { color: rgba(201,168,76,0.5); text-decoration: none; }
+    footer a:hover { color: var(--gold); }
 
-        .country-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .country-item:hover {
-            transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
-        }
-
-        .country-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: -1;
-        }
-
-        .country-item:hover::before {
-            opacity: 0.1;
-        }
-
-        .country-name {
-            font-weight: 500;
-            font-size: 1.1rem;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .country-flag {
-            width: 24px;
-            height: 18px;
-            border-radius: 3px;
-            background: var(--gradient);
-            display: inline-block;
-        }
-
-        .visit-count {
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: var(--accent-color);
-            min-width: 40px;
-            text-align: right;
-        }
-
-        .progress-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 3px;
-            background: var(--gradient);
-            border-radius: 0 0 12px 12px;
-            transition: width 0.8s ease;
-        }
-
-        .floating-elements {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .floating-circle {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .floating-circle:nth-child(1) {
-            width: 200px;
-            height: 200px;
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .floating-circle:nth-child(2) {
-            width: 150px;
-            height: 150px;
-            top: 60%;
-            right: 20%;
-            animation-delay: 2s;
-        }
-
-        .floating-circle:nth-child(3) {
-            width: 100px;
-            height: 100px;
-            bottom: 20%;
-            left: 30%;
-            animation-delay: 4s;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-
-        /* Mobile specific styles */
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
-            .header {
-                padding: 1.2rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .map-section, .stats-section {
-                padding: 1.5rem;
-            }
-
-            .content-grid {
-                gap: 1.5rem;
-            }
-
-            .country-item {
-                padding: 0.8rem 1rem;
-            }
-
-            .country-name {
-                font-size: 1rem;
-            }
-
-            .visit-count {
-                font-size: 1.1rem;
-            }
-
-            .total-visits {
-                font-size: 2.5rem;
-            }
-        }
-
-        /* Light mode map tiles */
-        .leaflet-container {
-            background: #f8f9fa !important;
-        }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--gradient);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-color);
-        }
-    </style>
+    /* ── ANIMS ── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
-    <div class="floating-elements">
-        <div class="floating-circle"></div>
-        <div class="floating-circle"></div>
-        <div class="floating-circle"></div>
+  <div id="scrollProgress"></div>
+
+  <a href="index.html" class="back-link">← Back to Vesser Selene</a>
+
+  <div class="wrapper">
+    <div class="page-header">
+      <span class="eyebrow">Global Readership</span>
+      <h1>Most Visited Locations</h1>
+      <p class="date-line">Updated: <span id="current-date"></span></p>
     </div>
 
-    <div class="container">
-        <div class="header">
-            <h1>Most Visited Locations</h1>
-            <p>Updated on: <span id="current-date"></span></p>
+    <div class="content-grid">
+      <!-- Map -->
+      <div class="card map-card delay-1">
+        <span class="map-label">Interactive World Map</span>
+        <div id="map"></div>
+      </div>
+
+      <!-- Stats -->
+      <div class="card stats-card delay-2">
+        <div class="stats-header">
+          <h2>Travel Statistics</h2>
+          <div class="total-number" id="total-visits">0</div>
+          <div class="total-label">Total Visits</div>
         </div>
-
-        <div class="content-grid">
-            <div class="map-section">
-                <div id="map" class="map-container"></div>
-            </div>
-
-            <div class="stats-section">
-                <div class="stats-header">
-                    <h2>Travel Statistics</h2>
-                    <div class="total-visits" id="total-visits">120</div>
-                    <p style="color: var(--text-secondary); margin-top: 0.5rem;">Total Visits</p>
-                </div>
-
-                <div class="country-list" id="country-list">
-                    <!-- Countries will be populated by JavaScript -->
-                </div>
-            </div>
-        </div>
+        <div class="country-list" id="country-list"></div>
+      </div>
     </div>
+  </div>
 
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        // Set current date
-        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
+  <footer>
+    <p>&copy; 2025 Fiverr Company Limited. All rights reserved. &nbsp;·&nbsp; <a href="index.html">Vesser Selene</a></p>
+  </footer>
 
-        // Country data with coordinates
-        const countryData = [
-            { name: 'USA', visits: 50, lat: 39.8283, lng: -98.5795, flag: '🇺🇸' },
-            { name: 'Maldives', visits: 35, lat: 3.2028, lng: 73.2207, flag: '🇲🇻' },
-            { name: 'Australia', visits: 15, lat: -25.2744, lng: 133.7751, flag: '🇦🇺' },
-            { name: 'England', visits: 8, lat: 52.3555, lng: -1.1743, flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
-            { name: 'India', visits: 7, lat: 20.5937, lng: 78.9629, flag: '🇮🇳' },
-            { name: 'Sri Lanka', visits: 4, lat: 7.8731, lng: 80.7718, flag: '🇱🇰' },
-            { name: 'Egypt', visits: 1, lat: 26.0975, lng: 31.2357, flag: '🇪🇬' }
-        ];
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Scroll progress
+    window.addEventListener('scroll', () => {
+      const pct = (window.pageYOffset / (document.body.offsetHeight - window.innerHeight)) * 100;
+      document.getElementById('scrollProgress').style.width = pct + '%';
+    });
 
-        // Calculate total visits
-        const totalVisits = countryData.reduce((sum, country) => sum + country.visits, 0);
-        const maxVisits = Math.max(...countryData.map(country => country.visits));
+    // Date
+    document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
 
-        // Update total visits display
-        let currentCount = 0;
-        const countAnimation = setInterval(() => {
-            currentCount++;
-            document.getElementById('total-visits').textContent = currentCount;
-            if (currentCount >= totalVisits) {
-                clearInterval(countAnimation);
-            }
-        }, 30);
+    // Data
+    const countryData = [
+      { name: 'USA',       visits: 69, lat: 39.8283, lng: -98.5795,  flag: '🇺🇸' },
+      { name: 'Maldives',  visits: 35, lat: 3.2028,  lng: 73.2207,   flag: '🇲🇻' },
+      { name: 'Australia', visits: 15, lat: -25.2744,lng: 133.7751,  flag: '🇦🇺' },
+      { name: 'England',   visits: 25, lat: 52.3555, lng: -1.1743,   flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
+      { name: 'India',     visits: 15, lat: 20.5937, lng: 78.9629,   flag: '🇮🇳' },
+      { name: 'Sri Lanka', visits: 18, lat: 7.8731,  lng: 80.7718,   flag: '🇱🇰' },
+      { name: 'Egypt',       visits: 1,  lat: 26.0975,  lng: 31.2357,   flag: '🇪🇬' },
+      { name: 'China',       visits: 3,  lat: 35.8617,  lng: 104.1954,  flag: '🇨🇳' },
+      { name: 'Japan',       visits: 7,  lat: 36.2048,  lng: 138.2529,  flag: '🇯🇵' },
+      { name: 'Brazil',      visits: 3,  lat: -14.2350, lng: -51.9253,  flag: '🇧🇷' },
+      { name: 'Nigeria',     visits: 4,  lat: 9.0820,   lng: 8.6753,    flag: '🇳🇬' },
+      { name: 'South Korea', visits: 2,  lat: 35.9078,  lng: 127.7669,  flag: '🇰🇷' },
+      { name: 'Pakistan',    visits: 5,  lat: 30.3753,  lng: 69.3451,   flag: '🇵🇰' },
+    ];
 
-        // Populate country list
-        const countryList = document.getElementById('country-list');
-        countryData.forEach((country, index) => {
-            const countryItem = document.createElement('div');
-            countryItem.className = 'country-item';
-            countryItem.innerHTML = `
-                <div class="country-name">
-                    <span class="country-flag">${country.flag}</span>
-                    ${country.name}
-                </div>
-                <div class="visit-count">${country.visits}</div>
-                <div class="progress-bar" style="width: ${(country.visits / maxVisits) * 100}%"></div>
-            `;
-            
-            // Add click handler to focus on country
-            countryItem.addEventListener('click', () => {
-                map.setView([country.lat, country.lng], 6);
-            });
-            
-            countryList.appendChild(countryItem);
-            
-            // Animate progress bars
-            setTimeout(() => {
-                const progressBar = countryItem.querySelector('.progress-bar');
-                progressBar.style.width = `${(country.visits / maxVisits) * 100}%`;
-            }, 500 + index * 100);
-        });
+    countryData.sort((a, b) => b.visits - a.visits);
+    const totalVisits = countryData.reduce((s, c) => s + c.visits, 0);
+    const maxVisits   = Math.max(...countryData.map(c => c.visits));
 
-        // Initialize map
-        const map = L.map('map', {
-            center: [20, 0],
-            zoom: 2,
-            zoomControl: true,
-            scrollWheelZoom: true,
-            doubleClickZoom: true,
-            touchZoom: true,
-            dragging: true
-        });
+    // Animate count
+    let current = 0;
+    const timer = setInterval(() => {
+      current = Math.min(current + Math.ceil(totalVisits / 60), totalVisits);
+      document.getElementById('total-visits').textContent = current;
+      if (current >= totalVisits) clearInterval(timer);
+    }, 25);
 
-        // Add light theme tile layer
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-            attribution: '© OpenStreetMap contributors © CARTO',
-            subdomains: 'abcd',
-            maxZoom: 19
-        }).addTo(map);
+    // Country list
+    const list = document.getElementById('country-list');
+    countryData.forEach((c, i) => {
+      const item = document.createElement('div');
+      item.className = 'country-item';
+      item.innerHTML = `
+        <span class="rank">${String(i+1).padStart(2,'0')}</span>
+        <span class="country-flag">${c.flag}</span>
+        <span class="country-name">${c.name}</span>
+        <span class="country-visits">${c.visits}</span>
+        <div class="country-bar-wrap"><div class="country-bar" id="bar-${i}" style="width:0%"></div></div>
+      `;
+      item.addEventListener('click', () => map.setView([c.lat, c.lng], 5));
+      list.appendChild(item);
+      setTimeout(() => {
+        document.getElementById('bar-'+i).style.width = ((c.visits / maxVisits) * 100) + '%';
+      }, 400 + i * 80);
+    });
 
-        // Add markers for each country with flag icons
-        countryData.forEach(country => {
-            // Create custom flag icon for each country
-            const flagIcon = L.divIcon({
-                className: 'flag-marker',
-                html: `<div style="
-                    font-size: 32px; 
-                    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-                    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-                    animation: bounce 2s infinite;
-                    cursor: pointer;
-                    transition: transform 0.2s ease;
-                " onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">${country.flag}</div>
-                <style>
-                    @keyframes bounce {
-                        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-                        40% { transform: translateY(-5px); }
-                        60% { transform: translateY(-3px); }
-                    }
-                </style>`,
-                iconSize: [40, 40],
-                iconAnchor: [20, 35]
-            });
+    // Map
+    const map = L.map('map', { center: [20, 0], zoom: 2, zoomControl: true });
 
-            const marker = L.marker([country.lat, country.lng], { icon: flagIcon })
-                .addTo(map)
-                .bindPopup(`
-                    <div style="text-align: center; font-family: Inter, sans-serif; padding: 8px;">
-                        <div style="font-size: 28px; margin-bottom: 8px;">${country.flag}</div>
-                        <strong style="font-size: 18px; color: #333; display: block; margin-bottom: 4px;">${country.name}</strong>
-                        <div style="color: #667eea; font-weight: bold; font-size: 16px; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">${country.visits} visits</div>
-                    </div>
-                `, {
-                    closeButton: true,
-                    autoClose: false,
-                    maxWidth: 200
-                });
-        });
+    // Dark-ish tile (CartoDB dark matter)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '© OpenStreetMap contributors © CARTO',
+      subdomains: 'abcd', maxZoom: 19
+    }).addTo(map);
 
-        // Mobile responsiveness for map
-        function handleResize() {
-            if (window.innerWidth <= 768) {
-                map.zoomControl.setPosition('bottomright');
-            } else {
-                map.zoomControl.setPosition('topright');
-            }
-            
-            setTimeout(() => {
-                map.invalidateSize();
-            }, 100);
-        }
+    countryData.forEach(c => {
+      const icon = L.divIcon({
+        className: '',
+        html: `<div style="font-size:28px;line-height:1;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6));cursor:pointer;transition:transform .2s;"
+                     onmouseover="this.style.transform='scale(1.25)'"
+                     onmouseout="this.style.transform='scale(1)'">${c.flag}</div>`,
+        iconSize: [36, 36], iconAnchor: [18, 32]
+      });
 
-        window.addEventListener('resize', handleResize);
-        handleResize();
+      L.marker([c.lat, c.lng], { icon })
+        .addTo(map)
+        .bindPopup(`
+          <div style="text-align:center;font-family:'DM Sans',sans-serif;padding:6px 4px;">
+            <div style="font-size:2rem;margin-bottom:6px;">${c.flag}</div>
+            <strong style="display:block;font-size:1rem;color:#f5f0e8;margin-bottom:4px;">${c.name}</strong>
+            <span style="font-size:0.85rem;color:#c9a84c;letter-spacing:.05em;">${c.visits} visits</span>
+          </div>
+        `, { maxWidth: 180 });
+    });
 
-        // Add smooth scroll behavior
-        document.documentElement.style.scrollBehavior = 'smooth';
-
-        // Add intersection observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe elements for animation
-        document.querySelectorAll('.country-item').forEach(item => {
-            observer.observe(item);
-        });
-    </script>
+    // Resize
+    window.addEventListener('resize', () => setTimeout(() => map.invalidateSize(), 100));
+  </script>
 </body>
 </html>
