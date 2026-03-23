@@ -1,394 +1,1088 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="robots" content="noindex, nofollow" />
-  <title>WEBPAGE TEMPORARILY UNAVAILABLE</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vesser Selene — Creative Storyteller & Writer</title>
+  <meta name="description" content="Explore the wonders and secrets of Vesser Selene, a captivating online realm.">
+  <meta name="keywords" content="Vesser Selene, mystical, mysterious, web experience">
+  <meta name="author" content="FIVERR">
+  <link rel="canonical" href="https://fiverrhub.github.io/vesserselene/">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
   <style>
-    :root{
-      --bg1:#070A12;
-      --bg2:#0B1224;
-      --card:rgba(255,255,255,.06);
-      --border:rgba(255,255,255,.10);
-      --text:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.70);
-      --muted2:rgba(255,255,255,.55);
-      --accent:#7C5CFF;
-      --accent2:#23D5AB;
-      --shadow: 0 30px 80px rgba(0,0,0,.55);
-      --radius: 22px;
+    :root {
+      --ink: #0d0d0f;
+      --paper: #f5f0e8;
+      --cream: #ede7d6;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --rose: #c4706a;
+      --rose-light: #e8968f;
+      --mist: rgba(245,240,232,0.06);
+      --mist-2: rgba(245,240,232,0.12);
+      --border: rgba(201,168,76,0.2);
+      --font-display: 'Cinzel', serif;
+      --font-body: 'Cormorant Garamond', serif;
+      --font-sans: 'DM Sans', sans-serif;
     }
 
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color: var(--text);
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999;
+      opacity: 0.6;
+    }
+
+    /* ── AMBIENT GLOWS ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
       background:
-        radial-gradient(900px 600px at 15% 20%, rgba(124,92,255,.28), transparent 55%),
-        radial-gradient(900px 600px at 85% 25%, rgba(35,213,171,.22), transparent 58%),
-        radial-gradient(800px 800px at 55% 90%, rgba(255,255,255,.08), transparent 60%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-      overflow-x:hidden;
+        radial-gradient(ellipse 60% 40% at 15% 20%, rgba(201,168,76,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 85% 80%, rgba(196,112,106,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 50% 50%, rgba(13,13,15,0) 0%, transparent 100%);
+      pointer-events: none; z-index: 0;
     }
 
-    .noise{
-      pointer-events:none;
-      position:fixed; inset:0;
-      opacity:.05;
-      mix-blend-mode: overlay;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
-      background-size: 260px 260px;
+    /* ── SCROLL PROGRESS ── */
+    #scrollProgress {
+      position: fixed; top: 0; left: 0; height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--rose));
+      width: 0%; z-index: 10000; transition: width 0.1s linear;
     }
 
-    .wrap{
-      min-height:100%;
-      display:grid;
-      place-items:center;
-      padding: clamp(18px, 3vw, 36px);
+    /* ── WRAPPER ── */
+    .wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative; z-index: 1;
     }
 
-    .card{
-      width:min(980px, 100%);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+    /* ── ADMIN LOGIN ── */
+    .admin-bar {
+      display: flex; justify-content: flex-end;
+      padding: 1rem 2rem 0;
+      max-width: 1200px; margin: 0 auto;
+      position: relative; z-index: 2;
+    }
+    .admin-bar input {
+      background: var(--mist); border: 1px solid var(--border);
+      color: var(--paper); font-family: var(--font-sans); font-size: 0.75rem;
+      padding: 0.4rem 0.75rem; border-radius: 4px;
+      outline: none; width: 90px; margin-right: 0.4rem;
+    }
+    .admin-bar input::placeholder { color: rgba(245,240,232,0.35); }
+    .btn-admin {
+      background: var(--gold); color: var(--ink);
+      font-family: var(--font-sans); font-size: 0.75rem; font-weight: 500;
+      padding: 0.4rem 0.9rem; border: none; border-radius: 4px; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-admin:hover { background: var(--gold-light); }
+    .btn-logout {
+      background: transparent; border: 1px solid var(--rose);
+      color: var(--rose); font-family: var(--font-sans); font-size: 0.75rem;
+      padding: 0.4rem 0.9rem; border-radius: 4px; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-logout:hover { background: var(--rose); color: #fff; }
+
+    /* ── HEADER ── */
+    header {
+      padding: 3rem 2rem 2rem;
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      position: relative; z-index: 2;
+      border-bottom: 1px solid var(--border);
+    }
+    .brand h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 400;
+      background: linear-gradient(135deg, var(--paper) 0%, var(--gold) 60%, var(--rose-light) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 1px;
+      line-height: 1.1;
+    }
+    .brand p {
+      font-family: var(--font-sans); font-size: 0.8rem; font-weight: 300;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(245,240,232,0.45); margin-top: 0.4rem;
+    }
+
+    /* ── NAV ── */
+    nav.desktop-nav { display: flex; gap: 0.25rem; }
+    nav.desktop-nav a {
+      font-family: var(--font-sans); font-size: 0.75rem; font-weight: 400;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(245,240,232,0.55); text-decoration: none;
+      padding: 0.5rem 0.85rem; border-radius: 4px;
+      transition: color 0.2s, background 0.2s;
+      cursor: pointer;
+    }
+    nav.desktop-nav a:hover { color: var(--gold); background: var(--mist); }
+
+    /* ── MOBILE MENU BUTTON ── */
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer;
+      color: var(--paper); font-size: 1.25rem; padding: 0.5rem;
+      position: relative; z-index: 10001;
+    }
+
+    /* ── MOBILE SIDE DRAWER ── */
+    .mobile-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(13,13,15,0.7); z-index: 9997;
+    }
+    .mobile-overlay.active { display: block; }
+    .mobile-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0;
+      width: min(300px, 85vw);
+      background: #111115; border-left: 1px solid var(--border);
+      z-index: 9998; transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+      overflow-y: auto; padding: 2rem 1.5rem;
+      display: flex; flex-direction: column; gap: 0.25rem;
+    }
+    .mobile-drawer.active { transform: translateX(0); }
+    .drawer-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 2rem;
+    }
+    .drawer-header span { font-family: var(--font-display); font-size: 0.85rem; letter-spacing: 0.15em; color: var(--gold); }
+    .drawer-close { background: none; border: none; color: var(--paper); font-size: 1.2rem; cursor: pointer; }
+    .mobile-drawer a {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-family: var(--font-sans); font-size: 0.85rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(245,240,232,0.7); text-decoration: none;
+      padding: 0.85rem 0.5rem; border-bottom: 1px solid rgba(201,168,76,0.1);
+      transition: color 0.2s, padding-left 0.2s; cursor: pointer;
+    }
+    .mobile-drawer a:hover { color: var(--gold); padding-left: 1rem; }
+    .mobile-drawer a i { width: 1.25rem; color: var(--gold); opacity: 0.6; font-size: 0.8rem; }
+
+    /* ── SECTION BASE ── */
+    .section {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      min-height: 60vh; padding: 4rem 0;
+    }
+    .section.active { opacity: 1; transform: translateY(0); }
+    .section.hidden { display: none !important; }
+
+    /* ── SECTION TITLE ── */
+    .sec-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      font-weight: 600; letter-spacing: 0.1em;
+      color: var(--paper); margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+    .sec-subtitle {
+      font-family: var(--font-sans); font-size: 0.75rem;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 3rem; display: block;
+    }
+    .title-block { text-align: center; margin-bottom: 3.5rem; }
+    .title-block .sec-title { display: block; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      display: flex; align-items: center; gap: 1rem;
+      margin: 2rem 0;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+    .divider span { color: var(--gold); font-size: 0.7rem; }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--mist);
       border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-      backdrop-filter: blur(10px);
+      border-radius: 2px;
+      padding: 2rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .card:hover { transform: translateY(-4px); border-color: rgba(201,168,76,0.4); }
+    .card:hover::before { opacity: 1; }
+
+    /* ── HOME SECTION ── */
+    .home-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+      align-items: start;
+    }
+    .author-portrait {
+      width: 100%; aspect-ratio: 3/4; object-fit: cover;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+    .author-meta {
+      margin-top: 1.5rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;
+    }
+    .meta-item {
+      font-family: var(--font-sans); font-size: 0.8rem;
+      color: rgba(245,240,232,0.6);
+    }
+    .meta-item strong { color: var(--gold); font-weight: 500; display: block; margin-bottom: 0.15rem; letter-spacing: 0.05em; }
+    .meta-item span { color: var(--paper); }
+    .status-active {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--font-sans); font-size: 0.75rem;
+      color: #7ecba0;
+    }
+    .status-active::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: #7ecba0;
+      box-shadow: 0 0 8px #7ecba0;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { box-shadow: 0 0 4px #7ecba0; }
+      50% { box-shadow: 0 0 12px #7ecba0; }
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
+    .home-intro h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+      font-weight: 600; letter-spacing: 0.08em;
+      color: var(--paper); margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .home-intro .tagline {
+      font-family: var(--font-body); font-style: italic;
+      font-size: 1.2rem; color: rgba(245,240,232,0.7);
+      line-height: 1.7; margin-bottom: 2rem;
+      padding-left: 1.25rem; border-left: 2px solid var(--gold);
+    }
+    .update-box {
+      background: rgba(201,168,76,0.06);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 2px; padding: 1.25rem;
+      position: relative; overflow: hidden;
+    }
+    .update-box::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--rose));
+    }
+    .update-label {
+      font-family: var(--font-sans); font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.6rem; display: block;
+    }
+    .update-box p {
+      font-family: var(--font-sans); font-size: 0.82rem;
+      color: rgba(245,240,232,0.85); line-height: 1.65;
     }
 
-    @media (max-width: 860px){
-      .grid{ grid-template-columns: 1fr; }
+    /* ── ABOUT SECTION ── */
+    .about-content { max-width: 760px; margin: 0 auto; }
+    .about-block { margin-bottom: 2.5rem; }
+    .about-block h3 {
+      font-family: var(--font-display); font-size: 1.1rem;
+      letter-spacing: 0.12em; color: var(--gold);
+      margin-bottom: 0.85rem; text-transform: uppercase;
+    }
+    .about-block p {
+      font-family: var(--font-body); font-size: 1.15rem;
+      color: rgba(245,240,232,0.8); line-height: 1.85;
+    }
+    .about-block p em {
+      font-style: italic; color: var(--paper);
     }
 
-    .left{
-      padding: clamp(22px, 4vw, 44px);
-      position:relative;
+    /* ── BOOKS SECTION ── */
+    .books-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .book-card { position: relative; }
+    .book-cover-wrap {
+      aspect-ratio: 3/4; overflow: hidden; border-radius: 2px;
+      border: 1px solid var(--border); margin-bottom: 1.25rem;
+      background: #1a1a22;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .book-cover-wrap img {
+      width: 100%; height: 100%; object-fit: contain;
+      transition: transform 0.5s ease;
+    }
+    .book-card:hover .book-cover-wrap img { transform: scale(1.04); }
+    .book-genre {
+      font-family: var(--font-sans); font-size: 0.65rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.4rem;
+    }
+    .book-title {
+      font-family: var(--font-display); font-size: 1.15rem;
+      letter-spacing: 0.08em; color: var(--paper);
+      margin-bottom: 1.25rem;
+    }
+    .book-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .btn-buy {
+      background: transparent; border: 1px solid var(--rose);
+      color: var(--rose); font-family: var(--font-sans);
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.55rem 1rem; border-radius: 2px; cursor: pointer;
+      text-decoration: none; transition: all 0.2s; display: inline-block;
+    }
+    .btn-buy:hover { background: var(--rose); color: #fff; }
+    .btn-premium {
+      background: linear-gradient(135deg, var(--gold), var(--rose));
+      border: none; color: var(--ink);
+      font-family: var(--font-sans); font-size: 0.72rem;
+      font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.55rem 1rem; border-radius: 2px; cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-premium:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* ── REVIEWS ON BOOK CARD ── */
+    .book-reviews { margin-top: 2rem; }
+    .book-reviews h4 {
+      font-family: var(--font-display); font-size: 0.85rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+      padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+    }
+    .review-item {
+      background: rgba(245,240,232,0.03);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 2px; padding: 0.85rem 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .review-meta {
+      display: flex; align-items: center; gap: 0.6rem;
+      margin-bottom: 0.5rem; flex-wrap: wrap;
+    }
+    .review-stars { color: var(--gold); font-size: 0.65rem; }
+    .review-author {
+      font-family: var(--font-sans); font-size: 0.75rem;
+      color: var(--paper); font-weight: 500;
+    }
+    .review-date {
+      font-family: var(--font-sans); font-size: 0.7rem;
+      color: rgba(245,240,232,0.35);
+    }
+    .review-text {
+      font-family: var(--font-body); font-size: 1rem;
+      color: rgba(245,240,232,0.75); line-height: 1.65;
+    }
+    .btn-reply {
+      background: none; border: none; cursor: pointer;
+      font-family: var(--font-sans); font-size: 0.7rem;
+      color: rgba(201,168,76,0.6); letter-spacing: 0.08em;
+      text-transform: uppercase; margin-top: 0.5rem;
+      transition: color 0.2s; display: none;
+    }
+    .btn-reply:hover { color: var(--gold); }
+    .reply-form { margin-top: 0.75rem; display: none; }
+    .reply-form textarea {
+      width: 100%; background: rgba(245,240,232,0.04);
+      border: 1px solid var(--border); color: var(--paper);
+      font-family: var(--font-body); font-size: 0.95rem;
+      padding: 0.6rem 0.8rem; border-radius: 2px; resize: none;
+      outline: none;
+    }
+    .reply-actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+    .btn-sm {
+      font-family: var(--font-sans); font-size: 0.68rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.4rem 0.8rem; border-radius: 2px; cursor: pointer;
+      border: 1px solid; transition: all 0.2s;
+    }
+    .btn-sm.submit { border-color: var(--gold); background: var(--gold); color: var(--ink); }
+    .btn-sm.cancel { border-color: rgba(245,240,232,0.2); background: transparent; color: rgba(245,240,232,0.5); }
+    .btn-sm.cancel:hover { border-color: var(--rose); color: var(--rose); }
+    .replies-container {
+      margin-top: 0.75rem; padding-left: 1rem;
+      border-left: 2px solid rgba(201,168,76,0.15);
+    }
+    .reply-entry {
+      background: rgba(245,240,232,0.02); padding: 0.6rem 0.75rem;
+      border-radius: 2px; margin-top: 0.5rem;
+    }
+    .reply-entry .admin-tag {
+      font-family: var(--font-sans); font-size: 0.68rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.25rem;
+    }
+    .reply-entry p { font-family: var(--font-body); font-size: 0.9rem; color: rgba(245,240,232,0.7); }
+
+    /* ── ACHIEVEMENTS SECTION ── */
+    .achievements-badges {
+      display: flex; justify-content: center; gap: 2rem;
+      margin-bottom: 3rem; flex-wrap: wrap;
+    }
+    .achievements-badges img {
+      height: 180px; border-radius: 2px;
+      border: 1px solid var(--border);
+      animation: float 6s ease-in-out infinite;
+    }
+    .achievements-badges img:nth-child(2) { animation-delay: -3s; }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    .achieve-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .achieve-card { text-align: center; }
+    .achieve-icon {
+      font-size: 2.5rem; margin-bottom: 1rem;
+      display: block;
+    }
+    .achieve-card h3 {
+      font-family: var(--font-display); font-size: 0.85rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.75rem;
+    }
+    .achieve-card p {
+      font-family: var(--font-body); font-size: 1rem;
+      color: rgba(245,240,232,0.7); line-height: 1.7;
     }
 
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: var(--muted);
-      font-size: 13px;
-      letter-spacing:.2px;
-      user-select:none;
+    /* ── REVIEWS SECTION (Premium) ── */
+    .reviews-gate { max-width: 520px; margin: 0 auto; }
+    .reviews-gate h3 {
+      font-family: var(--font-display); font-size: 1rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.5rem; text-align: center;
+    }
+    .field-group { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem; }
+    .field-group input, .field-group textarea {
+      background: rgba(245,240,232,0.05); border: 1px solid var(--border);
+      color: var(--paper); font-family: var(--font-body); font-size: 1rem;
+      padding: 0.75rem 1rem; border-radius: 2px; outline: none;
+      transition: border-color 0.2s;
+    }
+    .field-group input:focus, .field-group textarea:focus { border-color: var(--gold); }
+    .field-group input::placeholder, .field-group textarea::placeholder { color: rgba(245,240,232,0.3); }
+    .btn-main {
+      background: linear-gradient(135deg, var(--gold), var(--rose));
+      border: none; color: var(--ink);
+      font-family: var(--font-sans); font-size: 0.75rem;
+      font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.85rem 2rem; border-radius: 2px; cursor: pointer; width: 100%;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-main:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* ── EVENTS SECTION ── */
+    .events-gate { max-width: 480px; margin: 0 auto; }
+    .events-gate h3 {
+      font-family: var(--font-display); font-size: 0.85rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.5rem; text-align: center;
+    }
+    #loginError {
+      font-family: var(--font-sans); font-size: 0.8rem;
+      color: var(--rose); text-align: center; margin-top: 0.75rem;
     }
 
-    .dot{
-      width:10px; height:10px; border-radius:50%;
-      background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,.25));
-      box-shadow: 0 0 0 4px rgba(124,92,255,.18), 0 0 18px rgba(124,92,255,.45);
-      position:relative;
+    /* ── PAYMENT SECTION ── */
+    .payment-center { text-align: center; max-width: 400px; margin: 0 auto; }
+    .payment-center p {
+      font-family: var(--font-body); font-size: 1.1rem;
+      color: rgba(245,240,232,0.65); margin-bottom: 2rem; line-height: 1.7;
     }
-    .dot::after{
-      content:"";
-      position:absolute; inset:-8px;
-      border-radius:50%;
-      border:1px solid rgba(124,92,255,.25);
-      animation: pulse 1.6s ease-out infinite;
+    .btn-portal {
+      display: inline-block; text-decoration: none;
+      background: transparent; border: 1px solid var(--gold);
+      color: var(--gold); font-family: var(--font-sans);
+      font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 0.9rem 2.5rem; border-radius: 2px;
+      transition: all 0.25s;
     }
-    @keyframes pulse{
-      0%{ transform:scale(.6); opacity:.9; }
-      100%{ transform:scale(1.35); opacity:0; }
-    }
+    .btn-portal:hover { background: var(--gold); color: var(--ink); }
 
-    h1{
-      margin: 16px 0 10px;
-      font-size: clamp(30px, 4vw, 48px);
-      line-height: 1.06;
-      letter-spacing: -0.02em;
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem; text-align: center;
+      position: relative; z-index: 1;
     }
+    footer p {
+      font-family: var(--font-sans); font-size: 0.75rem;
+      color: rgba(245,240,232,0.35); letter-spacing: 0.05em;
+    }
+    footer .social { display: flex; justify-content: center; gap: 1.5rem; margin: 1rem 0; }
+    footer .social a {
+      color: rgba(245,240,232,0.35); font-size: 1rem;
+      transition: color 0.2s; text-decoration: none;
+    }
+    footer .social a:hover { color: var(--gold); }
+    footer .visitor {
+      font-family: var(--font-sans); font-size: 0.72rem;
+      color: rgba(245,240,232,0.3); margin-top: 0.5rem;
+    }
+    footer .visitor a { color: rgba(201,168,76,0.5); text-decoration: none; }
+    footer .visitor a:hover { color: var(--gold); }
 
-    p{
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: clamp(15px, 1.35vw, 17px);
-      line-height: 1.6;
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .home-grid { grid-template-columns: 1fr; }
+      .books-grid { grid-template-columns: 1fr 1fr; }
+      .achieve-grid { grid-template-columns: 1fr 1fr; }
     }
-
-    .meta{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top: 18px;
-    }
-
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.10);
-      color: var(--muted2);
-      font-size: 13px;
-    }
-
-    .actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      margin-top: 22px;
-    }
-
-    .btn{
-      appearance:none;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.07);
-      color: var(--text);
-      padding: 12px 14px;
-      border-radius: 14px;
-      font-size: 14px;
-      cursor:pointer;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      user-select:none;
-    }
-    .btn:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,.10);
-      border-color: rgba(255,255,255,.22);
-    }
-    .btn:active{ transform: translateY(0px); }
-    .btn.primary{
-      border-color: rgba(124,92,255,.45);
-      background: linear-gradient(135deg, rgba(124,92,255,.35), rgba(35,213,171,.18));
-    }
-
-    .right{
-      padding: clamp(20px, 3.5vw, 40px);
-      border-left:1px solid rgba(255,255,255,.10);
-      position:relative;
-      background:
-        radial-gradient(500px 500px at 50% 30%, rgba(124,92,255,.18), transparent 60%),
-        radial-gradient(600px 600px at 50% 90%, rgba(35,213,171,.12), transparent 60%);
-    }
-    @media (max-width: 860px){
-      .right{
-        border-left:none;
-        border-top:1px solid rgba(255,255,255,.10);
-      }
-    }
-
-    .panel{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.20);
-      border-radius: 18px;
-      padding: 16px;
-    }
-
-    .panel h2{
-      margin: 0 0 8px;
-      font-size: 14px;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.78);
-    }
-
-    .status{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding: 12px 12px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
-      margin-top: 10px;
-    }
-
-    .status .label{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-    }
-
-    .status .label strong{
-      font-size: 14px;
-      color: rgba(255,255,255,.90);
-    }
-
-    .status .label span{
-      font-size: 13px;
-      color: var(--muted2);
-    }
-
-    .pill{
-      font-size: 12px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: rgba(255,255,255,.80);
-      white-space:nowrap;
-    }
-
-    .footer{
-      padding: 14px clamp(22px, 4vw, 44px);
-      border-top: 1px solid rgba(255,255,255,.10);
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      color: var(--muted2);
-      font-size: 12.5px;
-    }
-
-    .link{
-      color: rgba(255,255,255,.80);
-      text-decoration: none;
-      border-bottom: 1px dashed rgba(255,255,255,.35);
-    }
-    .link:hover{ border-bottom-color: rgba(255,255,255,.70); }
-
-    .icon{
-      width:18px; height:18px; flex:0 0 18px;
-      opacity:.95;
-    }
-
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      .dot::after{ animation:none; }
-      .btn{ transition:none; }
+    @media (max-width: 640px) {
+      header { flex-direction: column; gap: 1rem; align-items: flex-start; }
+      nav.desktop-nav { display: none; }
+      .hamburger { display: block; position: absolute; top: 1.5rem; right: 1.5rem; }
+      .books-grid { grid-template-columns: 1fr; }
+      .achieve-grid { grid-template-columns: 1fr; }
+      .author-meta { grid-template-columns: 1fr 1fr; }
+      .wrapper { padding: 0 1rem; }
+      header { padding: 1.5rem 1rem; }
     }
   </style>
 </head>
+
 <body>
-  <div class="noise" aria-hidden="true"></div>
+  <div id="scrollProgress"></div>
 
-  <main class="wrap">
-    <section class="card" role="status" aria-live="polite">
-      <div class="grid">
-        <div class="left">
-          <div class="badge">
-            <span class="dot" aria-hidden="true"></span>
-            <span>Service notice</span>
-          </div>
+  <!-- Overlay & Drawer -->
+  <div id="mobileOverlay" class="mobile-overlay" onclick="closeMobileMenu()"></div>
+  <div id="mobileDrawer" class="mobile-drawer">
+    <div class="drawer-header">
+      <span>Navigation</span>
+      <button class="drawer-close" onclick="closeMobileMenu()"><i class="fas fa-times"></i></button>
+    </div>
+    <a onclick="showSection('home'); closeMobileMenu()"><i class="fas fa-home"></i>Home</a>
+    <a onclick="showSection('about'); closeMobileMenu()"><i class="fas fa-user"></i>About</a>
+    <a onclick="showSection('books'); closeMobileMenu()"><i class="fas fa-book"></i>Books</a>
+    <a onclick="showSection('achievements'); closeMobileMenu()"><i class="fas fa-trophy"></i>Achievements</a>
+    <a onclick="showSection('reviews'); closeMobileMenu()"><i class="fas fa-star"></i>Reviews</a>
+    <a onclick="showSection('events'); closeMobileMenu()"><i class="fas fa-calendar"></i>Events</a>
+    <a onclick="showSection('payment'); closeMobileMenu()"><i class="fas fa-credit-card"></i>Payment</a>
+  </div>
 
-          <h1>Website temporarily unavailable</h1>
-          <p>
-            We’re doing a quick maintenance / fixing an issue.
-            Please try again in a few minutes.
-          </p>
+  <!-- Admin Bar -->
+  <div id="admin-login" class="admin-bar">
+    <input type="text" id="username" placeholder="User">
+    <input type="password" id="password" placeholder="Pass" style="margin-right: 0.4rem;">
+    <button class="btn-admin" onclick="login()">→</button>
+  </div>
+  <div id="admin-logout" class="admin-bar hidden">
+    <button class="btn-logout" onclick="logout()">Sign Out</button>
+  </div>
 
-          <div class="meta">
-            <div class="chip">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-width="2"/>
-              </svg>
-              <span id="timeText">Updated just now</span>
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <h1>Vesser Selene</h1>
+      <p>Creative Storyteller &amp; Writer</p>
+    </div>
+    <nav class="desktop-nav">
+      <a onclick="showSection('home')">Home</a>
+      <a onclick="showSection('about')">About</a>
+      <a onclick="showSection('books')">Books</a>
+      <a onclick="showSection('achievements')">Achievements</a>
+      <a onclick="showSection('reviews')">Reviews</a>
+      <a onclick="showSection('events')">Events</a>
+      <a onclick="showSection('payment')">Payment</a>
+    </nav>
+    <button class="hamburger" onclick="openMobileMenu()"><i class="fas fa-bars"></i></button>
+  </header>
+
+  <!-- ════════════ HOME ════════════ -->
+  <div id="home-section" class="section">
+    <div class="wrapper">
+      <div class="home-grid">
+        <!-- Left: portrait + meta -->
+        <div class="card">
+          <img src="author-photomod.jpg" alt="Vesser Selene" class="author-portrait">
+          <div class="author-meta">
+            <div class="meta-item"><strong>Full Name</strong><span>Vesser Selene</span></div>
+            <div class="meta-item"><strong>Age</strong><span>20</span></div>
+            <div class="meta-item">
+              <strong>Born Country</strong>
+              <span>Maldives
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_Maldives.svg" alt="Maldives" width="20" style="vertical-align:middle; margin-left:4px; border-radius:2px;">
+              </span>
             </div>
-
-            <div class="chip">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M12 2l10 6-10 6L2 8l10-6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M2 8v8l10 6 10-6V8" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
-              <span>Responsive • Desktop + Mobile</span>
-            </div>
-          </div>
-
-          <div class="actions">
-            <button class="btn primary" onclick="location.reload()">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M21 12a9 9 0 0 1-15.36 6.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <path d="M3 12a9 9 0 0 1 15.36-6.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <path d="M6 18v-4h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M18 6v4h-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              Refresh
-            </button>
-
-            <a class="btn" href="/" aria-label="Go to homepage">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
-              Home
-            </a>
+            <div class="meta-item"><strong>Books Count</strong><span>5</span></div>
+            <div class="meta-item"><strong>Author Status</strong><span class="status-active">Active</span></div>
           </div>
         </div>
 
-        <aside class="right">
-          <div class="panel">
-            <h2>Status</h2>
+        <!-- Right: intro + update -->
+        <div class="home-intro">
+          <span class="sec-subtitle">Rising Star in Storytelling</span>
+          <h2>A Voice from the Maldives</h2>
+          <p class="tagline">A passionate writer from the Maldives, who joined Fiverr in late 2023, creating remarkable stories that captivate and inspire.</p>
 
-            <div class="status">
-              <div class="label">
-                <strong>Maintenance in progress</strong>
-                <span>We’ll be back soon.</span>
-              </div>
-              <span class="pill">Temporary</span>
-            </div>
-
-            <div class="status">
-              <div class="label">
-                <strong>Try again later</strong>
-                <span>If this keeps happening, contact support.</span>
-              </div>
-              <span class="pill">Retry</span>
-            </div>
-
-            <!-- Optional: show an incident code (edit/remove if not needed) -->
-            <div class="status" style="margin-bottom:2px;">
-              <div class="label">
-                <strong>Incident reference</strong>
-                <span id="refText">REF-XXXX</span>
-              </div>
-              <span class="pill" id="codePill">#</span>
-            </div>
+          <div class="update-box">
+            <span class="update-label">⭐ Latest Updates</span>
+            <p></p>
           </div>
-        </aside>
-      </div>
-
-      <div class="footer">
-        <div>© <span id="year"></span> • Fiverr Company Limited. All rights reserved.
-
-</div>
-        <div>
-          
-          <span aria-hidden="true"></span>
-          <a class="link" href="tel:+0000000000">CONTACT SUPPORT TEAM</a>
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </div>
+
+  <!-- ════════════ ABOUT ════════════ -->
+  <div id="about-section" class="section hidden">
+    <div class="wrapper">
+      <div class="title-block">
+        <span class="sec-subtitle">Who She Is</span>
+        <span class="sec-title">About Vesser Selene</span>
+      </div>
+      <div class="about-content">
+        <div class="about-block card">
+          <h3>A Rising Star in Storytelling</h3>
+          <p>Vesser Selene is a passionate writer whose commitment to storytelling has made her a standout in the creative community. She joined Fiverr in late 2023, and her journey has been nothing short of remarkable.</p>
+        </div>
+
+        <div class="divider"><span>✦</span></div>
+
+        <div class="about-block card">
+          <h3>Achievements in Contests</h3>
+          <p>In 2024, Vesser participated in the Fiverr Steel-a-Palooza Contest, submitting three of her original stories. Her talent shone brightly, with two of her entries ranking in the top 100 and one breaking into the top 50.</p>
+          <br>
+          <p>Her skill extends beyond storytelling — Vesser is a master of wording illustration, an ability to paint vivid and immersive scenes through her prose. This talent was evident in the Fiverr Fiction Fest Contest, where one of the stories she assisted ranked in the top 6. Notably, this contest featured contributions from the top 10 writers from the Palooza event, underscoring her collaborative prowess and creative excellence.</p>
+        </div>
+
+        <div class="divider"><span>✦</span></div>
+
+        <div class="about-block card">
+          <h3>Global Recognition</h3>
+          <p>Vesser Selene's dedication and talent earned global recognition when her story <em>Bound by Ink</em> stunned the Fiverr community by ranking in the top 30 of the Fiverr Inspiration Awards 2024. Notably, she became one of only eight Fiverr clients to achieve this prestigious ranking in the competition. This accomplishment solidified her status as one of the brightest newcomers on the platform.</p>
+        </div>
+
+        <div class="divider"><span>✦</span></div>
+
+        <div class="about-block card">
+          <h3>Elite Status</h3>
+          <p>In light of her incredible journey, Fiverr has honored Vesser Selene by inducting her into the Fiverr Elite Member Club. Her dedication, creativity, and meteoric rise serve as an inspiration to storytellers everywhere.</p>
+          <br>
+          <p style="font-style:italic; color: var(--gold); text-align:center;">We wish Vesser Selene continued success as she leaves an indelible mark on the world of storytelling!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ BOOKS ════════════ -->
+  <div id="books-section" class="section hidden">
+    <div class="wrapper">
+      <div class="title-block">
+        <span class="sec-subtitle">Her Works</span>
+        <span class="sec-title">Books by Vesser Selene</span>
+      </div>
+      <div class="books-grid">
+        <!-- Book 1 -->
+        <div class="card book-card">
+          <div class="book-cover-wrap">
+            <img src="BOOK1.JPG" alt="Chains of Mind">
+          </div>
+          <div class="book-genre">Drama · Horror · Mystery · Psychological Thriller</div>
+          <div class="book-title">Chains of Mind</div>
+          <div class="book-actions">
+            <a href="Skrillpage.html" class="btn-buy">Buy via Skrill $5</a>
+            <button class="btn-premium" onclick="promptPremiumDownload()">Premium</button>
+          </div>
+        </div>
+
+        <!-- Book 2 -->
+        <div class="card book-card">
+          <div class="book-cover-wrap">
+            <img src="BOOK2.JPG" alt="Bilgis">
+          </div>
+          <div class="book-genre">Horror · Thriller · Drama · Psychological</div>
+          <div class="book-title">Bilgis</div>
+          <div class="book-actions">
+            <a href="Skrillpage.html" class="btn-buy">Buy via Skrill $5</a>
+            <button class="btn-premium" onclick="promptPremiumDownload()">Premium</button>
+          </div>
+        </div>
+
+        <!-- Book 3 (with reviews) -->
+        <div class="card book-card">
+          <div class="book-cover-wrap">
+            <img src="BOOK4.JPG" alt="Bound by Ink">
+          </div>
+          <div class="book-genre">Mystery · Psychological Horror · Thriller · Dark Fantasy</div>
+          <div class="book-title">Bound by Ink</div>
+          <div class="book-actions">
+            <a href="Skrillpage.html" class="btn-buy">Buy via Skrill $12</a>
+            <button class="btn-premium" onclick="promptPremiumDownload()">Premium</button>
+          </div>
+
+          <!-- Reader Reviews -->
+          <div class="book-reviews">
+            <h4>Reader Reviews</h4>
+
+            <!-- Review 1 -->
+            <div class="review-item" id="review-card-1">
+              <div class="review-meta">
+                <span class="review-stars">★★★</span>
+                <span class="review-author">Auren</span>
+                <span class="review-date">28 Jan 2025</span>
+              </div>
+              <p class="review-text">Your story had its creepy vibe, but with your charm? It'd be irresistible. 😉 Keep shining my rising star ... Big fan Vesser Selene 😘</p>
+              <button class="btn-reply" id="reply-btn-1" onclick="showReplySection(1)">↩ Reply</button>
+              <div class="reply-form" id="reply-form-1">
+                <textarea id="reply-text-1" rows="2" placeholder="Write a reply…"></textarea>
+                <div class="reply-actions">
+                  <button class="btn-sm submit" onclick="submitReply(1)">Post</button>
+                  <button class="btn-sm cancel" onclick="cancelReply(1)">Cancel</button>
+                </div>
+              </div>
+              <div class="replies-container" id="replies-1"></div>
+            </div>
+
+            <!-- Review 2 -->
+            <div class="review-item" id="review-card-2">
+              <div class="review-meta">
+                <span class="review-stars">★★★★</span>
+                <span class="review-author">Ishadora</span>
+                <span class="review-date">28 Jan 2025</span>
+              </div>
+              <p class="review-text">I absolutely loved your story ❤️ The Cursed Journals is such a fun mix of reality and fiction — creepy in the best way and so gripping. Highly recommend 😊</p>
+              <button class="btn-reply" id="reply-btn-2" onclick="showReplySection(2)">↩ Reply</button>
+              <div class="reply-form" id="reply-form-2">
+                <textarea id="reply-text-2" rows="2" placeholder="Write a reply…"></textarea>
+                <div class="reply-actions">
+                  <button class="btn-sm submit" onclick="submitReply(2)">Post</button>
+                  <button class="btn-sm cancel" onclick="cancelReply(2)">Cancel</button>
+                </div>
+              </div>
+              <div class="replies-container" id="replies-2"></div>
+            </div>
+
+            <!-- Review 3 -->
+            <div class="review-item" id="review-card-3">
+              <div class="review-meta">
+                <span class="review-stars">★★</span>
+                <span class="review-author">Robin</span>
+                <span class="review-date">01 Feb 2025</span>
+              </div>
+              <p class="review-text">not so bad @ishadora are you happy now 😊</p>
+              <button class="btn-reply" id="reply-btn-3" onclick="showReplySection(3)">↩ Reply</button>
+              <div class="reply-form" id="reply-form-3">
+                <textarea id="reply-text-3" rows="2" placeholder="Write a reply…"></textarea>
+                <div class="reply-actions">
+                  <button class="btn-sm submit" onclick="submitReply(3)">Post</button>
+                  <button class="btn-sm cancel" onclick="cancelReply(3)">Cancel</button>
+                </div>
+              </div>
+              <div class="replies-container" id="replies-3"></div>
+            </div>
+
+            <!-- Review 4 -->
+            <div class="review-item" id="review-card-4">
+              <div class="review-meta">
+                <span class="review-stars">★★★★</span>
+                <span class="review-author">Auren</span>
+                <span class="review-date">05 Feb 2025</span>
+              </div>
+              <p class="review-text">@Robin &amp; @Ishadora 🍿👀🤔 Drama's getting good now go get a room...losers</p>
+              <button class="btn-reply" id="reply-btn-4" onclick="showReplySection(4)">↩ Reply</button>
+              <div class="reply-form" id="reply-form-4">
+                <textarea id="reply-text-4" rows="2" placeholder="Write a reply…"></textarea>
+                <div class="reply-actions">
+                  <button class="btn-sm submit" onclick="submitReply(4)">Post</button>
+                  <button class="btn-sm cancel" onclick="cancelReply(4)">Cancel</button>
+                </div>
+              </div>
+              <div class="replies-container" id="replies-4"></div>
+            </div>
+
+            <!-- Dynamic reviews land here -->
+            <div id="new-reviews-container"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ ACHIEVEMENTS ════════════ -->
+  <div id="achievements-section" class="section hidden">
+    <div class="wrapper">
+      <div class="title-block">
+        <span class="sec-subtitle">Recognition &amp; Milestones</span>
+        <span class="sec-title">Achievements</span>
+      </div>
+      <div class="achievements-badges">
+        <img src="ELITE LOGO.png" alt="Elite Badge">
+        <img src="INSPIRATION.png" alt="Inspiration Award">
+      </div>
+      <div class="achieve-grid">
+        <div class="card achieve-card">
+          <span class="achieve-icon">⭐</span>
+          <h3>Fiverr Steel-a-Palooza</h3>
+          <p>Two entries in the Top 100, including one in the Top 50: <em>Chains of Mind</em> &amp; <em>Bilqis</em></p>
+        </div>
+        <div class="card achieve-card">
+          <span class="achieve-icon">⭐</span>
+          <h3>Fiverr Fiction Fest</h3>
+          <p>Vanishing Pulse — Assisted Story by Vesser Selene, Officially Ranked in the Top 6</p>
+        </div>
+        <div class="card achieve-card">
+          <span class="achieve-icon">🏆</span>
+          <h3>Fiverr Inspiration Awards</h3>
+          <p><em>Bound by Ink</em> ranked in the Top 30 in 2024, becoming one of only 8 Fiverr members to achieve this milestone</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ REVIEWS (Premium) ════════════ -->
+  <div id="reviews-section" class="section hidden">
+    <div class="wrapper">
+      <div class="title-block">
+        <span class="sec-subtitle">Premium Access</span>
+        <span class="sec-title">Reviews</span>
+      </div>
+      <div class="reviews-gate card">
+        <h3>Enter Premium Code</h3>
+        <div class="field-group">
+          <input type="password" id="reviews-password" placeholder="Premium access code…">
+        </div>
+        <button class="btn-main" onclick="verifyReviewsPassword()">Unlock</button>
+
+        <div id="reviews-content" class="hidden" style="margin-top: 2rem;">
+          <div class="divider"><span>✦</span></div>
+          <div class="field-group">
+            <input type="text" id="reviewer-name" placeholder="Your name">
+            <textarea id="new-review-text" rows="4" placeholder="Write your review…"></textarea>
+          </div>
+          <button class="btn-main" onclick="postReview()">Post Review</button>
+          <div id="reviews-list" style="margin-top: 1.5rem;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ EVENTS ════════════ -->
+  <div id="events-section" class="section hidden">
+    <div class="wrapper">
+      <div class="title-block">
+        <span class="sec-subtitle">Admin Access</span>
+        <span class="sec-title">Upcoming Events</span>
+      </div>
+      <div class="card events-gate">
+        <h3>Admin Login</h3>
+        <div class="field-group">
+          <input type="text" id="adminUser" placeholder="Username">
+          <input type="password" id="adminPass" placeholder="Password">
+        </div>
+        <button class="btn-main" onclick="adminLogin()">Login</button>
+        <p id="loginError" class="hidden" style="font-family: var(--font-sans); font-size:0.8rem; color: var(--rose); text-align:center; margin-top:0.75rem;">Enter correct credentials</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ PAYMENT ════════════ -->
+  <div id="payment-section" class="section hidden">
+    <div class="wrapper">
+      <div class="title-block">
+        <span class="sec-subtitle">Transactions</span>
+        <span class="sec-title">Payment</span>
+      </div>
+      <div class="card payment-center">
+        <p>Securely process payments for books and premium content through our dedicated payment portal.</p>
+        <a href="payment.html" class="btn-portal">Open Payment Portal →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="social">
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+    <p>&copy; 2025 Fiverr Company Limited. All rights reserved.</p>
+    <p class="visitor"><a href="map.html">No of visitors to the page: <strong>120</strong></a></p>
+  </footer>
+
+  <!-- Firebase (kept for compatibility) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.6.1/firebase-app.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.6.1/firebase-firestore.min.js"></script>
 
   <script>
-    // Update year
-    document.getElementById("year").textContent = new Date().getFullYear();
+    // Firebase
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID",
+      measurementId: "YOUR_MEASUREMENT_ID"
+    };
+    let app, db;
+    try { app = firebase.initializeApp(firebaseConfig); db = firebase.firestore(); } catch(e) {}
 
-    // Show "last updated" time
-    const d = new Date();
-    const time = d.toLocaleString(undefined, {
-      weekday: "short", year: "numeric", month: "short", day: "2-digit",
-      hour: "2-digit", minute: "2-digit"
+    // Scroll progress
+    window.addEventListener('scroll', () => {
+      const pct = (window.pageYOffset / (document.body.offsetHeight - window.innerHeight)) * 100;
+      document.getElementById('scrollProgress').style.width = pct + '%';
     });
-    document.getElementById("timeText").textContent = "Updated: " + time;
 
-    // Create a lightweight reference code
-    const code = Math.random().toString(36).slice(2, 6).toUpperCase() + "-" + Math.random().toString(36).slice(2, 6).toUpperCase();
-    document.getElementById("refText").textContent = "REF-" + code;
-    document.getElementById("codePill").textContent = "REF-" + code;
+    // Mobile menu
+    function openMobileMenu() {
+      document.getElementById('mobileDrawer').classList.add('active');
+      document.getElementById('mobileOverlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMobileMenu() {
+      document.getElementById('mobileDrawer').classList.remove('active');
+      document.getElementById('mobileOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileMenu(); });
+
+    // Section nav
+    function showSection(name) {
+      document.querySelectorAll('.section').forEach(s => {
+        s.classList.add('hidden'); s.classList.remove('active');
+      });
+      const t = document.getElementById(name + '-section');
+      t.classList.remove('hidden');
+      setTimeout(() => t.classList.add('active'), 50);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Admin login (top bar)
+    function login() {
+      if (document.getElementById('username').value === 'admin' && document.getElementById('password').value === 'password') {
+        document.getElementById('admin-login').classList.add('hidden');
+        document.getElementById('admin-logout').classList.remove('hidden');
+        document.querySelectorAll('.btn-reply').forEach(b => b.style.display = 'inline-block');
+      } else { alert('Invalid credentials'); }
+    }
+    function logout() {
+      document.getElementById('admin-login').classList.remove('hidden');
+      document.getElementById('admin-logout').classList.add('hidden');
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+      document.querySelectorAll('.btn-reply').forEach(b => b.style.display = 'none');
+      document.querySelectorAll('.reply-form').forEach(f => f.style.display = 'none');
+    }
+
+    // Books
+    function promptPremiumDownload() {
+      const pw = prompt('Enter password to download:');
+      if (pw === '5555') { window.location.href = 'Bound_by_Ink.pdf'; }
+      else { alert('Payment Required'); }
+    }
+
+    // Reply system
+    function showReplySection(id) {
+      document.getElementById('reply-form-' + id).style.display = 'block';
+      document.getElementById('reply-btn-' + id).style.display = 'none';
+    }
+    function cancelReply(id) {
+      document.getElementById('reply-form-' + id).style.display = 'none';
+      document.getElementById('reply-btn-' + id).style.display = 'inline-block';
+      document.getElementById('reply-text-' + id).value = '';
+    }
+    function submitReply(id) {
+      const txt = document.getElementById('reply-text-' + id).value.trim();
+      if (!txt) return;
+      const c = document.getElementById('replies-' + id);
+      const el = document.createElement('div');
+      el.className = 'reply-entry';
+      el.innerHTML = `<div class="admin-tag">Admin · ${new Date().toLocaleDateString()}</div><p>${txt}</p>`;
+      c.appendChild(el);
+      cancelReply(id);
+    }
+
+    // Premium reviews
+    function verifyReviewsPassword() {
+      if (document.getElementById('reviews-password').value === '2552') {
+        document.getElementById('reviews-content').classList.remove('hidden');
+      } else { alert('Invalid premium code'); }
+    }
+    function postReview() {
+      const name = document.getElementById('reviewer-name').value.trim();
+      const text = document.getElementById('new-review-text').value.trim();
+      if (!name || !text) return;
+      const review = { name, text, date: new Date().toLocaleDateString() };
+      if (db) {
+        db.collection('reviews').add(review).then(() => {
+          displayReview(review, document.getElementById('reviews-list'));
+          displayReview(review, document.getElementById('new-reviews-container'));
+          document.getElementById('reviewer-name').value = '';
+          document.getElementById('new-review-text').value = '';
+        }).catch(console.error);
+      } else {
+        displayReview(review, document.getElementById('reviews-list'));
+        displayReview(review, document.getElementById('new-reviews-container'));
+        document.getElementById('reviewer-name').value = '';
+        document.getElementById('new-review-text').value = '';
+      }
+    }
+    function displayReview(review, container) {
+      const el = document.createElement('div');
+      el.className = 'review-item';
+      el.innerHTML = `
+        <div class="review-meta">
+          <span class="review-stars">★★★</span>
+          <span class="review-author">${review.name}</span>
+          <span class="review-date">${review.date}</span>
+        </div>
+        <p class="review-text">${review.text}</p>`;
+      container.appendChild(el);
+    }
+    function loadReviews() {
+      if (!db) return;
+      db.collection('reviews').get().then(snap => {
+        snap.forEach(doc => {
+          displayReview(doc.data(), document.getElementById('reviews-list'));
+          displayReview(doc.data(), document.getElementById('new-reviews-container'));
+        });
+      }).catch(console.error);
+    }
+
+    // Events admin login
+    function adminLogin() {
+      const u = document.getElementById('adminUser').value;
+      const p = document.getElementById('adminPass').value;
+      if (u === 'selene' && p === 'selene@0152') {
+        window.location.href = 'events.html';
+      } else {
+        document.getElementById('loginError').classList.remove('hidden');
+      }
+    }
+
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+      showSection('home');
+      loadReviews();
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 640) closeMobileMenu();
+    });
   </script>
 </body>
 </html>
