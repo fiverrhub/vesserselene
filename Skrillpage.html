@@ -5,739 +5,687 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Secure Payment | Vesser Selene</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --primary-light: #a5b4fc;
-            --surface: #ffffff;
-            --surface-elevated: #f8fafc;
-            --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --text: #0f172a;
-            --text-secondary: #64748b;
-            --text-muted: #94a3b8;
-            --border: #e2e8f0;
-            --success: #10b981;
-            --success-light: #d1fae5;
-            --warning: #f59e0b;
-            --warning-light: #fef3c7;
-            --error: #ef4444;
-            --glass-bg: rgba(255, 255, 255, 0.25);
-            --glass-border: rgba(255, 255, 255, 0.18);
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --ink: #0a0a0f;
+            --ink-2: #1a1a2e;
+            --ink-3: #252540;
+            --mist: #f4f3f0;
+            --mist-2: #eae9e4;
+            --gold: #c8a96e;
+            --gold-light: #e8cc98;
+            --gold-faint: rgba(200, 169, 110, 0.12);
+            --emerald: #2ecc8a;
+            --emerald-faint: rgba(46, 204, 138, 0.1);
+            --amber: #e8b84b;
+            --amber-faint: rgba(232, 184, 75, 0.12);
+            --surface: rgba(255,255,255,0.03);
+            --surface-2: rgba(255,255,255,0.06);
+            --border: rgba(255,255,255,0.08);
+            --border-gold: rgba(200, 169, 110, 0.3);
+            --text: #e8e6e0;
+            --text-dim: #8a8880;
+            --text-faint: #5a5855;
+            --r-sm: 12px;
+            --r-md: 20px;
+            --r-lg: 32px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--background);
-            background-attachment: fixed;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--ink);
             color: var(--text);
             line-height: 1.6;
             min-height: 100vh;
-            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
             overflow-x: hidden;
         }
 
-        /* Animated background elements */
+        /* Layered background */
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 15% 20%, rgba(200,169,110,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 80% at 85% 70%, rgba(46,204,138,0.04) 0%, transparent 60%),
+                radial-gradient(ellipse 100% 40% at 50% 100%, rgba(26,26,46,0.8) 0%, transparent 70%);
             pointer-events: none;
-            z-index: -1;
-            animation: float 20s ease-in-out infinite;
+            z-index: 0;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(1deg); }
-            66% { transform: translateY(10px) rotate(-1deg); }
+        /* Grain texture overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
         }
 
-        /* Main container */
-        .payment-container {
-            max-width: 1400px;
+        /* ─── LAYOUT ─────────────────────────────────── */
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 3rem 2rem;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 2rem;
             min-height: 100vh;
             align-items: start;
         }
 
-        /* Glass morphism cards */
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 2rem;
+        /* ─── TOPBAR LABEL ─────────────────────────────── */
+        .topbar {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .brand-wordmark {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        .ssl-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: var(--emerald-faint);
+            border: 1px solid rgba(46,204,138,0.2);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--emerald);
+            letter-spacing: 0.05em;
+        }
+
+        .ssl-pill .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--emerald);
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* ─── PANELS ──────────────────────────────────── */
+        .panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
             padding: 2.5rem;
-            box-shadow: var(--shadow-xl);
             position: relative;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(24px);
+            animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .glass-card::before {
+        .panel:nth-child(2) { animation-delay: 0.1s; }
+        .panel:nth-child(3) { animation-delay: 0.2s; }
+
+        @keyframes rise {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Decorative line at top */
+        .panel::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 10%; right: 10%;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+            opacity: 0.4;
         }
 
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-
-        /* Logo section */
+        /* ─── LOGO AREA ───────────────────────────────── */
         .logo-section {
-            text-align: center;
             margin-bottom: 2.5rem;
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
-        .logo-container {
-            display: inline-block;
-            position: relative;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 1.5rem;
-            box-shadow: var(--shadow-lg);
-            margin-bottom: 1rem;
-            transition: transform 0.3s ease;
+        .logo-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background: rgba(255,255,255,0.95);
+            border-radius: var(--r-md);
+            margin-bottom: 1.75rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 0 40px rgba(200,169,110,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .logo-container:hover {
-            transform: scale(1.05);
+        .logo-wrap:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 50px rgba(200,169,110,0.25);
         }
 
         .logo {
-            max-width: 200px;
+            max-width: 160px;
             height: auto;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
         }
 
         .logo-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--success);
-            color: white;
-            padding: 0.5rem;
+            width: 10px; height: 10px;
+            background: var(--emerald);
             border-radius: 50%;
-            font-size: 0.75rem;
-            animation: pulse 2s infinite;
+            box-shadow: 0 0 8px var(--emerald);
+            animation: blink 2s infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        /* Section titles */
+        /* ─── PAGE TITLE ───────────────────────────────── */
         .section-title {
-            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-family: 'Syne', sans-serif;
             font-weight: 700;
-            margin-bottom: 2rem;
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            line-height: 1.1;
             color: var(--text);
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
+            margin-bottom: 0.4rem;
         }
 
-        .section-title i {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            letter-spacing: 0.02em;
         }
 
-        /* Payment method card */
-        .payment-method {
-            background: rgba(255, 255, 255, 0.6);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+        /* ─── DIVIDER ─────────────────────────────────── */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 2rem 0;
         }
 
-        .payment-method::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .payment-method:hover::before {
-            left: 100%;
-        }
-
-        .payment-method:hover {
-            transform: translateY(-2px);
-            border-color: var(--primary-light);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .method-header {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .method-icon {
-            width: 64px;
-            height: 64px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.75rem;
-            color: white;
-            flex-shrink: 0;
-            box-shadow: var(--shadow-md);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .method-icon::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: rotate(45deg);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .method-info h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 0.25rem;
-        }
-
-        .method-info p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        /* Email display */
-        .email-display {
-            background: linear-gradient(135deg, var(--warning-light), #fff9db);
-            padding: 2rem;
-            border-radius: 1rem;
-            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-            font-size: clamp(1.1rem, 3vw, 1.4rem);
-            color: var(--warning);
-            border: 2px solid #fbbf24;
-            margin: 1.5rem 0;
-            text-align: center;
-            font-weight: 600;
-            word-break: break-all;
-            box-shadow: var(--shadow-md);
-            position: relative;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .email-display:hover {
-            transform: scale(1.02);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .email-display::before {
-            content: 'Click to copy';
-            position: absolute;
-            top: -10px;
-            right: 1rem;
-            background: var(--warning);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 1rem;
-            font-size: 0.75rem;
-            font-weight: 500;
-            opacity: 0;
-            transform: translateY(-5px);
-            transition: all 0.3s ease;
-        }
-
-        .email-display:hover::before {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Security badges */
+        /* ─── SECURITY BADGE ──────────────────────────── */
         .security-badge {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            color: var(--success);
-            font-size: 0.95rem;
+            color: var(--emerald);
+            font-size: 0.875rem;
             font-weight: 500;
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background: var(--success-light);
-            border-radius: 0.75rem;
-            border: 1px solid #86efac;
+            padding: 0.85rem 1.25rem;
+            background: var(--emerald-faint);
+            border-radius: var(--r-sm);
+            border: 1px solid rgba(46,204,138,0.15);
+            margin-bottom: 2rem;
         }
 
-        .security-badge i {
-            font-size: 1.1rem;
-        }
+        .security-badge i { font-size: 1rem; flex-shrink: 0; }
 
-        /* Instructions */
+        /* ─── INSTRUCTIONS BLOCK ──────────────────────── */
         .instructions {
-            background: rgba(255, 255, 255, 0.7);
-            padding: 2rem;
-            border-radius: 1.5rem;
-            margin-top: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: var(--shadow-md);
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 1.75rem;
+            margin-top: 0;
         }
 
         .instructions-title {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: var(--text);
-            margin-bottom: 1.5rem;
+            gap: 0.6rem;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--gold);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
         }
 
-        .instructions-title i {
-            color: var(--primary);
-            font-size: 1.2rem;
-        }
+        .instructions-title i { font-size: 0.9rem; }
 
-        .instructions-list {
-            list-style: none;
-            space-y: 1rem;
-        }
+        .instructions-list { list-style: none; }
 
         .instructions-list li {
-            margin-bottom: 1rem;
             display: flex;
             align-items: flex-start;
-            gap: 1rem;
-            color: var(--text-secondary);
-            padding: 0.75rem;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 0.75rem;
-            transition: all 0.3s ease;
+            gap: 0.875rem;
+            color: var(--text-dim);
+            font-size: 0.92rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            transition: color 0.2s;
         }
 
-        .instructions-list li:hover {
-            background: rgba(255, 255, 255, 0.8);
-            transform: translateX(5px);
-        }
+        .instructions-list li:last-child { border-bottom: none; padding-bottom: 0; }
+        .instructions-list li:first-child { padding-top: 0; }
 
-        .instructions-list li i {
-            color: var(--success);
-            margin-top: 0.125rem;
-            font-size: 1.1rem;
+        .instructions-list li:hover { color: var(--text); }
+
+        .step-num {
+            width: 22px; height: 22px;
+            background: var(--gold-faint);
+            border: 1px solid var(--border-gold);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--gold);
             flex-shrink: 0;
+            margin-top: 0.1rem;
         }
 
-        /* File upload */
-        .file-upload {
-            margin-top: 2rem;
+        /* ─── RIGHT PANEL ─────────────────────────────── */
+        .payment-method {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
             padding: 2rem;
-            border: 3px dashed var(--primary-light);
-            border-radius: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .payment-method:hover { border-color: var(--border-gold); }
+
+        .method-header {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .method-icon {
+            width: 54px; height: 54px;
+            background: linear-gradient(135deg, var(--gold), #a87e40);
+            border-radius: var(--r-sm);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            color: var(--ink);
+            flex-shrink: 0;
+            box-shadow: 0 4px 20px rgba(200,169,110,0.3);
+        }
+
+        .method-info h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.2rem;
+        }
+
+        .method-info p {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        /* ─── EMAIL DISPLAY ───────────────────────────── */
+        .email-label {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.6rem;
+        }
+
+        .email-display {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.1rem 1.4rem;
+            background: var(--gold-faint);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--r-sm);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(0.85rem, 2.5vw, 1rem);
+            font-weight: 500;
+            color: var(--gold-light);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            word-break: break-all;
+            margin-bottom: 1.25rem;
+        }
+
+        .email-display:hover {
+            background: rgba(200,169,110,0.18);
+            border-color: var(--gold);
+            transform: translateX(2px);
+        }
+
+        .email-display .copy-icon {
+            font-size: 0.85rem;
+            color: var(--gold);
+            opacity: 0.7;
+            flex-shrink: 0;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .email-display:hover .copy-icon { opacity: 1; transform: scale(1.1); }
+
+        /* ─── NEXT STEPS BLOCK ─────────────────────────── */
+        .nextsteps {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        .nextsteps .instructions-title { margin-bottom: 0.75rem; }
+
+        /* ─── FILE UPLOAD ─────────────────────────────── */
+        .file-upload {
+            border: 2px dashed rgba(200,169,110,0.25);
+            border-radius: var(--r-md);
+            padding: 2rem;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            background: rgba(200,169,110,0.03);
             position: relative;
             overflow: hidden;
         }
 
-        .file-upload::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, var(--primary-light), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .file-upload:hover::before {
-            opacity: 0.1;
-        }
-
         .file-upload:hover {
-            border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.5);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+            border-color: var(--gold);
+            background: var(--gold-faint);
         }
 
-        .file-upload input[type="file"] {
-            display: none;
+        .file-upload.drag-over {
+            border-color: var(--gold);
+            background: rgba(200,169,110,0.1);
+            transform: scale(1.01);
         }
 
-        .file-upload label {
-            cursor: pointer;
-            color: var(--primary-dark);
-            font-weight: 600;
-            font-size: 1.1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            position: relative;
-            z-index: 1;
-        }
+        .file-upload input[type="file"] { display: none; }
 
-        .file-upload label i {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
+        .upload-icon-wrap {
+            width: 56px; height: 56px;
+            background: var(--gold-faint);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--r-sm);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.4rem;
+            color: var(--gold);
             transition: transform 0.3s ease;
         }
 
-        .file-upload:hover label i {
-            transform: scale(1.1);
-        }
+        .file-upload:hover .upload-icon-wrap { transform: translateY(-3px); }
+
+        .upload-primary { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--text); margin-bottom: 0.3rem; }
+        .upload-secondary { font-size: 0.8rem; color: var(--text-faint); }
 
         .file-types {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
         }
 
-        /* Upload status */
+        .file-chip {
+            padding: 0.25rem 0.6rem;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-dim);
+        }
+
+        /* ─── UPLOAD STATUS ────────────────────────────── */
         .upload-status {
-            margin-top: 1.5rem;
-            padding: 1.5rem;
-            border-radius: 1rem;
-            background: linear-gradient(135deg, var(--success), #059669);
-            color: white;
+            margin-top: 1rem;
+            padding: 1.25rem 1.5rem;
+            border-radius: var(--r-sm);
+            background: linear-gradient(135deg, rgba(46,204,138,0.15), rgba(46,204,138,0.05));
+            border: 1px solid rgba(46,204,138,0.25);
+            color: var(--emerald);
             text-align: center;
             display: none;
-            font-weight: 600;
-            box-shadow: var(--shadow-md);
-            animation: slideIn 0.5s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+            animation: rise 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .upload-status i {
-            margin-right: 0.5rem;
-            font-size: 1.2rem;
-        }
-
-        /* Copy notification */
+        /* ─── COPY NOTIFICATION ────────────────────────── */
         .copy-notification {
             position: fixed;
             top: 2rem;
             right: 2rem;
-            background: var(--success);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            box-shadow: var(--shadow-lg);
+            background: var(--ink-2);
+            border: 1px solid var(--border-gold);
+            color: var(--gold-light);
+            padding: 0.875rem 1.5rem;
+            border-radius: var(--r-sm);
+            font-size: 0.875rem;
+            font-weight: 500;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
             z-index: 1000;
-            transform: translateY(-100px);
+            transform: translateY(-80px);
             opacity: 0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
         }
 
-        .copy-notification.show {
-            transform: translateY(0);
-            opacity: 1;
+        .copy-notification.show { transform: translateY(0); opacity: 1; }
+        .copy-notification i { color: var(--emerald); }
+
+        /* ─── LOADING ─────────────────────────────────── */
+        .loading {
+            display: inline-block;
+            width: 16px; height: 16px;
+            border: 2px solid rgba(46,204,138,0.3);
+            border-radius: 50%;
+            border-top-color: var(--emerald);
+            animation: spin 0.8s linear infinite;
+            vertical-align: middle;
+            margin-right: 0.4rem;
         }
 
-        /* Responsive design */
-        @media (max-width: 1200px) {
-            .payment-container {
-                padding: 1.5rem;
-                gap: 2rem;
-            }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-            .glass-card {
-                padding: 2rem;
-            }
+        /* ─── RESPONSIVE ──────────────────────────────── */
+        /* ─── ALT PAYMENT LINK ────────────────────────── */
+        .alt-payment-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 1.25rem;
+            padding: 1rem 1.25rem;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--r-sm);
+            text-decoration: none;
+            transition: all 0.25s ease;
+            group: true;
         }
 
-        @media (max-width: 768px) {
-            .payment-container {
+        .alt-payment-link:hover {
+            border-color: var(--border-gold);
+            background: var(--gold-faint);
+        }
+
+        .alt-label {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: 0.02em;
+        }
+
+        .alt-cta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--gold);
+            white-space: nowrap;
+            transition: gap 0.25s ease;
+        }
+
+        .alt-payment-link:hover .alt-cta { gap: 0.7rem; }
+
+        .alt-arrow {
+            font-size: 0.75rem;
+            transition: transform 0.25s ease;
+        }
+
+        .alt-payment-link:hover .alt-arrow { transform: translateX(3px); }
+
+        @media (max-width: 900px) {
+            .page-wrap {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
-                padding: 1rem;
-                min-height: auto;
+                padding: 1.5rem 1rem;
+                gap: 1.25rem;
             }
 
-            .glass-card {
-                padding: 1.5rem;
-                border-radius: 1.5rem;
-            }
+            .topbar { margin-bottom: 0.5rem; }
 
-            .method-header {
-                gap: 1rem;
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .method-icon {
-                width: 56px;
-                height: 56px;
-                font-size: 1.5rem;
-            }
-
-            .instructions {
-                padding: 1.5rem;
-            }
-
-            .file-upload {
-                padding: 1.5rem;
-            }
-
-            .logo {
-                max-width: 150px;
-            }
-
-            .copy-notification {
-                top: 1rem;
-                right: 1rem;
-                left: 1rem;
-            }
+            .panel { padding: 1.75rem 1.5rem; }
         }
 
         @media (max-width: 480px) {
-            .payment-container {
-                padding: 0.75rem;
-            }
-
-            .glass-card {
-                padding: 1.25rem;
-            }
-
-            .section-title {
-                font-size: 1.5rem;
-            }
-
-            .email-display {
-                padding: 1.5rem;
-                font-size: 1rem;
-            }
+            .page-wrap { padding: 1rem 0.75rem; }
+            .panel { padding: 1.5rem 1.25rem; border-radius: var(--r-md); }
+            .copy-notification { right: 1rem; left: 1rem; top: 1rem; }
+            .method-header { flex-direction: column; text-align: center; }
         }
 
-        /* Touch device optimizations */
         @media (hover: none) and (pointer: coarse) {
-            .email-display {
-                user-select: all;
-                -webkit-user-select: all;
-            }
-
-            .glass-card:hover {
-                transform: none;
-            }
-
-            .payment-method:hover {
-                transform: none;
-            }
-
-            .file-upload:hover {
-                transform: none;
-            }
+            .email-display { user-select: all; -webkit-user-select: all; }
         }
 
-        /* Dark mode support */
-        @media (prefers-color-scheme: dark) {
+        @media (prefers-color-scheme: light) {
             :root {
-                --surface: #1e293b;
-                --surface-elevated: #334155;
-                --text: #f1f5f9;
-                --text-secondary: #94a3b8;
-                --text-muted: #64748b;
-                --border: #334155;
-                --glass-bg: rgba(30, 41, 59, 0.4);
-                --glass-border: rgba(255, 255, 255, 0.1);
+                --ink: #f8f6f0;
+                --ink-2: #ede9e0;
+                --ink-3: #ddd8cc;
+                --surface: rgba(0,0,0,0.02);
+                --surface-2: rgba(0,0,0,0.04);
+                --border: rgba(0,0,0,0.08);
+                --border-gold: rgba(160,120,50,0.3);
+                --text: #1a180f;
+                --text-dim: #5a5040;
+                --text-faint: #8a7a60;
+                --gold: #a87e40;
+                --gold-light: #7a5c20;
+                --gold-faint: rgba(168,126,64,0.08);
+                --emerald-faint: rgba(46,180,110,0.08);
             }
-
-            .logo-container {
-                background: rgba(30, 41, 59, 0.9);
-            }
-
-            .payment-method {
-                background: rgba(30, 41, 59, 0.6);
-                border-color: rgba(255, 255, 255, 0.2);
-            }
-
-            .instructions {
-                background: rgba(30, 41, 59, 0.7);
-            }
-
-            .instructions-list li {
-                background: rgba(30, 41, 59, 0.5);
-            }
-
-            .file-upload {
-                background: rgba(30, 41, 59, 0.3);
-            }
+            body::before { display: none; }
+            body::after { display: none; }
+            .panel::before { opacity: 0.15; }
         }
 
-        /* Print styles */
         @media print {
-            body {
-                background: white;
-            }
-
-            .payment-container {
-                display: block;
-                box-shadow: none;
-            }
-
-            .glass-card {
-                background: white;
-                box-shadow: none;
-                border: 1px solid #ccc;
-                break-inside: avoid;
-                margin-bottom: 2rem;
-            }
-
-            .file-upload {
-                display: none;
-            }
-        }
-
-        /* Loading animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+            body { background: white; color: black; }
+            .file-upload { display: none; }
         }
     </style>
 </head>
 <body>
-    <!-- Copy notification -->
+
     <div id="copyNotification" class="copy-notification">
         <i class="fas fa-check"></i>
         Email copied to clipboard!
     </div>
 
-    <div class="payment-container">
+    <div class="page-wrap">
+
+        <!-- Topbar -->
+        <div class="topbar">
+            <span class="brand-wordmark">Vesser Selene</span>
+            <div class="ssl-pill">
+                <span class="dot"></span>
+                256-bit SSL · PCI Compliant
+            </div>
+        </div>
+
         <!-- Left Panel - Payment Summary -->
-        <div class="glass-card">
+        <div class="panel">
             <div class="logo-section">
-                <div class="logo-container">
+                <div class="logo-wrap">
                     <img src="skrilllogo.jpg" alt="Skrill Logo" class="logo">
-                    <div class="logo-badge">
-                
-                    </div>
+                    <div class="logo-badge"></div>
                 </div>
-                <h1 class="section-title">
-                    <i class="fas fa-credit-card"></i>
-                    Secure Payment
-                </h1>
+                <div class="section-title">Secure Payment</div>
+                <div class="section-subtitle">Complete your transaction safely below</div>
             </div>
 
             <div class="security-badge">
                 <i class="fas fa-shield-alt"></i>
-                <span>256-bit SSL Encryption • PCI Compliant</span>
+                <span>256-bit SSL Encryption &nbsp;·&nbsp; PCI Compliant &nbsp;·&nbsp; Protected by Paysafe Financial Services</span>
             </div>
 
             <div class="instructions">
                 <div class="instructions-title">
-                    <i class="fas fa-info-circle"></i>
-                    <span>Payment Instructions</span>
+                    <i class="fas fa-list-ol"></i>
+                    Payment Instructions
                 </div>
                 <ul class="instructions-list">
                     <li>
-                        <i class="fas fa-paper-plane"></i>
+                        <span class="step-num">1</span>
                         <span>Send payment to the highlighted email address using Skrill</span>
                     </li>
                     <li>
-                        <i class="fas fa-receipt"></i>
+                        <span class="step-num">2</span>
                         <span>Keep your transaction ID safe for reference</span>
                     </li>
                     <li>
-                        <i class="fas fa-upload"></i>
+                        <span class="step-num">3</span>
                         <span>Upload your payment confirmation slip below</span>
                     </li>
                     <li>
-                        <i class="fas fa-clock"></i>
+                        <span class="step-num">4</span>
                         <span>Receive your premium code within 2 hours</span>
                     </li>
                 </ul>
             </div>
+
+            <a href="#" target="_blank" class="alt-payment-link">
+                <span class="alt-label">For Alternative Payment Method</span>
+                <span class="alt-cta">
+                    <i class="fas fa-user-pen"></i>
+                    Contact Author
+                    <i class="fas fa-arrow-right alt-arrow"></i>
+                </span>
+            </a>
         </div>
 
         <!-- Right Panel - Payment Details -->
-        <div class="glass-card">
-            <h2 class="section-title">
-                <i class="fas fa-wallet"></i>
-                Payment Details
-            </h2>
-            
+        <div class="panel">
+            <div class="section-title" style="margin-bottom:0.4rem;">Payment Details</div>
+            <div class="section-subtitle" style="margin-bottom:2rem;">Send via Skrill to the address below</div>
+
             <div class="payment-method">
                 <div class="method-header">
                     <div class="method-icon">
@@ -749,30 +697,38 @@
                     </div>
                 </div>
 
-                <div class="email-display" onclick="copyEmail()" title="Click to copy email">
-                    vesserselene@gmail.com
+                <div class="email-label">Recipient Email</div>
+                <div class="email-display" onclick="copyEmail()" title="Click to copy email" tabindex="0" role="button" aria-label="Copy email address">
+                    <span id="emailDisplay">v<!-- cf -->esserselene<!-- @ -->&#64;<!-- -->gm<!-- -->ail<!-- . -->.com</span>
+                    <i class="fas fa-copy copy-icon"></i>
                 </div>
 
-                <div class="security-badge">
+                <div class="security-badge" style="margin-bottom:0;">
                     <i class="fas fa-lock"></i>
                     <span>Protected by Paysafe Financial Services</span>
                 </div>
             </div>
 
-            <div class="instructions">
+            <div class="nextsteps">
                 <div class="instructions-title">
                     <i class="fas fa-rocket"></i>
-                    <span>Next Steps</span>
+                    Next Steps
                 </div>
-                <p>After completing your Skrill payment, upload your payment confirmation slip below. Make sure your email address is visible on the receipt. We'll send your premium access code to your email within 2 hours of verification.</p>
+                After completing your Skrill payment, upload your payment confirmation slip below. Make sure your email address is visible on the receipt. We'll send your premium access code to your email within 2 hours of verification.
             </div>
 
-            <div class="file-upload" onclick="document.getElementById('fileInput').click()">
-                <label for="fileInput">
+            <div class="file-upload" id="fileUploadZone" onclick="document.getElementById('fileInput').click()">
+                <div class="upload-icon-wrap">
                     <i class="fas fa-cloud-upload-alt"></i>
-                    <span>Upload Payment Confirmation</span>
-                    <div class="file-types">Accepted formats: JPG, PNG, PDF (Max 10MB)</div>
-                </label>
+                </div>
+                <div class="upload-primary">Upload Payment Confirmation</div>
+                <div class="upload-secondary">Drag & drop or click to browse</div>
+                <div class="file-types">
+                    <span class="file-chip">JPG</span>
+                    <span class="file-chip">PNG</span>
+                    <span class="file-chip">PDF</span>
+                    <span class="file-chip">Max 10MB</span>
+                </div>
                 <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" onchange="handleFileUpload(event)">
             </div>
 
@@ -781,342 +737,96 @@
                 Payment slip uploaded successfully! Processing...
             </div>
         </div>
+
     </div>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
-    <script>
-        // Copy email to clipboard
+        // Store email for copy function
+        window.__em = 'vesserselene' + String.fromCharCode(64) + 'gmail.com';
+
         function copyEmail() {
-            const email = 'vesserselene@gmail.com';
-            
+            const email = window.__em || '';
             if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(email).then(() => {
-                    showCopyNotification();
-                }).catch(() => {
-                    fallbackCopyTextToClipboard(email);
-                });
+                navigator.clipboard.writeText(email).then(showCopyNotification).catch(() => fallbackCopy(email));
             } else {
-                fallbackCopyTextToClipboard(email);
+                fallbackCopy(email);
             }
         }
 
-        // Fallback copy method
-        function fallbackCopyTextToClipboard(text) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.position = "fixed";
-            textArea.style.left = "-999999px";
-            textArea.style.top = "-999999px";
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            
-            try {
-                document.execCommand('copy');
-                showCopyNotification();
-            } catch (err) {
-                console.error('Fallback: Could not copy text: ', err);
-            }
-            
-            document.body.removeChild(textArea);
+        function fallbackCopy(text) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+            document.body.appendChild(ta);
+            ta.focus(); ta.select();
+            try { document.execCommand('copy'); showCopyNotification(); } catch(e) {}
+            document.body.removeChild(ta);
         }
 
-        // Show copy notification
         function showCopyNotification() {
-            const notification = document.getElementById('copyNotification');
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
+            const n = document.getElementById('copyNotification');
+            n.classList.add('show');
+            setTimeout(() => n.classList.remove('show'), 3000);
         }
 
-        // Handle file upload
         function handleFileUpload(event) {
             const file = event.target.files[0];
-            const uploadStatus = document.getElementById('uploadStatus');
-            
-            if (file) {
-                // Check file size (10MB limit)
-                if (file.size > 10 * 1024 * 1024) {
-                    alert('File size too large. Please select a file smaller than 10MB.');
-                    event.target.value = '';
-                    return;
-                }
+            const status = document.getElementById('uploadStatus');
+            if (!file) return;
 
-                // Check file type
-                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
-                if (!allowedTypes.includes(file.type)) {
-                    alert('Invalid file type. Please select a JPG, PNG, or PDF file.');
-                    event.target.value = '';
-                    return;
-                }
+            if (file.size > 10 * 1024 * 1024) {
+                alert('File size too large. Please select a file smaller than 10MB.');
+                event.target.value = ''; return;
+            }
+            if (!['image/jpeg','image/jpg','image/png','application/pdf'].includes(file.type)) {
+                alert('Invalid file type. Please select a JPG, PNG, or PDF file.');
+                event.target.value = ''; return;
+            }
 
-                // Show upload status with loading
-                uploadStatus.innerHTML = `
-                    <i class="loading"></i>
-                    Uploading ${file.name}...
-                `;
-                uploadStatus.style.display = 'block';
+            status.innerHTML = `<span class="loading"></span> Uploading ${file.name}…`;
+            status.style.display = 'block';
 
-                // Simulate upload delay
+            setTimeout(() => {
+                status.innerHTML = `<i class="fas fa-check-circle" style="margin-right:.4rem"></i> "${file.name}" uploaded! We'll review within 2 hours.`;
                 setTimeout(() => {
-                    uploadStatus.innerHTML = `
-                        <i class="fas fa-check-circle"></i>
-                        Payment slip "${file.name}" uploaded successfully! We'll review it within 2 hours.
-                    `;
-                    
-                    // Send confirmation email (simulated)
-                    setTimeout(() => {
-                        uploadStatus.innerHTML += `
-                            <br><small><i class="fas fa-envelope"></i> Confirmation email sent to your address</small>
-                        `;
-                    }, 1000);
-                }, 2000);
-            }
+                    status.innerHTML += `<br><small style="opacity:.7;margin-top:.3rem;display:block"><i class="fas fa-envelope" style="margin-right:.3rem"></i>Confirmation email sent to your address</small>`;
+                }, 900);
+            }, 2000);
         }
 
-        // Auto-focus email for easier copying on mobile
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add touch feedback for mobile devices
-            if ('ontouchstart' in window) {
-                const emailDisplay = document.querySelector('.email-display');
-                emailDisplay.addEventListener('touchstart', function() {
-                    this.style.transform = 'scale(0.98)';
-                });
-                
-                emailDisplay.addEventListener('touchend', function() {
-                    this.style.transform = 'scale(1.02)';
-                    setTimeout(() => {
-                        this.style.transform = 'scale(1)';
-                    }, 150);
-                });
-            }
-
-            // Animate elements on scroll (for mobile)
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, observerOptions);
-
-            // Observe cards for animation
-            document.querySelectorAll('.glass-card').forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px)';
-                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(card);
-            });
-        });
-
-        // Prevent zoom on iOS when clicking input
-        document.addEventListener('touchend', function(e) {
-            const target = e.target;
-            if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
-                target.blur();
-                setTimeout(() => target.focus(), 0);
-            }
-        });
-
-        // Add ripple effect for touch interactions
-        function createRipple(event) {
-            const button = event.currentTarget;
-            const circle = document.createElement('span');
-            const diameter = Math.max(button.clientWidth, button.clientHeight);
-            const radius = diameter / 2;
-
-            circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
-            circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
-            circle.classList.add('ripple');
-
-            const ripple = button.getElementsByClassName('ripple')[0];
-            if (ripple) {
-                ripple.remove();
-            }
-
-            button.appendChild(circle);
-        }
-
-        // Add ripple effect to interactive elements
-        document.querySelectorAll('.email-display, .file-upload').forEach(element => {
-            element.addEventListener('click', createRipple);
-        });
-
-        // Add CSS for ripple effect
-        const rippleCSS = `
-            .ripple {
-                position: absolute;
-                border-radius: 50%;
-                transform: scale(0);
-                animation: ripple 600ms linear;
-                background-color: rgba(255, 255, 255, 0.6);
-                pointer-events: none;
-            }
-
-            @keyframes ripple {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
+        // Drag & drop
+        (function() {
+            const zone = document.getElementById('fileUploadZone');
+            ['dragenter','dragover','dragleave','drop'].forEach(e => zone.addEventListener(e, ev => { ev.preventDefault(); ev.stopPropagation(); }));
+            ['dragenter','dragover'].forEach(e => zone.addEventListener(e, () => zone.classList.add('drag-over')));
+            ['dragleave','drop'].forEach(e => zone.addEventListener(e, () => zone.classList.remove('drag-over')));
+            zone.addEventListener('drop', ev => {
+                const files = ev.dataTransfer.files;
+                if (files.length) {
+                    const inp = document.getElementById('fileInput');
+                    inp.files = files;
+                    handleFileUpload({ target: inp });
                 }
-            }
-        `;
-
-        const style = document.createElement('style');
-        style.textContent = rippleCSS;
-        document.head.appendChild(style);
-
-        // Enhanced error handling for file upload
-        window.addEventListener('error', function(e) {
-            console.error('Script error:', e.error);
-        });
-
-        // Performance optimization: Lazy load non-critical features
-        if ('IntersectionObserver' in window) {
-            const lazyLoadTrigger = document.querySelector('.file-upload');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        // Initialize advanced file upload features when visible
-                        initAdvancedUpload();
-                        observer.unobserve(entry.target);
-                    }
-                });
             });
-            observer.observe(lazyLoadTrigger);
-        } else {
-            // Fallback for older browsers
-            initAdvancedUpload();
+        })();
+
+        // Mobile touch feedback
+        if ('ontouchstart' in window) {
+            const em = document.querySelector('.email-display');
+            em.addEventListener('touchstart', () => em.style.opacity = '0.8');
+            em.addEventListener('touchend', () => { em.style.opacity = '1'; copyEmail(); });
         }
 
-        function initAdvancedUpload() {
-            // Add drag and drop functionality
-            const fileUpload = document.querySelector('.file-upload');
-            
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                fileUpload.addEventListener(eventName, preventDefaults, false);
-            });
-
-            function preventDefaults(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-
-            ['dragenter', 'dragover'].forEach(eventName => {
-                fileUpload.addEventListener(eventName, highlight, false);
-            });
-
-            ['dragleave', 'drop'].forEach(eventName => {
-                fileUpload.addEventListener(eventName, unhighlight, false);
-            });
-
-            function highlight(e) {
-                fileUpload.style.borderColor = 'var(--primary)';
-                fileUpload.style.backgroundColor = 'rgba(99, 102, 241, 0.1)';
-                fileUpload.style.transform = 'scale(1.02)';
-            }
-
-            function unhighlight(e) {
-                fileUpload.style.borderColor = 'var(--primary-light)';
-                fileUpload.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
-                fileUpload.style.transform = 'scale(1)';
-            }
-
-            fileUpload.addEventListener('drop', handleDrop, false);
-
-            function handleDrop(e) {
-                const dt = e.dataTransfer;
-                const files = dt.files;
-                
-                if (files.length > 0) {
-                    const fileInput = document.getElementById('fileInput');
-                    fileInput.files = files;
-                    handleFileUpload({ target: fileInput });
-                }
-            }
-        }
-
-        // Add accessibility improvements
-        document.addEventListener('keydown', function(e) {
-            // Make email copyable via keyboard
+        // Keyboard accessibility
+        document.addEventListener('keydown', e => {
             if (e.key === 'Enter' || e.key === ' ') {
-                const target = e.target;
-                if (target.classList.contains('email-display')) {
-                    e.preventDefault();
-                    copyEmail();
-                }
-                if (target.classList.contains('file-upload')) {
-                    e.preventDefault();
-                    document.getElementById('fileInput').click();
-                }
+                if (e.target.classList.contains('email-display')) { e.preventDefault(); copyEmail(); }
+                if (e.target.classList.contains('file-upload')) { e.preventDefault(); document.getElementById('fileInput').click(); }
             }
         });
 
-        // Add focus indicators for keyboard navigation
-        const focusableElements = document.querySelectorAll('.email-display, .file-upload');
-        focusableElements.forEach(element => {
-            element.setAttribute('tabindex', '0');
-            element.setAttribute('role', 'button');
-            
-            element.addEventListener('focus', function() {
-                this.style.outline = '3px solid var(--primary-light)';
-                this.style.outlineOffset = '2px';
-            });
-            
-            element.addEventListener('blur', function() {
-                this.style.outline = 'none';
-            });
-        });
-
-        // Progressive Web App features
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                // Register service worker for offline capability (optional)
-                // navigator.serviceWorker.register('/sw.js');
-            });
-        }
-
-        // Add connection status indicator
-        function updateConnectionStatus() {
-            const online = navigator.onLine;
-            if (!online) {
-                const notification = document.createElement('div');
-                notification.innerHTML = `
-                    <i class="fas fa-wifi"></i>
-                    Connection lost. Please check your internet connection.
-                `;
-                notification.style.cssText = `
-                    position: fixed;
-                    top: 1rem;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    background: var(--error);
-                    color: white;
-                    padding: 1rem 2rem;
-                    border-radius: 0.75rem;
-                    z-index: 9999;
-                    font-weight: 600;
-                    box-shadow: var(--shadow-lg);
-                `;
-                document.body.appendChild(notification);
-                
-                setTimeout(() => {
-                    if (document.body.contains(notification)) {
-                        document.body.removeChild(notification);
-                    }
-                }, 5000);
-            }
-        }
-
-        window.addEventListener('online', updateConnectionStatus);
-        window.addEventListener('offline', updateConnectionStatus);
-    </script>
-</body>
-</html>
+        // Connection status
+        window.addEventListener('offline', () => {
+            const n = document.createElement('div');
+            n.textContent = '⚠ Connection lost. Please check your internet connection.';
+            n.style.cssText = 'position:fixed;top:1rem;left:50%;transform:translateX(-50%);background:#ef4444;
