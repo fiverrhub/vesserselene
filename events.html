@@ -1,403 +1,693 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Literary Awards — Vesser Selene</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The Creative Clash – Novel Writing Competition, sponsored by Fiverr. Competition runs from August 22 to September 22, 2026." />
+  <title>The Creative Clash | Novel Writing Competition</title>
   <style>
     :root {
-      --ink: #0d0d0f;
-      --paper: #f5f0e8;
-      --gold: #c9a84c;
-      --gold-light: #e8c97a;
-      --gold-dim: rgba(201,168,76,0.18);
-      --rose: #c4706a;
-      --rose-dim: rgba(196,112,106,0.18);
-      --mist: rgba(245,240,232,0.04);
-      --border: rgba(201,168,76,0.2);
-      --border-soft: rgba(245,240,232,0.07);
-      --font-display: 'Cinzel', serif;
-      --font-body: 'Cormorant Garamond', serif;
-      --font-sans: 'DM Sans', sans-serif;
+      --ink: #07120e;
+      --ink-2: #0d1b15;
+      --paper: #f7f4ec;
+      --paper-dim: #cdd8d0;
+      --text: #f4faf6;
+      --muted: #a9bdb2;
+      --accent: #2fcf88;
+      --accent-dim: #1c8c5c;
+      --gold: #e9b64f;
+      --border: rgba(247,244,236,.12);
+      --border-strong: rgba(247,244,236,.22);
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 9px;
+      --space-1: clamp(.5rem, .45rem + .3vw, .75rem);
+      --space-2: clamp(1rem, .9rem + .5vw, 1.5rem);
+      --space-3: clamp(1.75rem, 1.4rem + 1.5vw, 3rem);
+      --space-4: clamp(3rem, 2.2rem + 3.2vw, 5.5rem);
+      --maxw: 1120px;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
 
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+    }
+
     body {
-      background: var(--ink);
-      color: var(--paper);
-      font-family: var(--font-body);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* noise layer */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 9999; opacity: 0.55;
-    }
-    /* ambient glows */
-    body::after {
-      content: '';
-      position: fixed; inset: 0;
+      margin: 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, "Source Serif 4", serif;
       background:
-        radial-gradient(ellipse 60% 45% at 10% 15%, rgba(201,168,76,0.07) 0%, transparent 65%),
-        radial-gradient(ellipse 50% 50% at 90% 85%, rgba(196,112,106,0.07) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 35% at 50% 50%, rgba(201,168,76,0.03) 0%, transparent 70%);
-      pointer-events: none; z-index: 0;
+        radial-gradient(ellipse 900px 500px at 85% -10%, rgba(47,207,136,.16), transparent 60%),
+        radial-gradient(ellipse 700px 400px at 0% 0%, rgba(233,182,79,.08), transparent 55%),
+        linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* scroll progress */
-    #sp {
-      position: fixed; top: 0; left: 0; height: 2px;
-      background: linear-gradient(90deg, var(--gold), var(--rose));
-      width: 0; z-index: 10001; transition: width 0.1s linear;
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 4px;
     }
 
-    /* custom scrollbar */
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: linear-gradient(var(--gold), var(--rose)); border-radius: 3px; }
-
-    /* ── WRAPPER ── */
-    .w { max-width: 1160px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
-
-    /* ── BACK LINK ── */
-    .back {
-      display: inline-flex; align-items: center; gap: 0.45rem;
-      font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
-      color: rgba(201,168,76,0.55); text-decoration: none;
-      padding: 1.5rem 2rem 0; max-width: 1160px; margin: 0 auto;
-      position: relative; z-index: 1; display: block;
-      transition: color 0.2s;
-    }
-    .back:hover { color: var(--gold); }
-
-    /* ── PAGE HEADER ── */
-    .ph {
-      padding: 3.5rem 0 2.5rem; border-bottom: 1px solid var(--border);
-      margin-bottom: 4rem; text-align: center;
-      animation: fd 0.7s ease both;
-    }
-    .ph .eyebrow {
-      font-family: var(--font-sans); font-size: 0.68rem; letter-spacing: 0.35em;
-      text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.9rem;
-    }
-    .ph h1 {
-      font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 600; letter-spacing: 0.1em;
-      background: linear-gradient(135deg, var(--paper) 0%, var(--gold) 55%, var(--rose) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      margin-bottom: 0.75rem; line-height: 1.1;
-    }
-    .ph .sub {
-      font-family: var(--font-body); font-style: italic; font-size: 1.2rem;
-      color: rgba(245,240,232,0.45);
+    .sans {
+      font-family: Inter, ui-sans-serif, system-ui, "Segoe UI", sans-serif;
     }
 
-    /* ── FILTER BAR ── */
-    .filters {
-      display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;
-      margin-bottom: 3rem; animation: fu 0.6s 0.2s ease both;
-    }
-    .filter-btn {
-      font-family: var(--font-sans); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
-      padding: 0.45rem 1rem; border-radius: 2px; cursor: pointer;
-      background: transparent; border: 1px solid var(--border-soft);
-      color: rgba(245,240,232,0.45); transition: all 0.2s;
-    }
-    .filter-btn:hover, .filter-btn.active {
-      border-color: var(--gold); color: var(--gold);
-      background: rgba(201,168,76,0.07);
+    .container {
+      width: min(var(--maxw), 100% - 2.5rem);
+      margin: 0 auto;
     }
 
-    /* ── AWARDS GRID ── */
-    .grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
-      margin-bottom: 5rem;
-    }
-    @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 580px) { .grid { grid-template-columns: 1fr; } }
-
-    /* ── AWARD CARD ── */
-    .award-card {
-      background: var(--mist); border: 1px solid var(--border-soft);
-      border-radius: 2px; padding: 1.75rem 1.5rem;
-      display: flex; flex-direction: column; gap: 0;
-      position: relative; overflow: hidden;
-      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-      animation: fu 0.5s ease both;
-    }
-    .award-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .award-card:hover {
-      border-color: rgba(201,168,76,0.35); transform: translateY(-5px);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
-    }
-    .award-card:hover::before { opacity: 1; }
-
-    /* prize accent stripe */
-    .prize-stripe {
-      position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
-    }
-    .stripe-gold  { background: linear-gradient(var(--gold), rgba(201,168,76,0.2)); }
-    .stripe-rose  { background: linear-gradient(var(--rose), rgba(196,112,106,0.2)); }
-    .stripe-teal  { background: linear-gradient(#6bbcb0, rgba(107,188,176,0.2)); }
-    .stripe-blue  { background: linear-gradient(#7ba8d4, rgba(123,168,212,0.2)); }
-    .stripe-green { background: linear-gradient(#7ecba0, rgba(126,203,160,0.2)); }
-    .stripe-amber { background: linear-gradient(#d4a056, rgba(212,160,86,0.2)); }
-
-    .card-org {
-      font-family: var(--font-sans); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 0.6rem; padding-left: 0.75rem;
-    }
-    .card-title {
-      font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.05em;
-      color: var(--paper); margin-bottom: 1.25rem; line-height: 1.3;
-      padding-left: 0.75rem;
+    .eyebrow {
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--accent);
     }
 
-    .card-meta { display: flex; flex-direction: column; gap: 0.55rem; padding-left: 0.75rem; flex: 1; }
-    .meta-row {
-      display: flex; align-items: center; gap: 0.6rem;
-    }
-    .meta-icon {
-      font-size: 0.8rem; width: 1.1rem; text-align: center; flex-shrink: 0;
-      opacity: 0.6;
-    }
-    .meta-label {
-      font-family: var(--font-sans); font-size: 0.67rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: rgba(245,240,232,0.35); width: 3.5rem; flex-shrink: 0;
-    }
-    .meta-value {
-      font-family: var(--font-sans); font-size: 0.78rem; color: rgba(245,240,232,0.8);
-    }
-    .meta-value.prize {
-      font-family: var(--font-display); font-size: 1rem; font-weight: 600;
-      color: var(--gold);
-    }
-    .meta-value.free {
-      color: #7ecba0; font-size: 0.72rem; letter-spacing: 0.08em;
+    /* ---------- Header ---------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(7,18,14,.78);
+      border-bottom: 1px solid var(--border);
     }
 
-    .genre-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 1.25rem; padding-left: 0.75rem; }
-    .tag {
-      font-family: var(--font-sans); font-size: 0.6rem; letter-spacing: 0.1em;
-      text-transform: uppercase; padding: 0.25rem 0.6rem; border-radius: 1px;
-      border: 1px solid var(--border-soft); color: rgba(245,240,232,0.45);
-      transition: all 0.2s;
-    }
-    .award-card:hover .tag { border-color: rgba(201,168,76,0.25); color: rgba(245,240,232,0.65); }
-
-    /* ── DEADLINE URGENCY ── */
-    .deadline-soon { color: var(--rose) !important; }
-    .deadline-dot {
-      display: inline-block; width: 5px; height: 5px; border-radius: 50%;
-      background: var(--rose); margin-right: 0.3rem;
-      box-shadow: 0 0 6px var(--rose);
-      animation: pdot 2s ease-in-out infinite;
-    }
-    @keyframes pdot { 0%,100% { box-shadow: 0 0 4px var(--rose); } 50% { box-shadow: 0 0 10px var(--rose); } }
-
-    /* ── SUMMARY BAR ── */
-    .summary {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
-      margin-bottom: 4rem; animation: fu 0.5s 0.1s ease both;
-    }
-    @media (max-width: 580px) { .summary { grid-template-columns: 1fr; } }
-    .sum-item {
-      background: var(--mist); border: 1px solid var(--border);
-      border-radius: 2px; padding: 1.25rem; text-align: center;
-      position: relative; overflow: hidden;
-    }
-    .sum-item::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    }
-    .sum-num {
-      font-family: var(--font-display); font-size: 2rem; font-weight: 600;
-      background: linear-gradient(135deg, var(--gold), var(--rose));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      display: block; margin-bottom: 0.3rem;
-    }
-    .sum-label {
-      font-family: var(--font-sans); font-size: 0.68rem; letter-spacing: 0.2em;
-      text-transform: uppercase; color: rgba(245,240,232,0.35);
+    .nav {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
     }
 
-    /* ── FOOTER ── */
+    .brand {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -.01em;
+      white-space: nowrap;
+    }
+
+    .brand em { font-style: normal; color: var(--accent); }
+
+    nav.links {
+      display: flex;
+      gap: 1.75rem;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: .88rem;
+      color: var(--muted);
+    }
+
+    nav.links a { transition: color .15s ease; }
+    nav.links a:hover { color: var(--text); }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      width: 42px;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+    }
+
+    .menu-toggle svg { width: 20px; height: 20px; }
+
+    #nav-check { display: none; }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      padding: var(--space-4) 0 var(--space-3);
+    }
+
+    .hero-inner {
+      max-width: 62ch;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .4rem .85rem;
+      border: 1px solid rgba(47,207,136,.4);
+      border-radius: 999px;
+      background: rgba(47,207,136,.1);
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: .78rem;
+      font-weight: 700;
+      color: #b7f4d6;
+      margin-bottom: 1.5rem;
+    }
+
+    .badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(47,207,136,.25);
+    }
+
+    h1 {
+      margin: 0 0 1.1rem;
+      font-weight: 700;
+      font-size: clamp(2.4rem, 1.7rem + 3.2vw, 4.6rem);
+      line-height: .98;
+      letter-spacing: -.03em;
+    }
+
+    h1 .accent-word {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero p.lede {
+      max-width: 46ch;
+      color: var(--muted);
+      font-size: clamp(1.02rem, .95rem + .3vw, 1.2rem);
+      margin: 0 0 2rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: .85rem;
+      flex-wrap: wrap;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 0 1.4rem;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: .92rem;
+      border: 1px solid var(--border-strong);
+      transition: background .15s ease, transform .15s ease, border-color .15s ease;
+    }
+
+    .btn.primary {
+      background: var(--accent);
+      color: #04140c;
+      border-color: transparent;
+    }
+    .btn.primary:hover { background: #45e19c; transform: translateY(-1px); }
+
+    .btn.secondary {
+      background: rgba(247,244,236,.04);
+      color: var(--text);
+    }
+    .btn.secondary:hover { border-color: var(--border-strong); background: rgba(247,244,236,.08); }
+
+    /* ---------- Stats ---------- */
+    .stats {
+      margin-top: var(--space-3);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: .9rem;
+    }
+
+    .stat {
+      background: rgba(247,244,236,.035);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+    }
+
+    .stat small {
+      display: block;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: .74rem;
+      color: var(--muted);
+      margin-bottom: .3rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .stat strong {
+      font-size: 1.2rem;
+      letter-spacing: -.01em;
+    }
+
+    /* ---------- Sections ---------- */
+    section { padding: var(--space-4) 0; }
+    section#confirm { padding-top: var(--space-3); }
+
+    .section-title {
+      margin: 0 0 .6rem;
+      font-weight: 700;
+      font-size: clamp(1.9rem, 1.5rem + 2vw, 2.9rem);
+      letter-spacing: -.02em;
+    }
+
+    .section-intro {
+      margin: 0 0 2rem;
+      color: var(--muted);
+      max-width: 62ch;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: .98rem;
+    }
+
+    .highlight {
+      border-left: 3px solid var(--accent);
+      background: rgba(47,207,136,.08);
+      padding: 1.25rem 1.5rem;
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      color: #dff8ea;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: .95rem;
+    }
+
+    /* Prizes */
+    .prizes {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: .9rem;
+    }
+
+    .prize {
+      position: relative;
+      background: linear-gradient(180deg, rgba(247,244,236,.05), rgba(247,244,236,.02));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.6rem 1.3rem;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    }
+
+    .prize.top {
+      border-color: rgba(233,182,79,.45);
+      background: linear-gradient(180deg, rgba(233,182,79,.10), rgba(247,244,236,.02));
+    }
+
+    .place {
+      font-size: .76rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      font-weight: 700;
+    }
+
+    .amount {
+      margin: .6rem 0 .2rem;
+      font-family: "Iowan Old Style", Georgia, serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -.02em;
+    }
+
+    .gold { color: var(--gold); }
+    .prize .desc { color: var(--muted); font-size: .85rem; }
+
+    /* Two-panel grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.1rem;
+    }
+
+    .panel {
+      background: rgba(247,244,236,.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.75rem;
+    }
+
+    .panel h3 {
+      margin: 0 0 .9rem;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    ul {
+      padding-left: 1.15rem;
+      margin: 0;
+      color: var(--muted);
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: .93rem;
+    }
+
+    li + li { margin-top: .6rem; }
+    li strong { color: var(--text); }
+
+    /* Timeline */
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .timeline .panel { display: flex; flex-direction: column; gap: .5rem; }
+
+    .step-mark {
+      width: 34px;
+      height: 34px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 9px;
+      background: rgba(47,207,136,.15);
+      color: #b7f4d6;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-weight: 700;
+      font-size: .85rem;
+    }
+
+    .timeline strong {
+      font-size: 1.15rem;
+      font-family: "Iowan Old Style", Georgia, serif;
+    }
+
+    .timeline p {
+      margin: 0;
+      color: var(--muted);
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: .9rem;
+    }
+
+    /* CTA */
+    .cta {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(47,207,136,.18), rgba(47,207,136,.04));
+      border: 1px solid rgba(47,207,136,.25);
+      border-radius: var(--radius-lg);
+      padding: clamp(2.2rem, 1.8rem + 2vw, 3.4rem) 1.5rem;
+    }
+
+    .cta h2 {
+      margin: 0 0 .7rem;
+      font-weight: 700;
+      font-size: clamp(1.8rem, 1.4rem + 2vw, 2.7rem);
+      letter-spacing: -.02em;
+    }
+
+    .cta p {
+      color: var(--muted);
+      max-width: 52ch;
+      margin: 0 auto 1.6rem;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: .96rem;
+    }
+
+    /* Footer */
     footer {
-      border-top: 1px solid var(--border); padding: 2rem; text-align: center;
-      position: relative; z-index: 1;
+      padding: 2.2rem 0 2.8rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      font-size: .85rem;
     }
-    footer p { font-family: var(--font-sans); font-size: 0.72rem; color: rgba(245,240,232,0.25); }
-    footer a { color: rgba(201,168,76,0.45); text-decoration: none; }
-    footer a:hover { color: var(--gold); }
 
-    /* ── ANIMS ── */
-    @keyframes fd { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:translateY(0); } }
-    @keyframes fu { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    .foot {
+      display: flex;
+      justify-content: space-between;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
 
-    /* empty state */
-    .empty { text-align: center; padding: 4rem 0; color: rgba(245,240,232,0.25); }
-    .empty span { font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.1em; }
+    .foot strong { color: var(--text); font-family: "Iowan Old Style", Georgia, serif; font-size: 1rem; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 920px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .prizes { grid-template-columns: repeat(2, 1fr); }
+      .grid-2, .timeline { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      nav.links { display: none; }
+      .menu-toggle { display: inline-flex; }
+
+      #nav-check:checked ~ .mobile-panel {
+        max-height: 320px;
+        border-top: 1px solid var(--border);
+      }
+
+      .mobile-panel {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .25s ease;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      }
+
+      .mobile-panel-inner {
+        display: flex;
+        flex-direction: column;
+        gap: .25rem;
+        padding: 1rem 0;
+      }
+
+      .mobile-panel-inner a {
+        padding: .7rem .25rem;
+        color: var(--muted);
+        font-size: .95rem;
+        border-radius: var(--radius-sm);
+      }
+      .mobile-panel-inner a:hover { color: var(--text); background: rgba(247,244,236,.05); }
+    }
+
+    @media (max-width: 600px) {
+      .stats { grid-template-columns: 1fr 1fr; }
+      .prizes { grid-template-columns: 1fr 1fr; }
+      .hero { padding-top: var(--space-3); }
+      .amount { font-size: 1.55rem; }
+    }
+
+    @media (max-width: 420px) {
+      .stats, .prizes { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
+
 <body>
-  <div id="sp"></div>
+  <header>
+    <div class="container nav">
+      <div class="brand">The Creative <em>Clash</em></div>
 
-  <a href="index.html" class="back">← Back to Vesser Selene</a>
+      <nav class="links">
+        <a href="#about">About</a>
+        <a href="#prizes">Prizes</a>
+        <a href="#rules">Rules</a>
+        <a href="#judging">Judging</a>
+      </nav>
 
-  <div class="w">
-
-    <!-- Header -->
-    <div class="ph">
-      <span class="eyebrow">Opportunities &amp; Recognition</span>
-      <h1>Literary Awards 2026</h1>
-      <p class="sub">Curated awards &amp; fellowships for emerging voices</p>
+      <label class="menu-toggle" for="nav-check" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </label>
     </div>
 
-    <!-- Cards -->
-    <div class="grid" id="cards-grid"></div>
+    <input type="checkbox" id="nav-check" />
+    <div class="mobile-panel">
+      <div class="container mobile-panel-inner">
+        <a href="#about">About</a>
+        <a href="#prizes">Prizes</a>
+        <a href="#rules">Rules</a>
+        <a href="#judging">Judging</a>
+      </div>
+    </div>
+  </header>
 
-  </div>
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="badge sans">Novel Writing Competition · Sponsored by Fiverr</div>
+        <h1>Write the story <span class="accent-word">only you</span> can tell.</h1>
+        <p class="lede">
+          The Creative Clash brings writers together for a month-long novel competition
+          celebrating originality, imagination, and exceptional storytelling.
+        </p>
+        <div class="hero-actions">
+          <a class="btn secondary" href="#rules">View Competition Rules</a>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="stats">
+          <div class="stat"><small>Opens</small><strong>Aug 22, 2026</strong></div>
+          <div class="stat"><small>Closes</small><strong>Sep 22, 2026</strong></div>
+          <div class="stat"><small>Length</small><strong>20k–80k words</strong></div>
+          <div class="stat"><small>First Prize</small><strong>USD 5,000</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">About the Competition</h2>
+        <p class="section-intro">
+          The Creative Clash recognizes writers who build memorable characters, compelling worlds,
+          engaging plots, and original stories. Participants may submit one complete novel within
+          the official competition period.
+        </p>
+
+        <div class="highlight">
+          <strong>Elite Members:</strong> Your registration has already been completed under your
+          Elite membership. Acknowledge the invitation email to confirm your participation.
+        </div>
+      </div>
+    </section>
+
+    <section id="prizes">
+      <div class="container">
+        <h2 class="section-title">Prize Pool</h2>
+        <p class="section-intro">Outstanding entries will be recognized across the final ranking.</p>
+
+        <div class="prizes">
+          <article class="prize top">
+            <div class="place">🥇 Winner</div>
+            <div class="amount gold">USD 5,000</div>
+            <div class="desc">First Place</div>
+          </article>
+          <article class="prize">
+            <div class="place">🥈 Runner-Up</div>
+            <div class="amount">USD 2,500</div>
+            <div class="desc">Second Place</div>
+          </article>
+          <article class="prize">
+            <div class="place">🥉 Third Place</div>
+            <div class="amount">USD 1,500</div>
+            <div class="desc">Third Place</div>
+          </article>
+          <article class="prize">
+            <div class="place">🏅 Top 10</div>
+            <div class="amount">USD 120</div>
+            <div class="desc">Each finalist</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="rules">
+      <div class="container">
+        <h2 class="section-title">Submission Requirements</h2>
+        <p class="section-intro">Entries should follow the requirements below to remain eligible for judging.</p>
+
+        <div class="grid-2">
+          <div class="panel">
+            <h3>Novel Requirements</h3>
+            <ul>
+              <li>The submitted work must be an original novel written by the participant.</li>
+              <li>Novel length must be between <strong>20,000 and 80,000 words</strong>.</li>
+              <li>Only one novel submission is permitted per participant.</li>
+              <li>The manuscript must be complete and submitted before the deadline.</li>
+              <li>Any genre is welcome unless otherwise stated in final guidelines.</li>
+              <li>The work must not contain plagiarized material.</li>
+            </ul>
+          </div>
+
+          <div class="panel">
+            <h3>Format &amp; Submission</h3>
+            <ul>
+              <li>Submission window: <strong>August 22–September 22, 2026</strong>.</li>
+              <li>Recommended manuscript formats: DOCX or PDF.</li>
+              <li>Use a clear, readable font and consistent chapter formatting.</li>
+              <li>Include the novel title and participant name with the submission.</li>
+              <li>Late or incomplete submissions may not be accepted.</li>
+              <li>Final upload instructions will be provided to confirmed participants.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="judging">
+      <div class="container">
+        <h2 class="section-title">Judging Criteria</h2>
+        <p class="section-intro">Entries will be evaluated on the overall quality and impact of the novel.</p>
+
+        <div class="grid-2">
+          <div class="panel">
+            <h3>What Judges Look For</h3>
+            <ul>
+              <li><strong>Originality:</strong> Fresh ideas and creative execution.</li>
+              <li><strong>Storytelling:</strong> A compelling plot with effective pacing.</li>
+              <li><strong>Characters:</strong> Memorable, believable, well-developed characters.</li>
+              <li><strong>Writing Quality:</strong> Strong language, clarity, and grammar.</li>
+              <li><strong>World &amp; Atmosphere:</strong> Effective setting, tone, and imagery.</li>
+              <li><strong>Overall Impact:</strong> Emotional resonance of the full read.</li>
+            </ul>
+          </div>
+
+          <div class="panel">
+            <h3>Important Conditions</h3>
+            <ul>
+              <li>Participants are responsible for meeting the word-count requirement.</li>
+              <li>Submissions must be received during the official period.</li>
+              <li>Entries may be disqualified for plagiarism or rule violations.</li>
+              <li>Participants should retain their own copy of the manuscript.</li>
+              <li>Full judging procedures may be shared separately with confirmed participants.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2 class="section-title">Competition Timeline</h2>
+        <p class="section-intro">Keep these key stages in mind while preparing your novel.</p>
+
+        <div class="timeline">
+          <div class="panel">
+            <span class="step-mark">1</span>
+            <strong>Confirm Participation</strong>
+            <p>Elite Members acknowledge the invitation email to confirm their place.</p>
+          </div>
+          <div class="panel">
+            <span class="step-mark">2</span>
+            <strong>Aug 22, 2026</strong>
+            <p>The Creative Clash officially begins and submissions open.</p>
+          </div>
+          <div class="panel">
+            <span class="step-mark">3</span>
+            <strong>Sep 22, 2026</strong>
+            <p>The competition closes. Complete manuscripts are due by the deadline.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="confirm">
+      <div class="container">
+        <div class="cta">
+          <h2>Elite Member? Your registration is already complete.</h2>
+          <p>
+            Reply to your official invitation email acknowledging your participation. Further
+            information on submission procedures, guidelines, and judging will be sent to
+            confirmed participants.
+          </p>
+          <a class="btn primary" href="mailto:?subject=The%20Creative%20Clash%20-%20Participation%20Confirmation&body=I%20acknowledge%20this%20invitation%20and%20confirm%20my%20participation%20in%20The%20Creative%20Clash%20Novel%20Writing%20Competition.">
+            Acknowledge Participation
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    <p>&copy; 2025 Fiverr Company Limited. All rights reserved. &nbsp;·&nbsp; <a href="index.html">Vesser Selene</a></p>
+    <div class="container foot">
+      <div><strong>The Creative Clash</strong><br />Novel Writing Competition</div>
+      <div>August 22 – September 22, 2026<br />Sponsored by Fiverr</div>
+    </div>
   </footer>
-
-  <script>
-    // Scroll progress
-    window.addEventListener('scroll', () => {
-      document.getElementById('sp').style.width =
-        (window.pageYOffset / (document.body.offsetHeight - window.innerHeight) * 100) + '%';
-    });
-
-    const awards = [
-      {
-        org: 'Interlochen Center for the Arts',
-        title: 'Pattis Family Foundation Creative Arts Book Award',
-        prize: '$10,000',
-        fee: '$0',
-        deadline: '20/05/26',
-        genres: ['Poetry', 'Fiction', 'Creative Nonfiction'],
-        stripe: 'stripe-gold',
-      },
-      {
-        org: 'Kansas City Public Library',
-        title: 'Maya Angelou Book Award',
-        prize: '$15,000',
-        fee: '$0',
-        deadline: '20/7/26',
-        genres: ['Poetry', 'Fiction'],
-        stripe: 'stripe-rose',
-      },
-      {
-        org: 'Ursula K. Le Guin Foundation',
-        title: 'Ursula K. Le Guin Prize for Fiction',
-        prize: '$25,000',
-        fee: '$500',
-        deadline: '30/07/26',
-        genres: ['Fiction'],
-        stripe: 'stripe-teal',
-      },
-      {
-        org: 'Georgia Writers',
-        title: 'Sapphic Stories Literary Success Grants',
-        prize: '$500',
-        fee: '$0',
-        deadline: '20/06/26',
-        genres: ['Poetry', 'Fiction', 'Creative Nonfiction'],
-        stripe: 'stripe-blue',
-      },
-      {
-        org: 'Book Industry Charitable Foundation',
-        title: 'Susan Kamil Emerging Writers Prize',
-        prize: '$10,000',
-        fee: '$0',
-        deadline: '30/03/26',
-        genres: ['Poetry', 'Fiction', 'Creative Nonfiction'],
-        stripe: 'stripe-green',
-      },
-      {
-        org: 'A Public Space',
-        title: 'Writing Fellowships',
-        prize: '$1,000',
-        fee: '$0',
-        deadline: '30/05/26',
-        genres: ['Poetry', 'Fiction', 'Creative Nonfiction'],
-        stripe: 'stripe-amber',
-      },
-    ];
-
-    // Determine if deadline is soon (within ~60 days of today)
-    function isSoon(dl) {
-      const [m, d, y] = dl.split('/');
-      const date = new Date(`20${y}`, m - 1, d);
-      const diff = (date - new Date()) / (1000 * 60 * 60 * 24);
-      return diff >= 0 && diff <= 60;
-    }
-
-    function buildCard(a, delay) {
-      const soon = isSoon(a.deadline);
-      return `
-        <div class="award-card" data-genres="${a.genres.join(',')}" style="animation-delay:${delay}s">
-          <div class="prize-stripe ${a.stripe}"></div>
-          <div class="card-org">${a.org}</div>
-          <div class="card-title">${a.title}</div>
-          <div class="card-meta">
-            <div class="meta-row">
-              <span class="meta-icon">💰</span>
-              <span class="meta-label">Prize</span>
-              <span class="meta-value prize">${a.prize}</span>
-            </div>
-            <div class="meta-row">
-              <span class="meta-icon">🎟</span>
-              <span class="meta-label">Fee</span>
-              <span class="meta-value free">Free to Enter</span>
-            </div>
-            <div class="meta-row">
-              <span class="meta-icon">📅</span>
-              <span class="meta-label">Deadline</span>
-              <span class="meta-value ${soon ? 'deadline-soon' : ''}">
-                ${soon ? '<span class="deadline-dot"></span>' : ''}${a.deadline}
-              </span>
-            </div>
-          </div>
-          <div class="genre-tags">
-            ${a.genres.map(g => `<span class="tag">${g}</span>`).join('')}
-          </div>
-        </div>`;
-    }
-
-    function render(list) {
-      const grid = document.getElementById('cards-grid');
-      if (list.length === 0) {
-        grid.innerHTML = '<div class="empty" style="grid-column:1/-1"><span>No awards match this filter.</span></div>';
-        return;
-      }
-      grid.innerHTML = list.map((a, i) => buildCard(a, i * 0.07)).join('');
-      document.getElementById('s-awards').textContent = list.length;
-    }
-
-    function filter(genre, btn) {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      if (genre === 'all') { render(awards); return; }
-      render(awards.filter(a => a.genres.includes(genre)));
-    }
-
-    render(awards);
-  </script>
 </body>
 </html>
